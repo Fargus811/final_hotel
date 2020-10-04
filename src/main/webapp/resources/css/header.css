@@ -1,0 +1,79 @@
+.header {
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    left: 0px;
+    top: 0px;
+    background: #002583;
+    z-index: 5;
+}
+
+.header-correction {
+    height: 45px;
+    background: white;
+}
+
+
+.site-name {
+    position: relative;
+    width: 40px;
+    height: 22.5px;
+    left: 25px;
+    top: 5px;
+    vertical-align: middle;
+    float: left;
+    margin-right: 85px;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 2.25rem;
+    text-align: center;
+    letter-spacing: 0.04em;
+    line-height: 40px;
+    box-sizing: unset;
+    color: #FFFFFF;
+}
+
+.userbox {
+    position: absolute;
+    width: 218px;
+    height: 148px;
+    left: calc(100% - 218px);
+    top: 50px;
+    background-color: #00034F;
+    visibility: hidden;
+    transition: all 0.5s ease 0.5s;
+}
+
+.profileimg {
+    position: absolute;
+    width: 50px;
+    float: right;
+    margin-left: 1200px;
+    background-color: #00034F;
+}
+
+.username {
+    position: relative;
+    width: fit-content;
+    cursor: pointer;
+    height: 41px;
+    top: 6px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 40px;
+    margin-left: 5px;
+    float: right;
+    margin-right: 15px;
+    color: azure;
+
+}
+
+.username:hover ~ .userbox,
+.userbox:hover {
+    visibility: visible;
+    transition: all 0.5s ease-in-out 0s;
+}
