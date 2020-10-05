@@ -17,7 +17,7 @@
     <img class="room-photo" src="" alt="Photo" width="210" height="120">
     <div class="room-name">Люкс</div>
     <div class="grade">Элитный</div>
-    <div class="room-desc">Сосать/мыть посуду</div>
+    <div class="room-desc">Лучшее описание</div>
     <div class="room-item-bottom">
         <div class="room-cost">$1999.99</div>
         <div class="room-beds">🛏 4</div>
