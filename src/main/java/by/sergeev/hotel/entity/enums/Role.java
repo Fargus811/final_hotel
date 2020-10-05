@@ -1,4 +1,4 @@
-package by.sergeev.hotel.entity;
+package by.sergeev.hotel.entity.enums;
 
 public enum Role {
 
@@ -10,8 +10,8 @@ public enum Role {
         this.id = id;
     }
 
-    public static Role getRole(int bit) {
-        return  (bit == 1) ? ADMIN : USER;
+    public static Role getRole(int id) {
+        return (id == 1) ? ADMIN : USER;
     }
 
     public Integer getId() {

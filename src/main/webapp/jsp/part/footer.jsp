@@ -6,8 +6,8 @@
   <div class="container">
  <div class="row">
     <div class="col-1">
-        <div class="footer-name">SUBU</div>
-        <div class="copyright">© Subu 2020</div>
+        <div class="footer-name">Grand Hotel</div>
+        <div class="copyright">© Grand Hotel 2020</div>
     </div>
     <div class="col-md-auto">
         <div class="block-list">
@@ -20,7 +20,7 @@
         <div class="block-list">
             <div class="block-list-element">Audio description</div>
             <div class="block-list-element">Investor relations</div>
-            <div class="block-list-element">Legal noties</div>
+            <div class="block-list-element">Legal notes</div>
         </div>
     </div>
     <div class="col-md-auto">

@@ -1,5 +1,7 @@
 package by.sergeev.hotel.entity;
 
+import by.sergeev.hotel.entity.enums.Role;
+
 public class User {
 
     private int id;

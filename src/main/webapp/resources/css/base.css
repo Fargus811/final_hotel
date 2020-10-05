@@ -1,0 +1,179 @@
+.button {
+    position: relative;
+    width: fit-content;
+    cursor: pointer;
+    height: 41px;
+    top: 6px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 40px;
+    margin-left: 25px;
+    float:left;
+
+    text-align: center;
+    letter-spacing: 0.04em;
+    box-sizing: unset;
+    color: #FFFFFF;
+}
+
+.button.active, .button:hover{
+    border-bottom: solid;
+}
+
+.button:hover {
+    opacity: 0.8;
+    color:white;
+    text-decoration: none;
+}
+
+.button.auth {
+    float: right;
+    font-family: Roboto;
+    font-style: normal;
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    border: solid;
+    border-radius: 10px;
+    height: 30px;
+    line-height: 34px;
+    border-width: 1.25px;
+    text-align: center;
+    letter-spacing: 0.04em;
+    margin-right: 10px;
+    margin-left: 0px;
+}
+
+.button.auth.primary {
+    font-weight: 900;
+    border-color: #000AFF;
+    background: #000AFF;
+}
+
+.button.auth:hover {
+    background: #0030aa;
+}
+.button.auth.primary:hover {
+    background: rgb(0, 81, 255)
+}
+
+.button:active{
+    opacity: 0.8;
+}
+
+
+.modal {
+    display: none;
+    text-align: center;
+    transition: .2s;
+}
+
+.modal.background {
+    display: block;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+.modal.open {
+    display: block;
+}
+
+.modal-body {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 35px 15px 25px;
+    z-index: 2;
+    display: inline-block;
+    margin-top: 5%;
+    width: 100%;
+    max-width: 700px;
+    position: relative;
+}
+
+.modal-body h3 {
+    font: 20px/20px 'Open Sans', sans-serif;
+    color: #707584;
+}
+
+.modal-control, .modal-close {
+    float: right;
+    color: #c6cce2;
+    font-size: 45px;
+    line-height: 22px;
+    cursor: pointer;
+    transition: color .1s;
+}
+
+.modal-control:hover, .modal-close:hover {
+    color: #8393ca;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transform: rotate(45deg);
+}
+
+.room-item {
+    height: 300px;
+    width: 250px;
+    border: 1px solid lightgray;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 10px 10px 10px 10px;
+}
+
+.room-name {
+    font-weight: 800;
+}
+
+.grade {
+    font-size: small;
+}
+
+.room-desc {
+    font-size: xx-small;
+}
+
+.room-cost {
+    float: left;
+    font-weight: 700;
+    bottom: 0px;
+}
+
+.room-beds {
+    float: left;
+    margin-left: 25%;
+}
+
+.room-max-persons {
+    float: right;
+}
+
+.room-item-bottom {
+    position: relative;
+    /* bottom: 1%; */
+    top: 10%;
+}
+
+img.room-photo {
+    margin-bottom: 5px;
+}
+
+.room-advantage {
+    font-size: xx-small;
+    float: right;
+    margin-left: 5px;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
