@@ -13,8 +13,8 @@ import by.sergeev.hotel.service.RoomService;
 import java.util.List;
 
 public class RoomServiceImpl implements RoomService {
+
     public List<Room> findAll() throws ServiceException {
-        System.out.println("findAll in service");
         RoomDao roomDao = DaoFactory.getInstance().getRoomDao();
         List<Room> rooms = null;
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()){

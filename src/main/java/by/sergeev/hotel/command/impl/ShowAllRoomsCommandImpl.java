@@ -18,7 +18,6 @@ public class ShowAllRoomsCommandImpl implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        System.out.println("Show all rooms");
         RoomService roomService = ServiceFactory.getInstance().getRoomService();
         List<Room> rooms;
         try {
