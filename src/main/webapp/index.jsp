@@ -3,12 +3,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="en">
 <head>
-    <title>$Title$</title>
+    <title>$Grand Hotel$</title>
 </head>
 <body>
-<c:redirect url="/jsp/main.jsp">
-
-</c:redirect>
+<jsp:forward page="/controller" >
+    <jsp:param name="command" value="show_all_rooms" />
+</jsp:forward>
 </body>
 </html>
 

@@ -7,6 +7,8 @@ public class DaoFactory {
 
     private static DaoFactory instance;
     private static volatile Object localInstance = new Object();
+    private final UserDao userDao = new UserDaoImpl();
+    private final RoomDao roomDao = new RoomDaoImpl();
 
     public static DaoFactory getInstance() {
         if (instance == null) {
@@ -20,10 +22,10 @@ public class DaoFactory {
     }
 
     public UserDao getUserDao() {
-        return new UserDaoImpl();
+        return userDao;
     }
 
     public RoomDao getRoomDao() {
-        return new RoomDaoImpl();
+        return roomDao;
     }
 }

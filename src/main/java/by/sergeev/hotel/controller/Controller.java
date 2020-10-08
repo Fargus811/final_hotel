@@ -14,9 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-@WebServlet("/home")
+@WebServlet("/controller")
 public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -24,12 +23,14 @@ public class Controller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("controller doGet");
         processRequest(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("controller doPost");
         processRequest(request, response);
     }
 

@@ -1,6 +1,5 @@
 package by.sergeev.hotel.entity;
 
-import by.sergeev.hotel.entity.enums.Grade;
 import by.sergeev.hotel.entity.enums.BookingStatus;
 
 import java.util.Date;
@@ -13,7 +12,7 @@ public class Booking {
     private int cost;
     private int max_persons;
     private int number_of_beds;
-    private Grade grade;
+    private String grade;
     private boolean has_TV;
     private boolean has_Wifi;
     private boolean has_bathroom;
@@ -24,7 +23,8 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(int id, Date start_date, Date end_date, int cost, int max_persons, int number_of_beds, Grade grade, boolean has_TV, boolean has_Wifi, boolean has_bathroom, User user, BookingStatus bookingStatus) {
+    public Booking(int id, Date start_date, Date end_date, int cost, int max_persons, int number_of_beds, String grade,
+                   boolean has_TV, boolean has_Wifi, boolean has_bathroom, User user, Room room, BookingStatus bookingStatus) {
         this.id = id;
         this.start_date = start_date;
         this.end_date = end_date;
@@ -36,6 +36,7 @@ public class Booking {
         this.has_Wifi = has_Wifi;
         this.has_bathroom = has_bathroom;
         this.user = user;
+        this.room = room;
         this.bookingStatus = bookingStatus;
     }
 
@@ -87,11 +88,11 @@ public class Booking {
         this.number_of_beds = number_of_beds;
     }
 
-    public Grade getGrade() {
+    public String getGrade() {
         return grade;
     }
 
-    public void setGrade(Grade grade) {
+    public void setGrade(String grade) {
         this.grade = grade;
     }
 
@@ -159,7 +160,7 @@ public class Booking {
         if (has_bathroom != booking.has_bathroom) return false;
         if (start_date != null ? !start_date.equals(booking.start_date) : booking.start_date != null) return false;
         if (end_date != null ? !end_date.equals(booking.end_date) : booking.end_date != null) return false;
-        if (grade != booking.grade) return false;
+        if (grade != null ? !grade.equals(booking.grade) : booking.grade != null) return false;
         if (user != null ? !user.equals(booking.user) : booking.user != null) return false;
         if (room != null ? !room.equals(booking.room) : booking.room != null) return false;
         return bookingStatus == booking.bookingStatus;
@@ -192,7 +193,7 @@ public class Booking {
         sb.append(", cost=").append(cost);
         sb.append(", max_persons=").append(max_persons);
         sb.append(", number_of_beds=").append(number_of_beds);
-        sb.append(", grade=").append(grade);
+        sb.append(", grade='").append(grade).append('\'');
         sb.append(", has_TV=").append(has_TV);
         sb.append(", has_Wifi=").append(has_Wifi);
         sb.append(", has_bathroom=").append(has_bathroom);

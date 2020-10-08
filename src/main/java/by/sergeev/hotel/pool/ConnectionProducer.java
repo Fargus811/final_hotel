@@ -1,6 +1,8 @@
 package by.sergeev.hotel.pool;
 
 import by.sergeev.hotel.exception.ConnectionPoolException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,39 +12,37 @@ import java.util.ResourceBundle;
 
 public class ConnectionProducer {
 
-    private String url;
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    private static final String URL = "jdbc:mysql://127.0.0.1:3306/hotel";
+    private static final String USER = "root";
+    private static final String PASSWORD = "40ofariv";
+    private static final String AUTO_RECONNECT = "true";
+    private static final String CHARACTER_ENCODING = "UTF-8";
+    private static final String USE_UNICODE = "true";
+
     private Properties configProp;
 
-    private static final String URL = "db.url";
-    private static final String USER = "db.user";
-    private static final String PASSWORD = "db.password";
-    private static final String AUTO_RECONNECT = "db.autoReconnect";
-    private static final String CHARACTER_ENCODING = "db.encoding";
-    private static final String USE_UNICODE = "db.useUnicode";
-    private static final String DATABASE_KEY_PROPERTY = "database";
-    private static final String USER_KEY_PROPERTY = "user";
-    private static final String PASSWORD_KEY_PROPERTY = "password";
-    private static final String AUTO_RECONNECT_KEY_PROPERTY = "autoReconnect";
-    private static final String CHARACTER_ENCODING_KEY_PROPERTY = "encoding";
-    private static final String USE_UNICODE_KEY_PROPERTY = "useUnicode";
+    {
+        configProp = new Properties();
+        configProp.put("user", USER);
+        configProp.put("password", PASSWORD);
+        configProp.put("autoReconnect", AUTO_RECONNECT);
+        configProp.put("characterEncoding", CHARACTER_ENCODING);
+        configProp.put("useUnicode", USE_UNICODE);
+    }
+
 
     ConnectionProducer() {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle(DATABASE_KEY_PROPERTY);
-        configProp = new Properties();
-        url = resourceBundle.getString(URL);
-        configProp.put(USER_KEY_PROPERTY, resourceBundle.getString(USER));
-        configProp.put(PASSWORD_KEY_PROPERTY, resourceBundle.getString(PASSWORD));
-        configProp.put(AUTO_RECONNECT_KEY_PROPERTY, resourceBundle.getString(AUTO_RECONNECT));
-        configProp.put(CHARACTER_ENCODING_KEY_PROPERTY, resourceBundle.getString(CHARACTER_ENCODING));
-        configProp.put(USE_UNICODE_KEY_PROPERTY, resourceBundle.getString(USE_UNICODE));
         try {
-            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         } catch (SQLException e) {
+            LOGGER.fatal("Problem with DriverManager registration", e);
             throw new RuntimeException(e);
         }
     }
 
-   public ProxyConnection produce() throws ConnectionPoolException {
+    ProxyConnection produce() throws ConnectionPoolException {
         try {
             return tryProduce();
         } catch (SQLException e) {

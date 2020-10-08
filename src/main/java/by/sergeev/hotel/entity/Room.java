@@ -1,32 +1,39 @@
 package by.sergeev.hotel.entity;
 
-import by.sergeev.hotel.entity.enums.Grade;
-
 public class Room {
 
     private int id;
     private String name;
-    private int number_of_rooms;
+    private int numberOfRooms;
     private int floor;
-    private Grade grade;
-    private int max_persons;
-    private boolean has_TV;
-    private boolean has_Wifi;
-    private boolean has_bathroom;
+    private int maxPersons;
+    private double cost;
+    private boolean hasWifi;
+    private boolean hasTV;
+    private boolean hasBathroom;
+    private int numberOfBeds;
+    private String description;
+    private String photoPath;
+    private String grade;
 
     public Room() {
     }
 
-    public Room(int id, String name, int number_of_rooms, int floor, Grade grade, int max_persons, boolean has_TV, boolean has_Wifi, boolean has_bathroom) {
+    public Room(int id, String name, int numberOfRooms, int floor, int maxPersons, double cost, boolean hasWifi,
+                boolean hasTV, boolean hasBathroom, int numberOfBeds, String description, String photoPath, String grade) {
         this.id = id;
         this.name = name;
-        this.number_of_rooms = number_of_rooms;
+        this.numberOfRooms = numberOfRooms;
         this.floor = floor;
+        this.maxPersons = maxPersons;
+        this.cost = cost;
+        this.hasWifi = hasWifi;
+        this.hasTV = hasTV;
+        this.hasBathroom = hasBathroom;
+        this.numberOfBeds = numberOfBeds;
+        this.description = description;
+        this.photoPath = photoPath;
         this.grade = grade;
-        this.max_persons = max_persons;
-        this.has_TV = has_TV;
-        this.has_Wifi = has_Wifi;
-        this.has_bathroom = has_bathroom;
     }
 
     public int getId() {
@@ -45,12 +52,12 @@ public class Room {
         this.name = name;
     }
 
-    public int getNumber_of_rooms() {
-        return number_of_rooms;
+    public int getNumberOfRooms() {
+        return numberOfRooms;
     }
 
-    public void setNumber_of_rooms(int number_of_rooms) {
-        this.number_of_rooms = number_of_rooms;
+    public void setNumberOfRooms(int numberOfRooms) {
+        this.numberOfRooms = numberOfRooms;
     }
 
     public int getFloor() {
@@ -61,44 +68,76 @@ public class Room {
         this.floor = floor;
     }
 
-    public Grade getGrade() {
+    public int getMaxPersons() {
+        return maxPersons;
+    }
+
+    public void setMaxPersons(int maxPersons) {
+        this.maxPersons = maxPersons;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public boolean isHasWifi() {
+        return hasWifi;
+    }
+
+    public void setHasWifi(boolean hasWifi) {
+        this.hasWifi = hasWifi;
+    }
+
+    public boolean isHasTV() {
+        return hasTV;
+    }
+
+    public void setHasTV(boolean hasTV) {
+        this.hasTV = hasTV;
+    }
+
+    public boolean isHasBathroom() {
+        return hasBathroom;
+    }
+
+    public void setHasBathroom(boolean hasBathroom) {
+        this.hasBathroom = hasBathroom;
+    }
+
+    public int getNumberOfBeds() {
+        return numberOfBeds;
+    }
+
+    public void setNumberOfBeds(int numberOfBeds) {
+        this.numberOfBeds = numberOfBeds;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    public String getGrade() {
         return grade;
     }
 
-    public void setGrade(Grade grade) {
+    public void setGrade(String grade) {
         this.grade = grade;
-    }
-
-    public int getMax_persons() {
-        return max_persons;
-    }
-
-    public void setMax_persons(int max_persons) {
-        this.max_persons = max_persons;
-    }
-
-    public boolean isHas_TV() {
-        return has_TV;
-    }
-
-    public void setHas_TV(boolean has_TV) {
-        this.has_TV = has_TV;
-    }
-
-    public boolean isHas_Wifi() {
-        return has_Wifi;
-    }
-
-    public void setHas_Wifi(boolean has_Wifi) {
-        this.has_Wifi = has_Wifi;
-    }
-
-    public boolean isHas_bathroom() {
-        return has_bathroom;
-    }
-
-    public void setHas_bathroom(boolean has_bathroom) {
-        this.has_bathroom = has_bathroom;
     }
 
     @Override
@@ -109,27 +148,38 @@ public class Room {
         Room room = (Room) o;
 
         if (id != room.id) return false;
-        if (number_of_rooms != room.number_of_rooms) return false;
+        if (numberOfRooms != room.numberOfRooms) return false;
         if (floor != room.floor) return false;
-        if (max_persons != room.max_persons) return false;
-        if (has_TV != room.has_TV) return false;
-        if (has_Wifi != room.has_Wifi) return false;
-        if (has_bathroom != room.has_bathroom) return false;
+        if (maxPersons != room.maxPersons) return false;
+        if (Double.compare(room.cost, cost) != 0) return false;
+        if (hasWifi != room.hasWifi) return false;
+        if (hasTV != room.hasTV) return false;
+        if (hasBathroom != room.hasBathroom) return false;
+        if (numberOfBeds != room.numberOfBeds) return false;
         if (name != null ? !name.equals(room.name) : room.name != null) return false;
-        return grade == room.grade;
+        if (description != null ? !description.equals(room.description) : room.description != null) return false;
+        if (photoPath != null ? !photoPath.equals(room.photoPath) : room.photoPath != null) return false;
+        return grade != null ? grade.equals(room.grade) : room.grade == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result;
+        long temp;
+        result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + number_of_rooms;
+        result = 31 * result + numberOfRooms;
         result = 31 * result + floor;
+        result = 31 * result + maxPersons;
+        temp = Double.doubleToLongBits(cost);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (hasWifi ? 1 : 0);
+        result = 31 * result + (hasTV ? 1 : 0);
+        result = 31 * result + (hasBathroom ? 1 : 0);
+        result = 31 * result + numberOfBeds;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (photoPath != null ? photoPath.hashCode() : 0);
         result = 31 * result + (grade != null ? grade.hashCode() : 0);
-        result = 31 * result + max_persons;
-        result = 31 * result + (has_TV ? 1 : 0);
-        result = 31 * result + (has_Wifi ? 1 : 0);
-        result = 31 * result + (has_bathroom ? 1 : 0);
         return result;
     }
 
@@ -138,13 +188,17 @@ public class Room {
         final StringBuilder sb = new StringBuilder("Room{");
         sb.append("id=").append(id);
         sb.append(", name='").append(name).append('\'');
-        sb.append(", number_of_rooms=").append(number_of_rooms);
+        sb.append(", numberOfRooms=").append(numberOfRooms);
         sb.append(", floor=").append(floor);
-        sb.append(", grade=").append(grade);
-        sb.append(", max_persons=").append(max_persons);
-        sb.append(", has_TV=").append(has_TV);
-        sb.append(", has_Wifi=").append(has_Wifi);
-        sb.append(", has_bathroom=").append(has_bathroom);
+        sb.append(", maxPersons=").append(maxPersons);
+        sb.append(", cost=").append(cost);
+        sb.append(", hasWifi=").append(hasWifi);
+        sb.append(", hasTV=").append(hasTV);
+        sb.append(", hasBathroom=").append(hasBathroom);
+        sb.append(", numberOfBeds=").append(numberOfBeds);
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", photoPath='").append(photoPath).append('\'');
+        sb.append(", grade='").append(grade).append('\'');
         sb.append('}');
         return sb.toString();
     }

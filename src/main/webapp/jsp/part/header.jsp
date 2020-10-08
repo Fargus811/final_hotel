@@ -3,9 +3,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/header.css" type="text/css">
 <div class='header' style="z-index:2">
-    <div class='site-name'><a href="">Hotel</a></div>
-    <div class='button'><a href="catalog">Catalog</a></div>
-    <div class='button'><a href="partnership">Partnership</a></div>
+    <div class='site-name'><a class= 'site-name' href="">Hotel</a></div>
+    <div class='button'><a class='button' href="catalog">Catalog</a></div>
+    <div class='button'><a class='button' href="partnership">Partnership</a></div>
     <div class="listener" hidden></div>
     <!--
     <div class="user-block authorized">
@@ -25,8 +25,8 @@
     </div>
     -->
         <div class="user-block unauthorized">
-            <a class='button auth primary' routerLink="signup">SIGN UP</a>
-            <a class='button auth secondary' routerLink="signin">SIGN IN</a>
+            <a class='button auth primary' href="signup">SIGN UP</a>
+            <a class='button auth secondary' href="signin">SIGN IN</a>
         </div>
 </div>
 <div class="header-correction"></div>

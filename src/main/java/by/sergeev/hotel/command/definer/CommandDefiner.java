@@ -16,7 +16,7 @@ public class CommandDefiner {
             String command = request.getParameter(COMMAND_PARAM);
             LOGGER.info("Command: " + command);
             CommandType currentEnum = CommandType.valueOf(command.toUpperCase());
-            Command curCommand = currentEnum.getCommand();
-            return curCommand;
+            Command currentCommand = currentEnum.getCommand();
+            return currentCommand;
         }
 }
