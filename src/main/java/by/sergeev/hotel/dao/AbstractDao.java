@@ -16,7 +16,7 @@ public abstract class AbstractDao<T> {
 
     public abstract List<T> findAll() throws DaoException;
     public abstract T findEntityById(int id) throws DaoException;
-    public abstract void create(T entity) throws DaoException;
+    public abstract void create(T entity, ProxyConnection connection) throws DaoException;
     public abstract void update(T entity) throws DaoException;
 
     protected T tryFindEntityByPrStatement(ProxyConnection proxyConnection,String query) throws SQLException {

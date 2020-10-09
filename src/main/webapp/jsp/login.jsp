@@ -35,12 +35,6 @@
             <span class="text-danger">Name is required</span>
         </div>
         <div class="form-group">
-            <div class="form-group">
-                <label for="InputPassword">Password</label>
-                <input formControlName="password" type="password" class="form-control" id="InputPassword"
-                       placeholder="Password">
-                <span class="text-danger">Password is required</span>
-            </div>
             <label>Confirm Password</label>
             <input type="password" class="form-control" formControlName="confirmPassword" placeholder="Password">
             <span class="text-danger">Confirm Password is required</span>

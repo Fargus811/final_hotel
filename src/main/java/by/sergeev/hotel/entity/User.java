@@ -26,6 +26,15 @@ public class User {
         this.balance = balance;
         this.role = role;
     }
+     public User(int id, String login, String password, String email, String first_name, String last_name, Role role) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.role = role;
+    }
 
     public int getId() {
         return id;

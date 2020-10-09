@@ -14,10 +14,6 @@ public interface RoomDao {
 
     Room sortRoomByCost(double cost) throws DaoException;
 
-    void create(Room room) throws DaoException;
-
-    void update(Room room) throws DaoException;
-
     Room sortRoomsByGrade() throws DaoException;
 
     Room sortRoomsByPeopleCount() throws DaoException;

@@ -22,7 +22,8 @@
 <body>
 <jsp:include page="/jsp/part/header.jsp"/>
 <div class="container-fluid">
-    <form action="${pageContext.request.contextPath}/user/signupform" method="POST">
+    <form action="${pageContext.request.contextPath}/controller" method="POST">
+        <input type="hidden" name="command" value="registration" />
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputEmail4">Email</label>
@@ -38,12 +39,12 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputFirstName">First name</label>
-                <input name="firstName" type="firtsname" class="form-control" id="inputFirstName"
+                <input name="firstName" type="firstName" class="form-control" id="inputFirstName"
                        placeholder="First name">
             </div>
             <div class="form-group col-md-6">
-                <label for="inputSurname">Surname</label>
-                <input name="surname" type="surname" class="form-control" id="inputSurname" placeholder="Surname">
+                <label for="inputLastName">Last name</label>
+                <input name="lastName" type="lastName" class="form-control" id="inputLastName" placeholder="Last Name">
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Sign in</button>
