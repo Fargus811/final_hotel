@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 public class ConnectionProducer {
 
@@ -20,6 +19,7 @@ public class ConnectionProducer {
     private static final String AUTO_RECONNECT = "true";
     private static final String CHARACTER_ENCODING = "UTF-8";
     private static final String USE_UNICODE = "true";
+    private static final String USE_SSL="false";
 
     private Properties configProp;
 
@@ -30,6 +30,7 @@ public class ConnectionProducer {
         configProp.put("autoReconnect", AUTO_RECONNECT);
         configProp.put("characterEncoding", CHARACTER_ENCODING);
         configProp.put("useUnicode", USE_UNICODE);
+        configProp.put("useSSL", USE_SSL);
     }
 
 

@@ -2,35 +2,52 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/footer.css" type="text/css">
+<fmt:setLocale value="${locale}"/>
+<fmt:bundle basename="text">
 <div class="footer" >
   <div class="container">
         <div class="row">
             <div class="col-1">
-                <div class="footer-name">Grand Hotel</div>
-                <div class="copyright">© Grand Hotel 2020</div>
+                <div class="footer-name"><fmt:message key="text.footer.hotel"/></div>
+                <div class="copyright"><fmt:message key="text.footer.copyright"/></div>
             </div>
             <div class="col-md-auto">
                 <div class="block-list">
-                    <div class="block-list-element">Audio and subtitles</div>
-                    <div class="block-list-element">Media center</div>
-                    <div class="block-list-element">Privacy</div>
+                    <div class="block-list-element"><fmt:message key="text.footer.terms"/></div>
+                    <div class="block-list-element"><fmt:message key="text.footer.media"/></div>
+                    <div class="block-list-element"><fmt:message key="text.footer.privacy"/></div>
                 </div>
             </div>
             <div class="col-md-auto">
                 <div class="block-list">
-                    <div class="block-list-element">Audio description</div>
-                    <div class="block-list-element">Investor relations</div>
-                    <div class="block-list-element">Legal notes</div>
+                    <div class="block-list-element"><fmt:message key="text.footer.services"/></div>
+                    <div class="block-list-element"><fmt:message key="text.footer.investor"/></div>
+                    <div class="block-list-element"><fmt:message key="text.footer.legalNotes"/></div>
                 </div>
             </div>
             <div class="col-md-auto">
                 <div class="block-list">
-                    <div title="Click here to contact us" class="block-list-element">Help center</div>
-                    <div class="block-list-element">Jobs</div>
-                    <div class="block-list-element">Cookie preferences</div>
+                    <div title="Click here to contact us" class="block-list-element"><fmt:message key="text.footer.helpCenter"/></div>
+                    <div class="block-list-element"><fmt:message key="text.footer.jobs"/></div>
+                    <div class="block-list-element"><fmt:message key="text.footer.cookie"/></div>
                 </div>
             </div>
             <div class="col-lg-1"></div>
+            <div class="col-md auto" style="left: 1200px;position: absolute;">
+                <ul class="nav navbar-nav navbar-right">
+                    <form id = "ruForm" action="${pageContext.request.contextPath}/controller" method = "post" style = "display:none;">
+                        <input type="hidden" name="command" value="language" />
+                        <input type="hidden" name="lang" value="ru"/>
+                    </form>
+                    <form id = "enForm" action="${pageContext.request.contextPath}/controller" method = "post" style = "display:none;">
+                        <input type="hidden" name="command" value="language" />
+                        <input type="hidden" name="lang" value="en"/>
+                    </form>
+                    <li><span><input type="image" src="/resources/room_images/russian.jpg" alt="РУС" onclick="document.getElementById('ruForm').submit()" style="width: 50px; height: 32px; margin-right: 10px; margin-top: 10px"></span></li>
+                    <li><span><input type="image" src="/resources/room_images/american.jpg" alt="EN" onclick="document.getElementById('enForm').submit()" style="width: 50px; height: 32px; margin-right: 10px; margin-top: 10px"></span></li>
+                </ul>
+            </div>
         </div>
 </div>
 </div>
+</fmt:bundle>

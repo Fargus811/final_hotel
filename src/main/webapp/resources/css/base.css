@@ -194,3 +194,27 @@ body {
     flex: 0 0 auto;
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+span.error-message {
+    color: red;
+    font-size: small;
+}
+
+button.btn.btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+select.language-select {
+    float: left;
+    margin: 1%;
+    background: none;
+    color: white;
+    border: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+.room-advantages {
+    padding-top: 25px;
+}

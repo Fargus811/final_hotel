@@ -2,9 +2,10 @@ package by.sergeev.hotel.entity;
 
 import by.sergeev.hotel.entity.enums.BookingStatus;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Booking {
+public class Booking implements Serializable {
 
     private int id;
     private Date start_date;

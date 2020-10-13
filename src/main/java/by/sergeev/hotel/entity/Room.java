@@ -1,6 +1,8 @@
 package by.sergeev.hotel.entity;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements Serializable {
 
     private int id;
     private String name;

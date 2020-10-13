@@ -14,19 +14,16 @@ public abstract class AbstractDao<T> {
 
     public AbstractDao() {}
 
-    public abstract List<T> findAll() throws DaoException;
-    public abstract T findEntityById(int id) throws DaoException;
-    public abstract void create(T entity, ProxyConnection connection) throws DaoException;
-    public abstract void update(T entity) throws DaoException;
 
-    protected T tryFindEntityByPrStatement(ProxyConnection proxyConnection,String query) throws SQLException {
-        List<T> entityList = tryFindEntityListByPrStatement(proxyConnection,query);
+    protected T tryFindEntityByPrStatement(ProxyConnection proxyConnection,String query,StatementMaster master, Object... params) throws SQLException {
+        List<T> entityList = tryFindEntityListByPrStatement(proxyConnection,query,master,params);
         T entity = (entityList.isEmpty()) ? null : entityList.get(0);
         return entity;
     }
 
-    protected List<T> tryFindEntityListByPrStatement(ProxyConnection proxyConnection,String query) throws SQLException {
+    protected List<T> tryFindEntityListByPrStatement(ProxyConnection proxyConnection,String query,StatementMaster master, Object... params) throws SQLException {
         try (PreparedStatement preparedSt = proxyConnection.prepareStatement(query)) {
+            master.prepare(preparedSt,params);
             List<T> entityList = takeEntityListByPrStatement(preparedSt);
             return entityList;
         }

@@ -1,7 +1,6 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,600,900&amp;lang=en"/>
@@ -16,35 +15,36 @@
     <title>Login</title>
 </head>
 <body>
+<fmt:setLocale value="${locale}"/>
+<fmt:bundle basename="text">
 <jsp:include page="/jsp/part/header.jsp"/>
 <div class="row justify-content-center" style="margin-bottom: 50px;">
     <form formGroup="registerForm">
-        <input id="role" formControlName="role" value="0" hidden>
         <div class="form-group">
-            <label for="InputEmail">Email</label>
-            <input formControlName="email" type="email" class="form-control" id="InputEmail"
+            <label for="inputEmail"><fmt:message key="text.logIn.email"/></label>
+            <input type="email" class="form-control" id="InputEmail"
                    aria-describedby="emailHelp"
-                   placeholder="Enter email">
-            <span class="text-danger">Email is required</span>
-            <span class="text-danger">Enter a valid email address</span>
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                   placeholder="Enter email" pattern="\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+" not-validated>
+            <span class="text-danger" hidden><fmt:message key="text.logIn.email.error"/></span>
         </div>
         <div class="form-group">
-            <label for="InputEmail">Password</label>
-            <input formControlName="name" type="text" class="form-control" id="name" placeholder="name">
-            <span class="text-danger">Name is required</span>
+            <label for="inputPassword"><fmt:message key="text.logIn.password"/></label>
+            <input type="password" class="form-control" id="InputPassword" placeholder="<fmt:message key="text.logIn.password"/>"
+                   pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,25}$" not-validated>
+            <span class="text-danger" hidden><fmt:message key="text.logIn.password.error"/></span>
         </div>
         <div class="form-group">
-            <label>Confirm Password</label>
-            <input type="password" class="form-control" formControlName="confirmPassword" placeholder="Password">
-            <span class="text-danger">Confirm Password is required</span>
-            <span class="text-danger">Passwords doesn't match</span>
+            <label><fmt:message key="text.logIn.password.confirm"/></label>
+            <input type="inputConfirmPassword" class="form-control" id="InputConfirmPassword" placeholder="<fmt:message key="text.logIn.password"/>">
+            <span class="text-danger" hidden><fmt:message key="text.logIn.password.error"/></span>
+            <span class="text-danger" hidden>Passwords doesn't match</span>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-success" style="margin-top: 25px;">Register</button>
+            <button type="submit" class="btn btn-success" style="margin-top: 25px;" disabled><fmt:message key="text.logIn.button"/></button>
         </div>
     </form>
 </div>
 </body>
+</fmt:bundle>
 <jsp:include page="/jsp/part/footer.jsp"/>
 </html>

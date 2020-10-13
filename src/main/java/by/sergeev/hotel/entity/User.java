@@ -2,37 +2,43 @@ package by.sergeev.hotel.entity;
 
 import by.sergeev.hotel.entity.enums.Role;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private int id;
-    private String login;
-    private String password;
     private String email;
+    private String password;
     private String first_name;
     private String last_name;
     private double balance;
     private Role role;
 
-    public User() {
+
+    public User(int id, String email, String password, String first_name, String last_name, Double balance, Role role) {
+        this.id = this.id;
+        this.email = email;
+        this.password = password;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.balance = this.balance;
+        this.role = role;
     }
 
-    public User(int id, String login, String password, String email, String first_name, String last_name, double balance, Role role) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
+    public User(String email, String password, String first_name, String last_name, double balance, Role role) {
         this.email = email;
+        this.password = password;
         this.first_name = first_name;
         this.last_name = last_name;
         this.balance = balance;
         this.role = role;
     }
-     public User(int id, String login, String password, String email, String first_name, String last_name, Role role) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
+
+    public User(String email, String passwordHashed, String firstName, String lastName, Role role) {
         this.email = email;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.password = passwordHashed;
+        this.first_name = firstName;
+        this.last_name = lastName;
         this.role = role;
     }
 
@@ -42,14 +48,6 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public String getPassword() {
@@ -109,7 +107,6 @@ public class User {
 
         if (id != user.id) return false;
         if (Double.compare(user.balance, balance) != 0) return false;
-        if (login != null ? !login.equals(user.login) : user.login != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (first_name != null ? !first_name.equals(user.first_name) : user.first_name != null) return false;
@@ -122,7 +119,6 @@ public class User {
         int result;
         long temp;
         result = id;
-        result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (first_name != null ? first_name.hashCode() : 0);
@@ -137,7 +133,6 @@ public class User {
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
         sb.append("id=").append(id);
-        sb.append(", login='").append(login).append('\'');
         sb.append(", password='").append(password).append('\'');
         sb.append(", email='").append(email).append('\'');
         sb.append(", first_name='").append(first_name).append('\'');

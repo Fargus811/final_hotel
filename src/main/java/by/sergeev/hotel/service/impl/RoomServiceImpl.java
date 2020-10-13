@@ -16,14 +16,10 @@ public class RoomServiceImpl implements RoomService {
 
     public List<Room> findAll() throws ServiceException {
         RoomDao roomDao = DaoFactory.getInstance().getRoomDao();
-        List<Room> rooms = null;
-        try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()){
-            rooms = roomDao.findAll(connection);
-        } catch (DaoException e) {
-            throw new ServiceException("Problem with RoomDAO, when trying to show all rooms", e);
-        } catch (ConnectionPoolException e) {
-            throw new ServiceException("Problem with getting connection", e);
+        try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
+            return roomDao.findAll(connection);
+        } catch (DaoException | ConnectionPoolException e) {
+            throw new ServiceException("Problem, when trying find all rooms", e);
         }
-        return rooms;
     }
 }

@@ -25,12 +25,12 @@ public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
 
     @Override
     public List<Room> findAll(ProxyConnection proxyConnection) throws DaoException {
-        System.out.println("findAll in DAO");
         try {
             return tryFindEntityListByQuery(proxyConnection, FIND_ALL_ROOMS_SQL);
         } catch (SQLException e) {
-            throw new DaoException("Problem in RoomDao, while trying to fina all themes", e);
+            throw new DaoException("Problem in RoomDao, while trying to fina all rooms", e);
         }
+
     }
 
     @Override
@@ -41,26 +41,6 @@ public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
     @Override
     public Room sortRoomByCost(double cost) throws DaoException {
         return null;
-    }
-
-    @Override
-    public List<Room> findAll() throws DaoException {
-        return null;
-    }
-
-    @Override
-    public Room findEntityById(int id) throws DaoException {
-        return null;
-    }
-
-    @Override
-    public void create(Room entity, ProxyConnection connection) throws DaoException {
-
-    }
-
-    @Override
-    public void update(Room room) throws DaoException {
-
     }
 
     @Override

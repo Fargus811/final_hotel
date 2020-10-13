@@ -1,5 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,600,900&amp;lang=en"/>
@@ -14,6 +15,8 @@
     <title>Grand Hotel</title>
 </head>
 <body>
+<fmt:setLocale value="${locale}"/>
+<fmt:bundle basename="text">
 <jsp:include page="/jsp/part/header.jsp"/>
 <c:forEach var="elem" items="${rooms}">
 <div class="room-item" style="float: left">
@@ -25,12 +28,15 @@
         <div class="room-cost">${elem.cost}💵</div>
         <div class="room-beds">🛏 ${elem.numberOfBeds}</div>
         <div class="room-max-persons">👥 ${elem.maxPersons}</div>
-        <div class="room-advantage">Wi-Fi ${elem.hasWifi}</div>
-        <div class="room-advantage">📺  ${elem.hasTV}</div>
-        <div class="room-advantage">🛁  ${elem.hasBathroom}</div>
+        <div class="room-advantages">
+            <c:if test="${elem.hasWifi}"><div class="room-advantage">Wi-Fi</div></c:if>
+            <c:if test="${elem.hasTV}"><div class="room-advantage">📺</div></c:if>
+            <c:if test="${elem.hasBathroom}"><div class="room-advantage">🛁</div></c:if>
+        </div>
     </div>
 </div>
 </c:forEach>
 </body>
 <jsp:include page="/jsp/part/footer.jsp"/>
+</fmt:bundle>
 </html>

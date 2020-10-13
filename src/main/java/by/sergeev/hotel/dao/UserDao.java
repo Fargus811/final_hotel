@@ -10,8 +10,10 @@ public interface UserDao {
 
      List<User> findAll() throws DaoException;
      User findEntityById(int id) throws DaoException;
-     User findUserByLogin(String login, ProxyConnection proxyConnection) throws DaoException;
+     User findUserByEmail(String login, ProxyConnection proxyConnection) throws DaoException;
      void updatePassword(String login, String password) throws DaoException;
      void authorization(String login, String password) throws DaoException;
      void updateEmail(String login, String email) throws DaoException;
+
+    void create(User user, ProxyConnection connection) throws DaoException;
 }

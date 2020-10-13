@@ -21,6 +21,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+      <version>5.0.6.RELEASE</version>
+    </dependency>
+    <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
       <version>7.1.0</version>
@@ -39,7 +44,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.19</version>
+      <version>8.0.21</version>
     </dependency>
     <dependency>
       <groupId>jstl</groupId>
