@@ -9,17 +9,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class ConnectionProducer {
+class ConnectionProducer {
 
-    private static final Logger LOGGER = LogManager.getLogger();
-
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionProducer.class);
     private static final String URL = "jdbc:mysql://127.0.0.1:3306/hotel";
     private static final String USER = "root";
     private static final String PASSWORD = "40ofariv";
     private static final String AUTO_RECONNECT = "true";
     private static final String CHARACTER_ENCODING = "UTF-8";
     private static final String USE_UNICODE = "true";
-    private static final String USE_SSL="false";
+    private static final String USE_SSL = "false";
 
     private Properties configProp;
 
@@ -59,3 +58,41 @@ public class ConnectionProducer {
     }
 
 }
+//TODO new Connection Producer
+//    private String url;
+//    private Properties configProp;
+//
+//    private static final String DATABASE_NAME_PROPERTIES = "database";
+//    private static final String URL = "db.url";
+//    private static final String USER = "db.user";
+//    private static final String PASSWORD = "db.password";
+//    private static final String AUTO_RECONNECT = "db.autoReconnect";
+//    private static final String CHARACTER_ENCODING = "db.characterEncoding";
+//    private static final String USE_UNICODE = "db.useUnicode";
+//
+//    ConnectionProducer() {
+//        ResourceBundle resourceBundle = ResourceBundle.getBundle(DATABASE_NAME_PROPERTIES);
+//        configProp = new Properties();
+//        url = resourceBundle.getString(URL);
+//        configProp.put("user", resourceBundle.getString(USER));
+//        configProp.put("password", resourceBundle.getString(PASSWORD));
+//        configProp.put("autoReconnect", resourceBundle.getString(AUTO_RECONNECT));
+//        configProp.put("characterEncoding", resourceBundle.getString(CHARACTER_ENCODING));
+//        configProp.put("useUnicode", resourceBundle.getString(USE_UNICODE));
+//        try {
+//            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+//        } catch (SQLException e) {
+//            LOGGER.fatal("Problem with DriverManager registration", e);
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    public ProxyConnection produce() throws ConnectionPoolException {
+//        try {
+//            Connection connection = DriverManager.getConnection(URL, configProp);
+//            return new ProxyConnection(connection);
+//        } catch (SQLException e) {
+//            throw new ConnectionPoolException("Connection was not produced", e);
+//        }
+//    }
+

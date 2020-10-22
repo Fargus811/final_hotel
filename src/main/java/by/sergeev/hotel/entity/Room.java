@@ -3,7 +3,7 @@ package by.sergeev.hotel.entity;
 import java.io.Serializable;
 
 public class Room implements Serializable {
-
+//TODO add ENUM to поля класса
     private int id;
     private String name;
     private int numberOfRooms;
@@ -16,13 +16,13 @@ public class Room implements Serializable {
     private int numberOfBeds;
     private String description;
     private String photoPath;
-    private String grade;
+    private String roomGrade;
 
     public Room() {
     }
 
     public Room(int id, String name, int numberOfRooms, int floor, int maxPersons, double cost, boolean hasWifi,
-                boolean hasTV, boolean hasBathroom, int numberOfBeds, String description, String photoPath, String grade) {
+                boolean hasTV, boolean hasBathroom, int numberOfBeds, String description, String photoPath, String roomGrade) {
         this.id = id;
         this.name = name;
         this.numberOfRooms = numberOfRooms;
@@ -35,7 +35,7 @@ public class Room implements Serializable {
         this.numberOfBeds = numberOfBeds;
         this.description = description;
         this.photoPath = photoPath;
-        this.grade = grade;
+        this.roomGrade = roomGrade;
     }
 
     public int getId() {
@@ -134,12 +134,12 @@ public class Room implements Serializable {
         this.photoPath = photoPath;
     }
 
-    public String getGrade() {
-        return grade;
+    public String getRoomGrade() {
+        return roomGrade;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setRoomGrade(String roomGrade) {
+        this.roomGrade = roomGrade;
     }
 
     @Override
@@ -161,7 +161,7 @@ public class Room implements Serializable {
         if (name != null ? !name.equals(room.name) : room.name != null) return false;
         if (description != null ? !description.equals(room.description) : room.description != null) return false;
         if (photoPath != null ? !photoPath.equals(room.photoPath) : room.photoPath != null) return false;
-        return grade != null ? grade.equals(room.grade) : room.grade == null;
+        return roomGrade != null ? roomGrade.equals(room.roomGrade) : room.roomGrade == null;
     }
 
     @Override
@@ -181,7 +181,7 @@ public class Room implements Serializable {
         result = 31 * result + numberOfBeds;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (photoPath != null ? photoPath.hashCode() : 0);
-        result = 31 * result + (grade != null ? grade.hashCode() : 0);
+        result = 31 * result + (roomGrade != null ? roomGrade.hashCode() : 0);
         return result;
     }
 
@@ -200,7 +200,7 @@ public class Room implements Serializable {
         sb.append(", numberOfBeds=").append(numberOfBeds);
         sb.append(", description='").append(description).append('\'');
         sb.append(", photoPath='").append(photoPath).append('\'');
-        sb.append(", grade='").append(grade).append('\'');
+        sb.append(", roomGrade='").append(roomGrade).append('\'');
         sb.append('}');
         return sb.toString();
     }

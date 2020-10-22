@@ -1,4 +1,4 @@
-package by.sergeev.hotel.utils;
+package by.sergeev.hotel.util;
 
 
 import org.springframework.security.crypto.bcrypt.BCrypt;

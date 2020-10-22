@@ -3,9 +3,11 @@ package by.sergeev.hotel.dao.impl;
 import by.sergeev.hotel.dao.AbstractDao;
 import by.sergeev.hotel.dao.RoomDao;
 import by.sergeev.hotel.entity.Room;
+import by.sergeev.hotel.exception.ConnectionPoolException;
 import by.sergeev.hotel.exception.DaoException;
+import by.sergeev.hotel.pool.ConnectionPool;
 import by.sergeev.hotel.pool.ProxyConnection;
-import by.sergeev.hotel.utils.EntityAttribute;
+import by.sergeev.hotel.util.EntityAttribute;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,13 +26,12 @@ public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
 
 
     @Override
-    public List<Room> findAll(ProxyConnection proxyConnection) throws DaoException {
-        try {
-            return tryFindEntityListByQuery(proxyConnection, FIND_ALL_ROOMS_SQL);
-        } catch (SQLException e) {
-            throw new DaoException("Problem in RoomDao, while trying to fina all rooms", e);
+    public List<Room> findAll() throws DaoException {
+        try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
+            return tryFindEntityListByQuery(connection, FIND_ALL_ROOMS_SQL);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Problem in RoomDao, while trying to find all rooms", e);
         }
-
     }
 
     @Override
@@ -47,8 +48,8 @@ public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
     protected Room makeEntity(ResultSet rs) throws SQLException {
         int id = rs.getInt(EntityAttribute.FIRST_ATTRIBUTE);
         String roomName = rs.getString(EntityAttribute.SECOND_ATTRIBUTE);
-        int numberOfRooms = rs.getInt(EntityAttribute.THRIRD_ATTRIBUTE);
-        int floor = rs.getInt(EntityAttribute.FOUTH_ATTRIBUTE);
+        int numberOfRooms = rs.getInt(EntityAttribute.THIRD_ATTRIBUTE);
+        int floor = rs.getInt(EntityAttribute.FOURTH_ATTRIBUTE);
         int maxPersons = rs.getInt(EntityAttribute.FIFTH_ATTRIBUTE);
         double cost = rs.getDouble(EntityAttribute.SIXTH_ATTRIBUTE);
         boolean hasWifi = rs.getBoolean(EntityAttribute.SEVENTH_ATTRIBUTE);

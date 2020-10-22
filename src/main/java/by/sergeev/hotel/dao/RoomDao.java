@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface RoomDao {
 
-    List<Room> findAll(ProxyConnection proxyConnection) throws DaoException;
+    List<Room> findAll() throws DaoException;
 
     Room findRoomById(int id) throws DaoException;
 

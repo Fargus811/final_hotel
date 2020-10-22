@@ -1,24 +1,17 @@
 package by.sergeev.hotel.service;
 
+import by.sergeev.hotel.service.impl.BookingServiceImpl;
 import by.sergeev.hotel.service.impl.RoomServiceImpl;
 import by.sergeev.hotel.service.impl.UserServiceImpl;
 
 public class ServiceFactory {
 
-    private static ServiceFactory instance;
-    private static volatile Object localInstance = new Object();
+    public static final ServiceFactory serviceFactory = new ServiceFactory();
     private final UserService userService = new UserServiceImpl();
     private final RoomService roomService = new RoomServiceImpl();
+    private final BookingService bookingService = new BookingServiceImpl();
 
-    public static ServiceFactory getInstance() {
-        if (instance == null) {
-            synchronized (localInstance) {
-                if (instance == null) {
-                    instance = new ServiceFactory();
-                }
-            }
-        }
-        return instance;
+    private ServiceFactory() {
     }
 
     public UserService getUserService() {
@@ -27,5 +20,9 @@ public class ServiceFactory {
 
     public RoomService getRoomService() {
         return roomService;
+    }
+
+    public BookingService getBookingService() {
+        return bookingService;
     }
 }

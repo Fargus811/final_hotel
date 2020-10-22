@@ -14,13 +14,12 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
 
-    private static final Logger LOG = LogManager.getLogger();
+    private static final Logger LOG = LogManager.getLogger(ConnectionPool.class);
 
-    private static final int POOL_SIZE = 5;
+    private static final int POOL_SIZE = 8;
     private static final int TIMEOUT_VALID = 3;
 
     private BlockingQueue<ProxyConnection> availableConnections;
-    private ConnectionProducer connectionProducer;
 
     private static AtomicBoolean isInitialized = new AtomicBoolean(false);
     private static Lock initializationLock = new ReentrantLock();
@@ -45,35 +44,27 @@ public class ConnectionPool {
 
     private ConnectionPool() {
         availableConnections = new ArrayBlockingQueue<ProxyConnection>(POOL_SIZE);
-        connectionProducer = new ConnectionProducer();
         initConnections();
     }
 
     private void initConnections() {
         while (availableConnections.size() != POOL_SIZE) {
             int rest = POOL_SIZE - availableConnections.size();
-            initRestConnections(rest);
+            for (int i = 0; i < rest; i++) {
+                try {
+                    ProxyConnection connection = tryProduceConnection();
+                    availableConnections.put(connection);
+                    LOG.info("Connection was initialized and added to connection pool");
+                } catch (SQLException | ConnectionPoolException | InterruptedException e) {
+                    LOG.warn("Connection was not added to connection pool");
+                }
+            }
             checkSize();
         }
     }
 
-    private void initRestConnections(int rest) {
-        for (int i = 0; i < rest; i++) {
-            initConnection();
-        }
-    }
-
-    private void initConnection() {
-        try {
-            ProxyConnection connection = tryProduceConnection();
-            availableConnections.put(connection);
-            LOG.info("Connection was initialized and added to connection pool");
-        } catch (SQLException | ConnectionPoolException | InterruptedException e) {
-            LOG.warn("Connection was not added to connection pool");
-        }
-    }
-
     private ProxyConnection tryProduceConnection() throws ConnectionPoolException, SQLException {
+        ConnectionProducer connectionProducer = new ConnectionProducer();
         ProxyConnection connection = connectionProducer.produce();
         connection.setAutoCommit(true);
         return connection;
@@ -88,34 +79,25 @@ public class ConnectionPool {
 
     public ProxyConnection takeConnection() throws ConnectionPoolException {
         try {
-            return tryTakeConnection();
+            ProxyConnection connection = availableConnections.take();
+            LOG.info("Connection was taken from connection pool");
+            return connection;
         } catch (InterruptedException e) {
             throw new ConnectionPoolException("Exception in ConnectionPool while trying to take connection", e);
         }
     }
 
-    private ProxyConnection tryTakeConnection() throws InterruptedException {
-        ProxyConnection connection = availableConnections.take();
-        LOG.info("Connection was taken from connection pool");
-        return connection;
-    }
-
     public void putConnection(ProxyConnection connection) throws ConnectionPoolException {
         try {
-            tryPutConnection(connection);
+            if (!connection.isValid(TIMEOUT_VALID)) {
+                connection = tryProduceConnection();
+            }
+            availableConnections.put(connection);
             LOG.info("Connection was put to connection pool");
         } catch (ConnectionPoolException | InterruptedException | SQLException e) {
             throw new ConnectionPoolException("Exception in ConnectionPool while trying to put connection", e);
         }
     }
-
-    private void tryPutConnection(ProxyConnection connection) throws SQLException, InterruptedException, ConnectionPoolException {
-        if (!connection.isValid(TIMEOUT_VALID)) {
-            connection = tryProduceConnection();
-        }
-        availableConnections.put(connection);
-    }
-
 
     public void closeAll() {
         if (isInitialized.compareAndSet(true, false)) {

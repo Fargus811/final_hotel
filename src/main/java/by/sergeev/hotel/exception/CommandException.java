@@ -1,6 +1,7 @@
 package by.sergeev.hotel.exception;
 
 public class CommandException extends Exception {
+
     public CommandException() {
         super();
     }

@@ -4,16 +4,21 @@ import by.sergeev.hotel.entity.User;
 import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.pool.ProxyConnection;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
-public interface UserDao {
+public interface UserDao  {
 
-     List<User> findAll() throws DaoException;
-     User findEntityById(int id) throws DaoException;
-     User findUserByEmail(String login, ProxyConnection proxyConnection) throws DaoException;
-     void updatePassword(String login, String password) throws DaoException;
-     void authorization(String login, String password) throws DaoException;
-     void updateEmail(String login, String email) throws DaoException;
+    List<User> findAll();
 
-    void create(User user, ProxyConnection connection) throws DaoException;
+    User findEntityById( int id);
+
+    void create(User user, String password);
+
+    User findUserByEmail(String email);
+
+    String findPasswordById(int userId) ;
+
+    void updateEntity(User entity, String password);
 }

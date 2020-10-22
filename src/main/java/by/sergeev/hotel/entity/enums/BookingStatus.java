@@ -23,5 +23,4 @@ public enum BookingStatus {
         return id;
     }
 
-
 }

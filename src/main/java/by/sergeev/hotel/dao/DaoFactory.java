@@ -1,24 +1,17 @@
 package by.sergeev.hotel.dao;
 
+import by.sergeev.hotel.dao.impl.BookingDaoImpl;
 import by.sergeev.hotel.dao.impl.RoomDaoImpl;
 import by.sergeev.hotel.dao.impl.UserDaoImpl;
 
 public class DaoFactory {
 
-    private static DaoFactory instance;
-    private static volatile Object localInstance = new Object();
+    public static final DaoFactory daoFactory = new DaoFactory();
     private final UserDao userDao = new UserDaoImpl();
     private final RoomDao roomDao = new RoomDaoImpl();
+    private final BookingDao bookingDao = new BookingDaoImpl();
 
-    public static DaoFactory getInstance() {
-        if (instance == null) {
-            synchronized (localInstance) {
-                if (instance == null) {
-                    instance = new DaoFactory();
-                }
-            }
-        }
-        return instance;
+    private DaoFactory(){
     }
 
     public UserDao getUserDao() {
@@ -27,5 +20,9 @@ public class DaoFactory {
 
     public RoomDao getRoomDao() {
         return roomDao;
+    }
+
+    public BookingDao getBookingDao() {
+        return bookingDao;
     }
 }

@@ -1,4 +1,4 @@
-package by.sergeev.hotel.command;
+package by.sergeev.hotel.controller.command;
 
 import by.sergeev.hotel.exception.CommandException;
 

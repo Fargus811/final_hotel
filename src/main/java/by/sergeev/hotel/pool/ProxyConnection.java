@@ -7,7 +7,8 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 
 public class ProxyConnection implements AutoCloseable {
-    private static final Logger LOGGER = LogManager.getLogger();
+
+    private static final Logger LOGGER = LogManager.getLogger(ProxyConnection.class);
 
     private Connection connection;
 

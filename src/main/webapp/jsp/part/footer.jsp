@@ -32,8 +32,8 @@
                     <div class="block-list-element"><fmt:message key="text.footer.cookie"/></div>
                 </div>
             </div>
-            <div class="col-lg-1"></div>
-            <div class="col-md auto" style="left: 1200px;position: absolute;">
+            <div class="col-md-5"></div>
+            <div class="col-md auto" style="left: 100px;position: inherit;">
                 <ul class="nav navbar-nav navbar-right">
                     <form id = "ruForm" action="${pageContext.request.contextPath}/controller" method = "post" style = "display:none;">
                         <input type="hidden" name="command" value="language" />

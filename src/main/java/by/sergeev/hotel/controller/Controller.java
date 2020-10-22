@@ -1,8 +1,10 @@
 package by.sergeev.hotel.controller;
 
-import by.sergeev.hotel.command.Command;
-import by.sergeev.hotel.command.definer.CommandDefiner;
+import by.sergeev.hotel.controller.command.Command;
+import by.sergeev.hotel.controller.command.CommandDefiner;
 import by.sergeev.hotel.exception.CommandException;
+import by.sergeev.hotel.exception.DaoException;
+import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,21 +36,17 @@ public class Controller extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         try {
-            tryProcessRequest(request, response);
-        } catch (CommandException e) {
+            String page = null;
+            CommandDefiner commandDefiner = new CommandDefiner();
+            Command command = commandDefiner.define(request);
+            page = command.execute(request);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+            dispatcher.forward(request, response);
+        } catch (CommandException |  DaoException e) {
             LOGGER.error("Command failed", e);
+            throw new ServiceException("Command failed", e);
         }
-    }
-
-    private void tryProcessRequest(HttpServletRequest request, HttpServletResponse response) throws CommandException, ServletException, IOException {
-        String page = null;
-        CommandDefiner commandDefiner = new CommandDefiner();
-        Command command = commandDefiner.define(request);
-        page = command.execute(request);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-        dispatcher.forward(request, response);
     }
 
     @Override

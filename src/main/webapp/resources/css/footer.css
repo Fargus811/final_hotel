@@ -3,9 +3,9 @@
     left: 0px;
     height: 100px;
     background-color: black;
-    margin-top: 50px;
     bottom: 0px;
-    position: absolute;
+    position: static;
+    margin-top: 100%;
     width: 100%;
 }
 

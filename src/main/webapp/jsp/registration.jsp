@@ -3,13 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,600,900&amp;lang=en"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/base.css" type="text/css">
@@ -50,7 +46,7 @@
                     <label for="inputLastName"><fmt:message key="text.registration.lastName"/></label>
                     <input name="lastName" type="lastName" class="form-control" id="inputLastName"
                            placeholder="<fmt:message key="text.registration.lastName"/>" pattern="[A-ZА-Я][a-zа-я\-]{1,32}" not-validated>
-                    <span id="error-inputLastName" class="error-message" hidden><fmt:message key="text.registration.firstNameError"/></span>
+                    <span id="error-inputLastName" class="error-message" hidden><fmt:message key="text.registration.lastNameError"/></span>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary" id="submit-button" disabled><fmt:message key="text.registration.button"/></button>

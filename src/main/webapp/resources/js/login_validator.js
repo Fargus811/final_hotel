@@ -1,11 +1,9 @@
-var emailRegex = new RegExp($("#inputEmail").attr("pattern"))
-var passwordRegex = new RegExp($("#inputPassword").attr("pattern"))
-var passwordConfirmRegex = new RegExp($("#inputPassword").attr("pattern"))
+var emailRegex = new RegExp($("#InputEmail").attr("pattern"))
+var passwordRegex = new RegExp($("#InputPassword").attr("pattern"))
 
 var regexMap = {
     'email': emailRegex,
     'password': passwordRegex,
-    'passwordConfirm': passwordConfirmRegex,
 }
 jQuery(function () {
     $(".form-control").on("input", function () {
