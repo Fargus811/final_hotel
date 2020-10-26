@@ -6,7 +6,7 @@ import by.sergeev.hotel.entity.SessionUser;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.service.BookingService;
 import by.sergeev.hotel.service.ServiceFactory;
-import by.sergeev.hotel.util.Page;
+import by.sergeev.hotel.util.PagePath;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,6 +29,6 @@ public class ShowAllUserBookingsCommand implements Command {
         bookingList = bookingService.findBookingsByUserId(sessionUser.getId());
 
         request.setAttribute(REQUEST_PARAMETER_BOOKINGS, bookingList);
-        return Page.USER_BOOKINGS;
+        return PagePath.USER_BOOKINGS;
     }
 }

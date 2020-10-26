@@ -2,7 +2,7 @@ package by.sergeev.hotel.controller.command.user.edit;
 
 import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.exception.CommandException;
-import by.sergeev.hotel.util.Page;
+import by.sergeev.hotel.util.PagePath;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,7 +19,7 @@ public class ChangeLanguageCommand implements Command {
         session.setAttribute(LOCALE_ATTR, locale);
         StringBuffer requestURL = request.getRequestURL();
         String requestURI = request.getRequestURI();
-        String curPage = Page.INDEX;
-        return request.getAttribute("OriginURL").toString();
+        String curPage = PagePath.INDEX;
+        return curPage;
     }
 }

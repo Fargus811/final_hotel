@@ -14,6 +14,7 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="text">
 <jsp:include page="/jsp/part/header.jsp"/>
+
 <c:forEach var="elem" items="${rooms}">
     <div class="room-item" style="float: left; margin-top: 50px">
         <img class="room-photo" src="${elem.photoPath}" alt="Room Image" width="210" height="120">

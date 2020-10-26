@@ -5,7 +5,7 @@ import by.sergeev.hotel.entity.Room;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.service.RoomService;
 import by.sergeev.hotel.service.ServiceFactory;
-import by.sergeev.hotel.util.Page;
+import by.sergeev.hotel.util.PagePath;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,7 +30,7 @@ public class ShowAllRoomsCommand implements Command {
             request.setAttribute(ATTRIBUTE_LOCALE, VALUE_OF_LOCALE);
         }
         request.setAttribute(ROOMS_ATTRIBUTE, rooms);
-        String page = Page.MAIN;
+        String page = PagePath.MAIN;
         return page;
     }
 }

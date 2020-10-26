@@ -43,7 +43,7 @@ public class ConnectionPool {
     }
 
     private ConnectionPool() {
-        availableConnections = new ArrayBlockingQueue<ProxyConnection>(POOL_SIZE);
+        availableConnections = new ArrayBlockingQueue<>(POOL_SIZE);
         initConnections();
     }
 

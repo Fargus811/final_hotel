@@ -10,30 +10,39 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="text">
     <div class='header' style="z-index:2">
-        <div><a class='site-name' href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="text.hotel"/></a></div>
+        <div><a class='site-name' href="${pageContext.request.contextPath}/index.jsp"><fmt:message
+                key="text.hotel"/></a></div>
         <div class='button' href="catalog"><fmt:message key="text.catalog"/></div>
         <a class='button' href="partnership"><fmt:message key="text.partnership"/></a>
-        <div class="listener" hidden></div>
         <c:choose>
-        <c:when test="${empty sessionScope.sessionUser}">
-            <div class="user-block unauthorized">
-                <a class='button auth primary' href="${pageContext.request.contextPath}/jsp/registration.jsp"><fmt:message
-                        key="text.registration.title"/></a>
-                <a class='button auth secondary' href="${pageContext.request.contextPath}/jsp/login.jsp"><fmt:message
-                        key="text.logIn.title"/></a>
-            </div>
-        </c:when>
-        <c:otherwise>
-            <div class="user-block authorized">
-                <div class="username">${sessionUser.firstName}</div>
-                <img src="/resources/images/profile.jpg" alt="Profile-Img" style="float: right;width: 60px; margin-top: 5px;">
-                <div class='userbox'>
-                    <div class='button active'>Profile</div>
-                    <div class='button active' href="${pageContext.servletContext.contextPath}/controller?command=show_user_bookings">My bookings </div>
-                    <div class='button active' href="${pageContext.servletContext.contextPath}/controller?command=logout">LogOut</div>
+            <c:when test="${empty sessionScope.sessionUser}">
+                <div class="user-block unauthorized">
+                    <a class='button auth primary'
+                       href="${pageContext.request.contextPath}/jsp/registration.jsp"><fmt:message
+                            key="text.registration.title"/></a>
+                    <a class='button auth secondary'
+                       href="${pageContext.request.contextPath}/jsp/login.jsp"><fmt:message
+                            key="text.logIn.title"/></a>
                 </div>
-            </div>
-        </c:otherwise>
+            </c:when>
+            <c:otherwise>
+                <div class="user-block authorized">
+                    <div class="username">${sessionUser.firstName}</div>
+                    <img src="/resources/images/profile.jpg" alt="Profile-Img"
+                         style="float: right;width: 60px; margin-top: 5px;">
+                    <div class='userbox'>
+                        <div class='button'><a style="color: white"
+                                               href="${pageContext.servletContext.contextPath}/controller?command=show_my_profile">Profile</a>
+                        </div>
+                        <div class='button'><a style="color: white"
+                                               href="${pageContext.servletContext.contextPath}/controller?command=logout">LogOut</a>
+                        </div>
+                        <div class='button'><a style="color: white"
+                                               href="${pageContext.servletContext.contextPath}/controller?command=show_user_bookings">My
+                            bookings</a></div>
+                    </div>
+                </div>
+            </c:otherwise>
         </c:choose>
     </div>
     <div class="header-correction"></div>

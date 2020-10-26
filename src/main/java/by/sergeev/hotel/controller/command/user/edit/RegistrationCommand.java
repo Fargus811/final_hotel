@@ -1,11 +1,10 @@
 package by.sergeev.hotel.controller.command.user.edit;
 
 import by.sergeev.hotel.controller.command.Command;
-import by.sergeev.hotel.entity.User;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
-import by.sergeev.hotel.util.Page;
+import by.sergeev.hotel.util.PagePath;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,13 +23,13 @@ public class RegistrationCommand implements Command {
         String password = request.getParameter(REQUEST_PARAMETER_PASSWORD);
         String firstName = request.getParameter(REQUEST_PARAMETER_FIRST_NAME);
         String lastName = request.getParameter(REQUEST_PARAMETER_LAST_NAME);
-        String page = Page.REGISTRATION;
+        String page = PagePath.REGISTRATION;
 
         boolean isParamsValid = userService.checkIsValid(email, password, firstName, lastName);
 
         if (isParamsValid) {
             userService.register(email, password, firstName, lastName);
-            page = Page.LOGIN;
+            page = PagePath.LOGIN;
         }
         return page;
     }

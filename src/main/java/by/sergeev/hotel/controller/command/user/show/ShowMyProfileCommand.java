@@ -6,7 +6,7 @@ import by.sergeev.hotel.entity.User;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
-import by.sergeev.hotel.util.Page;
+import by.sergeev.hotel.util.PagePath;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,21 +16,25 @@ public class ShowMyProfileCommand implements Command {
 
     private final static String USER_INFO = "user";
     private final static String SESSION_USER = "sessionUser";
+    private final static String PROFILE_SETTINGS = "profile";
 
     private UserService userService = ServiceFactory.serviceFactory.getUserService();
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession(true);
-        SessionUser sessionUser = (SessionUser)session.getAttribute(SESSION_USER);
+        String profile = request.getParameter(PROFILE_SETTINGS);
+        SessionUser sessionUser = (SessionUser) session.getAttribute(SESSION_USER);
         User user = userService.findUserById(sessionUser.getId());
-        if (Objects.isNull(user)){
-            return Page.INDEX;//TODO error page
-        }else {
-            request.setAttribute(USER_INFO,user);
+        if (Objects.isNull(user)) {
+            return PagePath.INDEX;//TODO error page
+        } else {
+            request.setAttribute(USER_INFO, user);
         }
-        return Page.CLIENT_PROFILE;
-
-
+        if (Objects.isNull(request.getParameter(PROFILE_SETTINGS))) {
+            return PagePath.CLIENT_PROFILE;
+        } else {
+            return PagePath.CLIENT_SETTINGS;
+        }
     }
 }

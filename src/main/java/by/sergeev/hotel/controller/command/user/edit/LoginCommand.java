@@ -6,7 +6,7 @@ import by.sergeev.hotel.entity.User;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
-import by.sergeev.hotel.util.Page;
+import by.sergeev.hotel.util.PagePath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,7 +41,7 @@ public class LoginCommand implements Command {
             request.setAttribute(ERROR_PARAM, "error");
             LOGGER.info("Log in was failed");
         }
-        return isCommandSuccess ? Page.CLIENT_PROFILE : Page.LOGIN;
+        return isCommandSuccess ? PagePath.CLIENT_PROFILE : PagePath.LOGIN;
     }
 }
 

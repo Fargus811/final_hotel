@@ -6,7 +6,7 @@ import by.sergeev.hotel.entity.SessionUser;
 import by.sergeev.hotel.entity.enums.RoomGrade;
 import by.sergeev.hotel.service.BookingService;
 import by.sergeev.hotel.service.ServiceFactory;
-import by.sergeev.hotel.util.Page;
+import by.sergeev.hotel.util.PagePath;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -68,7 +68,7 @@ public class CreateBookingCommand implements Command {
 
         bookingService.createBooking(freshBooking);
 
-        return Page.CLIENT_PROFILE;
+        return PagePath.CLIENT_PROFILE;
     }
 
 }

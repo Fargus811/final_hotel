@@ -5,11 +5,13 @@ import by.sergeev.hotel.controller.command.booking.CreateBookingCommand;
 import by.sergeev.hotel.controller.command.booking.ShowAllUserBookingsCommand;
 import by.sergeev.hotel.controller.command.room.ShowAllRoomsCommand;
 import by.sergeev.hotel.controller.command.user.edit.*;
+import by.sergeev.hotel.controller.command.user.show.ShowMyProfileCommand;
 
 public enum CommandType {
 
     SHOW_ALL_ROOMS(new ShowAllRoomsCommand()),
     SHOW_USER_BOOKINGS(new ShowAllUserBookingsCommand()),
+    SHOW_MY_PROFILE(new ShowMyProfileCommand()),
     REGISTRATION(new RegistrationCommand()),
     LOGIN(new LoginCommand()),
     LOGOUT(new LogoutCommand()),

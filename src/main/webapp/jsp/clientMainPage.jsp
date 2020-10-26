@@ -2,12 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,600,900&amp;lang=en"/>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
@@ -16,7 +10,7 @@
 <head>
     <fmt:setLocale value="${locale}"/>
     <fmt:bundle basename="text">
-    <title>Title</title>
+    <title>ClientPage</title>
 </head>
 <jsp:include page="/jsp/part/header.jsp"/>
 <body>
@@ -29,7 +23,9 @@
                  height="150px">
             <nav class="side-menu" style="width: 150px">
                 <ul class="nav">
-                    <li class="active"><a href="profile"><span class="fa fa-user"></span> Profile</a>
+                    <li class="active"><a
+                            href="${pageContext.servletContext.contextPath}/controller?command=show_my_profile"><span
+                            class="fa fa-user"></span> Profile</a>
                     <li><a href="${pageContext.servletContext.contextPath}/controller?command=show_user_bookings"><span
                             class="fa fa-bookmark"></span> Bookings</a></li>
                     <li><a href="${pageContext.servletContext.contextPath}/jsp/createBooking.jsp"><span
@@ -61,7 +57,11 @@
                         <div class="panel-body">${user.balance}$</div>
                     </div>
                     <div class="panel-body">
-                        <a role="button" (click)="openModal()" class="btn btn-primary btn-lg">Edit</a>
+                        <form action="${pageContext.request.contextPath}/controller?command=show_my_profile"
+                              method="POST">
+                            <input type="hidden" name="profile" value="1"/>
+                            <button class="btn btn-primary btn-lg">Edit</button>
+                        </form>
                     </div>
                 </div>
             </div>
