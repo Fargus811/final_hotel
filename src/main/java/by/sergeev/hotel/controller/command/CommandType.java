@@ -6,6 +6,7 @@ import by.sergeev.hotel.controller.command.booking.ShowAllUserBookingsCommand;
 import by.sergeev.hotel.controller.command.room.ShowAllRoomsCommand;
 import by.sergeev.hotel.controller.command.user.edit.*;
 import by.sergeev.hotel.controller.command.user.show.ShowMyProfileCommand;
+import by.sergeev.hotel.controller.command.user.show.ShowProfileSettingsCommand;
 
 public enum CommandType {
 
@@ -18,8 +19,8 @@ public enum CommandType {
     LANGUAGE(new ChangeLanguageCommand()),
     ADD_BALANCE(new AddUserBalanceCommand()),
     CREATE_BOOKING(new CreateBookingCommand()),
-    CHANGE_BOOKING_STATUS(new ChangeBookingStatusCommand());
-
+    CHANGE_BOOKING_STATUS(new ChangeBookingStatusCommand()),
+    SHOW_PROFILE_SETTINGS(new ShowProfileSettingsCommand());
     private Command command;
 
     CommandType(Command command) {

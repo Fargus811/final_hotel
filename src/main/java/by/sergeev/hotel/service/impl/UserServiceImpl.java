@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
@@ -54,16 +55,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User logIn(String email, String password) throws ServiceException {
-        User user = null;
+    public Optional<User> logIn(String email, String password) throws ServiceException {
         try {
-            user = userDao.findUserByEmail(email);
-            String hashPassword = userDao.findPasswordById(user.getId());
-
-            if (user != null && BCryptHash.checkPassword(password, hashPassword)) {
-                return user;
+            Optional<User> userOptional = userDao.findUserByEmail(email);
+            if (userOptional.isPresent()) {
+                String hashPassword = userDao.findPasswordById(userOptional.get().getId());
+                if (BCryptHash.checkPassword(password, hashPassword)) {
+                    return userOptional;
+                } else {
+                    return Optional.empty();
+                }
+            } else {
+                return userOptional;
             }
-            return null;
         } catch (DaoException e) {
             LOGGER.error("Problem with UserDAO", e);
             throw new ServiceException(e);
@@ -73,7 +77,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addBalance(int userId, double balance, String password) throws ServiceException {
         try {
-            User user = userDao.findEntityById(userId);
+            User user = userDao.findEntityById(userId).get();
             user.setBalance(user.getBalance() + balance);
             if (BCryptHash.checkPassword(password, userDao.findPasswordById(userId)))
                 userDao.updateEntity(user, password);
@@ -83,7 +87,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserById(int userId) {
+    public Optional<User> findUserById(int userId) {
         return userDao.findEntityById(userId);
     }
 }

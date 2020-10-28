@@ -15,4 +15,7 @@ public class EntityAttribute {
     public static final int ELEVENTH_ATTRIBUTE = 11;
     public static final int TWELFTH_ATTRIBUTE = 12;
     public static final int THIRTEENTH_ATTRIBUTE = 13;
+
+    private EntityAttribute(){
+    }
 }

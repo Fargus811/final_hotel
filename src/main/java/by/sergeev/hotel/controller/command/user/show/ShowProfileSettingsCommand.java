@@ -11,9 +11,11 @@ import by.sergeev.hotel.util.RequestParameter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 import java.util.Optional;
 
-public class ShowMyProfileCommand implements Command {
+public class ShowProfileSettingsCommand implements Command {
+
 
     private UserService userService = ServiceFactory.serviceFactory.getUserService();
 
@@ -21,12 +23,12 @@ public class ShowMyProfileCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession(true);
         SessionUser sessionUser = (SessionUser) session.getAttribute(RequestParameter.SESSION_USER);
-        Optional<User> user = userService.findUserById(sessionUser.getId());
-        if (!user.isPresent()) {
+        Optional<User> userOptional = userService.findUserById(sessionUser.getId());
+        if (!userOptional.isPresent()) {
             return PagePath.ERROR;
         } else {
-            request.setAttribute(RequestParameter.USER, user.get());
+            request.setAttribute(RequestParameter.USER, userOptional.get());
         }
-        return PagePath.CLIENT_PROFILE;
+        return PagePath.CLIENT_SETTINGS;
     }
 }

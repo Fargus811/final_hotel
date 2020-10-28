@@ -2,6 +2,7 @@ package by.sergeev.hotel.controller;
 
 import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.controller.command.CommandDefiner;
+import by.sergeev.hotel.controller.command.CommandType;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.exception.ServiceException;
@@ -37,13 +38,23 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String page = null;
+            Object commandResult = null;
             CommandDefiner commandDefiner = new CommandDefiner();
             Command command = commandDefiner.define(request);
-            page = command.execute(request);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-            dispatcher.forward(request, response);
-        } catch (CommandException |  DaoException e) {
+            commandResult = command.execute(request);
+            if (commandResult instanceof String) {
+                String page = (String)commandResult;
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+                dispatcher.forward(request, response);
+            }else if(commandResult instanceof Command){
+                Command showCommand = (Command) commandResult;
+                String page  = (String)showCommand.execute(request);
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+                dispatcher.forward(request, response);
+            }else {
+                throw new RuntimeException("Not supported command result");
+            }
+        } catch (CommandException | DaoException e) {
             LOGGER.error("Command failed", e);
             throw new ServiceException("Command failed", e);
         }

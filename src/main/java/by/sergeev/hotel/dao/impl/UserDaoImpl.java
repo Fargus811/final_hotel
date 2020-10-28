@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
@@ -41,10 +42,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public User findEntityById(int id) throws DaoException {
+    public Optional<User> findEntityById(int id) throws DaoException {
         try (ProxyConnection proxyConnection = ConnectionPool.getInstance().takeConnection()) {
-            return tryFindEntityByPrStatement(proxyConnection, FIND_USER_BY_ID,
-                    ((preparedStatement, params) -> preparedStatement.setInt(FIRST_PARAMETER_INDEX, id)), id);
+            return Optional.ofNullable(tryFindEntityByPrStatement(proxyConnection, FIND_USER_BY_ID,
+                    ((preparedStatement, params) -> preparedStatement.setInt(FIRST_PARAMETER_INDEX, id)), id));
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Problem when trying to find user by email", e);
         }
@@ -88,11 +89,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
-            User user = tryFindEntityByPrStatement(connection, FIND_USER_BY_EMAIL,
-                    ((preparedStatement, params) -> preparedStatement.setString(FIRST_PARAMETER_INDEX, email)), email);
-            return user;
+            return  Optional.ofNullable(tryFindEntityByPrStatement(connection, FIND_USER_BY_EMAIL,
+                    ((preparedStatement, params) -> preparedStatement.setString(FIRST_PARAMETER_INDEX, email)), email));
         } catch (SQLException | DaoException | ConnectionPoolException e) {
             throw new DaoException("Problem when trying to find user by email", e);
         }

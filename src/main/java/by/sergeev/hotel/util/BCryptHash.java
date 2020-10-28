@@ -1,6 +1,5 @@
 package by.sergeev.hotel.util;
 
-
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class BCryptHash {
@@ -24,4 +23,5 @@ public class BCryptHash {
 
         return (passwordVerified);
     }
+
 }

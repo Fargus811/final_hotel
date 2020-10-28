@@ -57,9 +57,8 @@
                         <div class="panel-body">${user.balance}$</div>
                     </div>
                     <div class="panel-body">
-                        <form action="${pageContext.request.contextPath}/controller?command=show_my_profile"
+                        <form action="${pageContext.request.contextPath}/controller?command=show_profile_settings"
                               method="POST">
-                            <input type="hidden" name="profile" value="1"/>
                             <button class="btn btn-primary btn-lg">Edit</button>
                         </form>
                     </div>
