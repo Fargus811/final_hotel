@@ -1,23 +1,32 @@
 package by.sergeev.hotel.entity;
 
+import by.sergeev.hotel.entity.enums.AccountStatus;
 import by.sergeev.hotel.entity.enums.Role;
 
 import java.io.Serializable;
 
 public class User implements Serializable {
-// TODO убирать ли пароль из класса юзера
+
     private int id;
     private String email;
     private String firstName;
     private String lastName;
     private double balance;
     private Role role;
+    private AccountStatus accountStatus;
 
     public User(){
 
     }
 
-    public User(String email, String firstName, String lastName, Role role) {
+    public User(int id, String email, String firstName, String lastName) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public User(String email, String firstName, String lastName, Role role, AccountStatus accountStatus) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -95,6 +104,14 @@ public class User implements Serializable {
         this.role = role;
     }
 
+    public AccountStatus getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(AccountStatus accountStatus) {
+        this.accountStatus = accountStatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -107,7 +124,8 @@ public class User implements Serializable {
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
-        return role == user.role;
+        if (role != user.role) return false;
+        return accountStatus == user.accountStatus;
     }
 
     @Override
@@ -121,6 +139,7 @@ public class User implements Serializable {
         temp = Double.doubleToLongBits(balance);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (accountStatus != null ? accountStatus.hashCode() : 0);
         return result;
     }
 
@@ -133,6 +152,7 @@ public class User implements Serializable {
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", balance=").append(balance);
         sb.append(", role=").append(role);
+        sb.append(", accountStatus=").append(accountStatus);
         sb.append('}');
         return sb.toString();
     }

@@ -3,6 +3,7 @@ package by.sergeev.hotel.service.impl;
 import by.sergeev.hotel.dao.DaoFactory;
 import by.sergeev.hotel.dao.RoomDao;
 import by.sergeev.hotel.entity.Room;
+import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.RoomService;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +18,10 @@ public class RoomServiceImpl implements RoomService {
     private RoomDao roomDao = DaoFactory.daoFactory.getRoomDao();
 
     public List<Room> findAll() throws ServiceException {
-        return roomDao.findAll();
+        try {
+            return roomDao.findAll();
+        } catch (DaoException e) {
+            throw new ServiceException("Problem in method findAll in roomDao", e);
+        }
     }
 }

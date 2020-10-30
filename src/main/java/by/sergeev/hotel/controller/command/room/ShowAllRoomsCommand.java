@@ -3,10 +3,11 @@ package by.sergeev.hotel.controller.command.room;
 import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.entity.Room;
 import by.sergeev.hotel.exception.CommandException;
+import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.RoomService;
 import by.sergeev.hotel.service.ServiceFactory;
-import by.sergeev.hotel.util.PagePath;
-import by.sergeev.hotel.util.RequestParameter;
+import by.sergeev.hotel.controller.command.PagePath;
+import by.sergeev.hotel.controller.command.RequestParameter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,9 +22,11 @@ public class ShowAllRoomsCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession(true);
         List<Room> rooms;
-
-        rooms = roomService.findAll();
-
+        try {
+            rooms = roomService.findAll();
+        } catch (ServiceException e) {
+            throw new CommandException("Problem with method findAll in room service", e);
+        }
         if (Objects.isNull(session.getAttribute(RequestParameter.LOCALE))) {
             request.setAttribute(RequestParameter.LOCALE, RequestParameter.VALUE_OF_LOCALE);
         }

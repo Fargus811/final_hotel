@@ -8,15 +8,17 @@ import java.util.Optional;
 
 public interface UserService {
 
-    List<User> findAll();
+    List<User> findAll() throws ServiceException;
 
     boolean checkIsValid(String email, String password, String firstName, String lastName) throws ServiceException;
 
     Optional<User> logIn(String email, String password) throws ServiceException;
 
-    void register(String email, String password, String firstName, String lastName);
+    void register(String email, String password, String firstName, String lastName) throws ServiceException;
 
     void addBalance(int userId, double balance, String password) throws ServiceException;
 
-    Optional<User> findUserById(int userId);
+    Optional<User> findUserById(int userId) throws ServiceException;
+
+    void updateUser(User user) throws ServiceException;
 }

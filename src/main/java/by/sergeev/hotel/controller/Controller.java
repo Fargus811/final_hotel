@@ -3,6 +3,7 @@ package by.sergeev.hotel.controller;
 import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.controller.command.CommandDefiner;
 import by.sergeev.hotel.controller.command.CommandType;
+import by.sergeev.hotel.controller.command.ShowCommand;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.exception.ServiceException;
@@ -16,7 +17,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
@@ -41,6 +44,11 @@ public class Controller extends HttpServlet {
             Object commandResult = null;
             CommandDefiner commandDefiner = new CommandDefiner();
             Command command = commandDefiner.define(request);
+//            if (command instanceof ShowCommand){
+//            Map<String,Object> map = command.getParameters();
+//            String name = command.getName();
+//            HttpSession session = request.getSession(true);
+//            session.setAttribute();}
             commandResult = command.execute(request);
             if (commandResult instanceof String) {
                 String page = (String)commandResult;

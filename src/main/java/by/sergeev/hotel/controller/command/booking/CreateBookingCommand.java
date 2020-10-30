@@ -1,26 +1,27 @@
 package by.sergeev.hotel.controller.command.booking;
 
-import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.controller.command.CommandType;
 import by.sergeev.hotel.controller.command.EditCommand;
 import by.sergeev.hotel.entity.Booking;
 import by.sergeev.hotel.entity.SessionUser;
 import by.sergeev.hotel.entity.enums.RoomGrade;
+import by.sergeev.hotel.exception.CommandException;
+import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.BookingService;
 import by.sergeev.hotel.service.ServiceFactory;
-import by.sergeev.hotel.util.RequestParameter;
+import by.sergeev.hotel.controller.command.RequestParameter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 
-public class CreateBookingCommand implements Command, EditCommand {
+public class CreateBookingCommand implements  EditCommand {
 
     private BookingService bookingService = ServiceFactory.serviceFactory.getBookingService();
 
     @Override
-    public Object execute(HttpServletRequest request) {
+    public Object execute(HttpServletRequest request) throws CommandException {
         //TODO session if-else
         HttpSession session = request.getSession(true);
         SessionUser sessionUser = (SessionUser) (session.getAttribute("sessionUser"));
@@ -55,10 +56,11 @@ public class CreateBookingCommand implements Command, EditCommand {
         freshBooking.setHasWifi(hasWifi);
         freshBooking.setHasTV(hasTV);
         freshBooking.setHasBathroom(hasBathroom);
-
-        bookingService.createBooking(freshBooking);
-
+        try {
+            bookingService.createBooking(freshBooking);
+        } catch (ServiceException e) {
+            throw new CommandException("Problem with create booking", e);
+        }
         return CommandType.SHOW_USER_BOOKINGS.getCommand();
     }
-
 }

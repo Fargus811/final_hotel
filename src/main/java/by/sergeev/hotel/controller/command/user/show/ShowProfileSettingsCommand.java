@@ -6,16 +6,14 @@ import by.sergeev.hotel.entity.User;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
-import by.sergeev.hotel.util.PagePath;
-import by.sergeev.hotel.util.RequestParameter;
+import by.sergeev.hotel.controller.command.PagePath;
+import by.sergeev.hotel.controller.command.RequestParameter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Objects;
 import java.util.Optional;
 
 public class ShowProfileSettingsCommand implements Command {
-
 
     private UserService userService = ServiceFactory.serviceFactory.getUserService();
 
@@ -28,7 +26,7 @@ public class ShowProfileSettingsCommand implements Command {
             return PagePath.ERROR;
         } else {
             request.setAttribute(RequestParameter.USER, userOptional.get());
+            return PagePath.CLIENT_SETTINGS;
         }
-        return PagePath.CLIENT_SETTINGS;
     }
 }

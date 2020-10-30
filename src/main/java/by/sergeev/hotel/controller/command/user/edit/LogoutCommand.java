@@ -2,7 +2,7 @@ package by.sergeev.hotel.controller.command.user.edit;
 
 import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.exception.CommandException;
-import by.sergeev.hotel.util.PagePath;
+import by.sergeev.hotel.controller.command.PagePath;
 
 import javax.servlet.http.HttpServletRequest;
 

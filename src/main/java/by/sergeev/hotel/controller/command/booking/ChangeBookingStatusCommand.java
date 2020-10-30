@@ -2,9 +2,10 @@ package by.sergeev.hotel.controller.command.booking;
 
 import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.exception.CommandException;
+import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.BookingService;
 import by.sergeev.hotel.service.ServiceFactory;
-import by.sergeev.hotel.util.RequestParameter;
+import by.sergeev.hotel.controller.command.RequestParameter;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,9 +17,11 @@ public class ChangeBookingStatusCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         String bookingStatus = request.getParameter(RequestParameter.BOOKING_STATUS);
         int bookingId = Integer.parseInt(request.getParameter(RequestParameter.BOOKING_ID));
-
-        bookingService.changeBookingStatusById(bookingId, bookingStatus);
-
+        try {
+            bookingService.changeBookingStatusById(bookingId, bookingStatus);
+        } catch (ServiceException e) {
+            throw new CommandException("Problem with changeBookingStatusById", e);
+        }
         return null;
     }
 }

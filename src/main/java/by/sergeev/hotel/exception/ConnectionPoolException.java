@@ -1,6 +1,6 @@
 package by.sergeev.hotel.exception;
 
-public class ConnectionPoolException extends RuntimeException{
+public class ConnectionPoolException extends Exception{
 
     public ConnectionPoolException() {
         super();

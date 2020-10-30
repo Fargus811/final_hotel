@@ -3,6 +3,7 @@ package by.sergeev.hotel.service.impl;
 import by.sergeev.hotel.dao.DaoFactory;
 import by.sergeev.hotel.dao.UserDao;
 import by.sergeev.hotel.entity.User;
+import by.sergeev.hotel.entity.enums.AccountStatus;
 import by.sergeev.hotel.entity.enums.Role;
 import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.exception.ServiceException;
@@ -24,7 +25,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() throws ServiceException {
-        return userDao.findAll();
+        try {
+            return userDao.findAll();
+        } catch (DaoException e) {
+            throw new ServiceException("Problem in method findAll in roomDao", e);
+        }
     }
 
     @Override
@@ -48,10 +53,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(String email, String password, String firstName, String lastName) {
+    public void register(String email, String password, String firstName, String lastName) throws ServiceException {
         String passwordHashed = BCryptHash.hashPassword(password);
-        User user = new User(email, firstName, lastName, Role.getRole(0));
-        userDao.create(user, passwordHashed);
+        User user = new User(email, firstName, lastName, Role.USER, AccountStatus.ACTIVE);
+        try {
+            userDao.create(user, passwordHashed);
+        } catch (DaoException e) {
+            throw new ServiceException("Problem in method create in userDao", e);
+        }
     }
 
     @Override
@@ -87,8 +96,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findUserById(int userId) {
-        return userDao.findEntityById(userId);
+    public Optional<User> findUserById(int userId) throws ServiceException {
+        try {
+            return userDao.findEntityById(userId);
+        } catch (DaoException e) {
+            throw new ServiceException("Problem in method findUserById in userDao", e);
+        }
+    }
+
+    @Override
+    public void updateUser(User user) throws ServiceException {
+        try {
+            userDao.updateUserInformation(user);
+        } catch (DaoException e) {
+            throw new ServiceException("Problem in method updateUserInformation in userDao", e);
+        }
     }
 }
 

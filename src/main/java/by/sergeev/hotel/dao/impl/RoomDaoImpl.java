@@ -8,12 +8,16 @@ import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.pool.ConnectionPool;
 import by.sergeev.hotel.pool.ProxyConnection;
 import by.sergeev.hotel.util.EntityAttribute;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
+
+    private static final Logger LOGGER = LogManager.getLogger(RoomDaoImpl.class);
 
     private static final String INSERTED_COLUMNS = "rooms.name, rooms.number_of_rooms, rooms.floor, rooms.max_persons, " +
             "rooms.cost, rooms.has_Wifi, rooms.has_TV, rooms.has_bathroom, rooms.number_of_beds,rooms.room_description, rooms.photo_path, grades.grade_name";
@@ -46,19 +50,19 @@ public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
 
     @Override
     protected Room makeEntity(ResultSet rs) throws SQLException {
-        int id = rs.getInt(EntityAttribute.FIRST_ATTRIBUTE);
-        String roomName = rs.getString(EntityAttribute.SECOND_ATTRIBUTE);
-        int numberOfRooms = rs.getInt(EntityAttribute.THIRD_ATTRIBUTE);
-        int floor = rs.getInt(EntityAttribute.FOURTH_ATTRIBUTE);
-        int maxPersons = rs.getInt(EntityAttribute.FIFTH_ATTRIBUTE);
-        double cost = rs.getDouble(EntityAttribute.SIXTH_ATTRIBUTE);
-        boolean hasWifi = rs.getBoolean(EntityAttribute.SEVENTH_ATTRIBUTE);
-        boolean hasTV = rs.getBoolean(EntityAttribute.EIGHTH_ATTRIBUTE);
-        boolean hasBathroom = rs.getBoolean(EntityAttribute.NINTH_ATTRIBUTE);
-        int numberOfBeds = rs.getInt(EntityAttribute.TENTH_ATTRIBUTE);
-        String description = rs.getString(EntityAttribute.ELEVENTH_ATTRIBUTE);
-        String photoPath = rs.getString(EntityAttribute.TWELFTH_ATTRIBUTE);
-        String gradeName = rs.getString(EntityAttribute.THIRTEENTH_ATTRIBUTE);
+        int id = rs.getInt(1);
+        String roomName = rs.getString(2);
+        int numberOfRooms = rs.getInt(3);
+        int floor = rs.getInt(4);
+        int maxPersons = rs.getInt(5);
+        double cost = rs.getDouble(6);
+        boolean hasWifi = rs.getBoolean(7);
+        boolean hasTV = rs.getBoolean(8);
+        boolean hasBathroom = rs.getBoolean(9);
+        int numberOfBeds = rs.getInt(10);
+        String description = rs.getString(11);
+        String photoPath = rs.getString(12);
+        String gradeName = rs.getString(13);
         return new Room(id, roomName, numberOfRooms, floor, maxPersons, cost, hasWifi, hasTV, hasBathroom, numberOfBeds, description, photoPath, gradeName);
     }
 

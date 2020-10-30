@@ -4,8 +4,8 @@ import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
-import by.sergeev.hotel.util.PagePath;
-import by.sergeev.hotel.util.RequestParameter;
+import by.sergeev.hotel.controller.command.PagePath;
+import by.sergeev.hotel.controller.command.RequestParameter;
 
 import javax.servlet.http.HttpServletRequest;
 

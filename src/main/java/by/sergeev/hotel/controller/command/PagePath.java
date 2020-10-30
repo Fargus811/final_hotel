@@ -1,4 +1,4 @@
-package by.sergeev.hotel.util;
+package by.sergeev.hotel.controller.command;
 
 public class PagePath {
 
