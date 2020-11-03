@@ -193,7 +193,7 @@ body {
 .footer {
     flex: 0 0 auto;
 }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { display: flex; flex-direction: column; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 span.error-message {
     color: red;
@@ -217,4 +217,8 @@ select.language-select {
 
 .room-advantages {
     padding-top: 25px;
+}
+
+.room-container {
+    min-height: 500px
 }

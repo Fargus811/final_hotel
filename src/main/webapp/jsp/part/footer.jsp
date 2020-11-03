@@ -33,20 +33,14 @@
                 </div>
             </div>
             <div class="col-md-5"></div>
-            <div class="col-md auto" style="left: 100px;position: inherit;">
-                <ul class="nav navbar-nav navbar-right">
-                    <form id = "ruForm" action="${pageContext.request.contextPath}/controller" method = "post" style = "display:none;">
-                        <input type="hidden" name="command" value="language" />
-                        <input type="hidden" name="lang" value="ru"/>
-                    </form>
-                    <form id = "enForm" action="${pageContext.request.contextPath}/controller" method = "post" style = "display:none;">
-                        <input type="hidden" name="command" value="language" />
-                        <input type="hidden" name="lang" value="en"/>
-                    </form>
-                    <li><span><input type="image" src="/resources/room_images/russian.jpg" alt="РУС" onclick="document.getElementById('ruForm').submit()" style="width: 50px; height: 32px; margin-right: 10px; margin-top: 10px"></span></li>
-                    <li><span><input type="image" src="/resources/room_images/american.jpg" alt="EN" onclick="document.getElementById('enForm').submit()" style="width: 50px; height: 32px; margin-right: 10px; margin-top: 10px"></span></li>
-                </ul>
-            </div>
+            <form id = "ruForm" action="${pageContext.request.contextPath}/controller" method = "post" style = "display:none;">
+                <input type="hidden" name="command" value="language" />
+                <input type="hidden" name="lang" value="ru"/>
+            </form>
+            <form id = "enForm" action="${pageContext.request.contextPath}/controller" method = "post" style = "display:none;">
+                <input type="hidden" name="command" value="language" />
+                <input type="hidden" name="lang" value="en"/>
+            </form>
         </div>
 </div>
 </div>

@@ -1,4 +1,4 @@
-package by.sergeev.hotel.controller.command.booking;
+package by.sergeev.hotel.controller.command.booking.edit;
 
 import by.sergeev.hotel.controller.command.CommandType;
 import by.sergeev.hotel.controller.command.EditCommand;
@@ -21,7 +21,7 @@ public class CreateBookingCommand implements  EditCommand {
     private BookingService bookingService = ServiceFactory.serviceFactory.getBookingService();
 
     @Override
-    public Object execute(HttpServletRequest request) throws CommandException {
+    public String execute(HttpServletRequest request) throws CommandException {
         //TODO session if-else
         HttpSession session = request.getSession(true);
         SessionUser sessionUser = (SessionUser) (session.getAttribute("sessionUser"));
@@ -33,15 +33,15 @@ public class CreateBookingCommand implements  EditCommand {
         int gradeId =Integer.parseInt(request.getParameter(RequestParameter.GRADE_ID));
         int numberOfRooms = Integer.parseInt(request.getParameter(RequestParameter.NUMBER_OF_ROOMS));
         boolean hasWifi = false;
-        if (Objects.isNull(request.getParameter(RequestParameter.HAS_WIFI))) {
+        if (!Objects.isNull(request.getParameter(RequestParameter.HAS_WIFI))) {
             hasWifi = true;
         }
         boolean hasTV = false;
-        if (Objects.isNull(request.getParameter(RequestParameter.HAS_TV))) {
+        if (!Objects.isNull(request.getParameter(RequestParameter.HAS_TV))) {
             hasTV = true;
         }
         boolean hasBathroom = false;
-        if (Objects.isNull(request.getParameter(RequestParameter.HAS_BATHROOM))) {
+        if (!Objects.isNull(request.getParameter(RequestParameter.HAS_BATHROOM))) {
             hasBathroom = true;
         }
         Booking freshBooking = new Booking();
@@ -52,7 +52,7 @@ public class CreateBookingCommand implements  EditCommand {
         freshBooking.setMaxPersons(maxPersons);
         freshBooking.setNumberOfBeds(numberOfBeds);
         freshBooking.setNumberOfRooms(numberOfRooms);
-        freshBooking.setRoomGrade(RoomGrade.getRoomGrade(gradeId));
+        freshBooking.setRoomGrade(RoomGrade.values()[gradeId]);
         freshBooking.setHasWifi(hasWifi);
         freshBooking.setHasTV(hasTV);
         freshBooking.setHasBathroom(hasBathroom);
@@ -61,6 +61,6 @@ public class CreateBookingCommand implements  EditCommand {
         } catch (ServiceException e) {
             throw new CommandException("Problem with create booking", e);
         }
-        return CommandType.SHOW_USER_BOOKINGS.getCommand();
+        return CommandType.SHOW_USER_BOOKINGS.name();
     }
 }

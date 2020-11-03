@@ -6,6 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface Command {
 
-    Object execute(HttpServletRequest request) throws CommandException;
+    String execute(HttpServletRequest request) throws CommandException;
 }
 

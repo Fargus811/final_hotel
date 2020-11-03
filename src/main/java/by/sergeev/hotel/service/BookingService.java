@@ -12,4 +12,8 @@ public interface BookingService {
     void changeBookingStatusById(int bookingId, String bookingStatus) throws ServiceException;
 
     void createBooking(Booking freshBooking) throws ServiceException;
+
+    void addRoomToBooking(int bookingId, int roomId) throws ServiceException;
+
+    List<Booking> findAll() throws ServiceException;
 }

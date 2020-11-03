@@ -14,8 +14,8 @@ public class RequestParameter {
 
     //BOOKING COMMAND
     public static final String BOOKINGS = "bookings";
-    public static final String BOOKING_STATUS = "booking_status";
-    public static final String BOOKING_ID = "booking_id";
+    public static final String BOOKING_STATUS = "bookingStatus";
+    public static final String BOOKING_ID = "bookingId";
     public static final String START_DATE = "startDate";
     public static final String END_DATE = "endDate";
     public static final String COST = "cost";
@@ -28,7 +28,8 @@ public class RequestParameter {
     public static final String HAS_TV = "hasTV";
     public static final String HAS_BATHROOM = "hasBathroom";
     //ROOM COMMAND
-    public static final String ROOMS_ATTRIBUTE = "rooms";
+    public static final String ROOMS = "rooms";
+    public static final String ROOM_ID = "roomId";
     //LOCALE
     public static final String LOCALE = "locale";
     public static final String VALUE_OF_LOCALE = "ru";
@@ -36,5 +37,6 @@ public class RequestParameter {
     //ERROR
     public static final String ERROR = "error";
 
-
+    private RequestParameter(){
+    }
 }

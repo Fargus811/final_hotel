@@ -45,4 +45,22 @@ public class BookingServiceImpl implements BookingService {
             throw new ServiceException("Problem in method createBooking in bookingDao", e);
         }
     }
+
+    @Override
+    public void addRoomToBooking(int bookingId, int roomId) throws ServiceException {
+        try {
+            bookingDao.addRoomToBooking(bookingId,roomId);
+        }catch (DaoException e){
+            throw new ServiceException("Problem in method addRoomToBooking in bookingDao", e);
+        }
+    }
+
+    @Override
+    public List<Booking> findAll() throws ServiceException {
+        try {
+            return bookingDao.findAll();
+        }catch (DaoException e){
+            throw new ServiceException("Problem in method findAll in bookingDao", e);
+        }
+    }
 }

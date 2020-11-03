@@ -130,25 +130,25 @@
                         <form>
                             <div class="form-group">
                                 <label for="firstName">First Name</label>
-                                <input type="text" class="form-control" id="firstName" aria-describedby="firstNameHelp"
+                                <input type="text" class="form-control" name="firstName" id="firstName" aria-describedby="firstNameHelp"
                                        placeholder="Enter your firstName" value="${user.firstName}">
-                                <small id="firstNameHelp" class="form-text text-muted">Your name may appear around here
+                                <small id="firstNameHelp" class="form-text text-muted">Your first name may appear around here
                                     where you are mentioned. You can change or remove it at any time.
                                 </small>
                             </div>
                             <hr>
                             <div class="form-group">
                                 <label for="lastName">Last Name</label>
-                                <input type="text" class="form-control" id="lastName" aria-describedby="lastNameHelp"
+                                <input type="text" class="form-control" name="lastName" id="lastName" aria-describedby="lastNameHelp"
                                        placeholder="Enter your lastName" value="${user.lastName}">
-                                <small id="fullNameHelp" class="form-text text-muted">Your name may appear around here
+                                <small id="fullNameHelp" class="form-text text-muted">Your last name may appear around here
                                     where you are mentioned. You can change or remove it at any time.
                                 </small>
                             </div>
                             <hr>
                             <div class="form-group">
                                 <label for="email">Your email</label>
-                                <input type="text" class="form-control" id="email" aria-describedby="emailHelp"
+                                <input type="text" class="form-control" name = "email" id="email" aria-describedby="emailHelp"
                                        placeholder="Enter your email" value=${user.email}>
                                 <small id="usernameHelp" class="form-text text-muted">After changing your email, your
                                     old email becomes available for anyone else to claim.
@@ -169,7 +169,7 @@
                         <form>
                             <div class="form-group">
                                 <label class="d-block">Confirm your Password </label>
-                                <input type="text" class="form-control" placeholder="Enter your password">
+                                <input type="text" class="form-control" id="password" name="password" placeholder="Enter your password">
                                 <br>
                                 <label class="d-block text-danger">Delete Account</label>
                                 <p class="text-muted font-size-sm">Once you delete your account, there is no going back.
@@ -184,9 +184,9 @@
                         <form>
                             <div class="form-group">
                                 <label class="d-block">Change Password</label>
-                                <input type="text" class="form-control" placeholder="Enter your old password">
-                                <input type="text" class="form-control mt-1" placeholder="New password">
-                                <input type="text" class="form-control mt-1" placeholder="Confirm new password">
+                                <input type="text" id="oldPassword" name="oldPassword" class="form-control" placeholder="Enter your old password">
+                                <input type="text" id="newPassword" name="newPassword" class="form-control mt-1" placeholder="New password">
+                                <input type="text" id="confirmPassword" name="confirmPassword" class="form-control mt-1" placeholder="Confirm new password">
                                 <hr>
                                 <button type="button" class="btn btn-primary">Update Password</button>
                             </div>

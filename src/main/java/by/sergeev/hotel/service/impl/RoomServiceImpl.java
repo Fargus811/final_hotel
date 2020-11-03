@@ -24,4 +24,14 @@ public class RoomServiceImpl implements RoomService {
             throw new ServiceException("Problem in method findAll in roomDao", e);
         }
     }
+
+    @Override
+    public List<Room> findRoomsByBooking(int bookingId) throws ServiceException {
+//        try {
+//            return null;//roomDao.findRoomsByBooking(bookingId);
+//        } catch (DaoException e) {
+//            throw new ServiceException("Problem in method findAll in roomDao", e);
+//        }
+        return null;
+    }
 }

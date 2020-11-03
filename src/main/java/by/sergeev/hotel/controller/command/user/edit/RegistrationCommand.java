@@ -2,6 +2,7 @@ package by.sergeev.hotel.controller.command.user.edit;
 
 import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.exception.CommandException;
+import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
 import by.sergeev.hotel.controller.command.PagePath;
@@ -20,11 +21,18 @@ public class RegistrationCommand implements Command {
         String firstName = request.getParameter(RequestParameter.FIRST_NAME);
         String lastName = request.getParameter(RequestParameter.LAST_NAME);
         String page = PagePath.REGISTRATION;
-
-        boolean isParamsValid = userService.checkIsValid(email, password, firstName, lastName);
-
+        boolean isParamsValid ;
+        try {
+            isParamsValid = userService.checkIsValid(email, password, firstName, lastName);
+        } catch (ServiceException e) {
+            throw new CommandException("Problem with validation registration params", e);
+        }
         if (isParamsValid) {
-            userService.register(email, password, firstName, lastName);
+            try {
+                userService.register(email, password, firstName, lastName);
+            } catch (ServiceException e) {
+                throw new CommandException("Problem with registration", e);
+            }
             page = PagePath.LOGIN;
         }
         return page;

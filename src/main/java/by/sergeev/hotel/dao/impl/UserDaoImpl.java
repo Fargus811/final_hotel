@@ -8,16 +8,13 @@ import by.sergeev.hotel.exception.ConnectionPoolException;
 import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.pool.ConnectionPool;
 import by.sergeev.hotel.pool.ProxyConnection;
-import by.sergeev.hotel.util.EntityAttribute;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
@@ -55,7 +52,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public void create(User entity, String password) {
+    public void create(User entity, String password) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             try (PreparedStatement preparedSt = connection.prepareStatement(CREATE_USER)) {
                 preparedSt.setString(1, entity.getEmail());
@@ -76,12 +73,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     protected User makeEntity(ResultSet rs) throws SQLException {
-        int id = rs.getInt(EntityAttribute.FIRST_ATTRIBUTE);
-        String email = rs.getString(EntityAttribute.SECOND_ATTRIBUTE);
-        String firstName = rs.getString(EntityAttribute.THIRD_ATTRIBUTE);
-        String lastName = rs.getString(EntityAttribute.FOURTH_ATTRIBUTE);
-        double balance = rs.getDouble(EntityAttribute.FIFTH_ATTRIBUTE);
-        Role role = Role.values()[(rs.getInt(EntityAttribute.SIXTH_ATTRIBUTE))];
+        int id = rs.getInt(1);
+        String email = rs.getString(2);
+        String firstName = rs.getString(3);
+        String lastName = rs.getString(4);
+        double balance = rs.getDouble(5);
+        Role role = Role.values()[(rs.getInt(6))];
         User user = new User();
         user.setId(id);
         user.setEmail(email);
@@ -93,11 +90,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
-            return  Optional.ofNullable(tryFindEntityByPrStatement(connection, FIND_USER_BY_EMAIL,
+            return Optional.ofNullable(tryFindEntityByPrStatement(connection, FIND_USER_BY_EMAIL,
                     ((preparedStatement, params) -> preparedStatement.setString(1, email)), email));
-        } catch (SQLException | DaoException | ConnectionPoolException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Problem when trying to find user by email", e);
         }
     }
@@ -111,14 +108,14 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 rs.next();
                 String password = rs.getString(1);
                 return password;
-            } catch (SQLException e) {
-                throw new DaoException("Problem with find password by user id", e);
             }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Problem with find password by user id", e);
         }
     }
 
     @Override
-    public void updateUserInformation(User user) {
+    public void updateUserInformation(User user) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_INFO)) {
                 preparedStatement.setString(1, user.getEmail());
@@ -136,7 +133,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public void updateEntity(User entity, String password) {
+    public void updateEntity(User entity, String password) throws DaoException{
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(CHECK_USER_BALANCE)) {
                 preparedStatement.setInt(1, entity.getId());

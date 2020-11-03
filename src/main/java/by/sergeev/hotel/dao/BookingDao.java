@@ -13,4 +13,8 @@ public interface BookingDao {
 
     void createBooking(Booking booking) throws DaoException;
 
+    void addRoomToBooking(int bookingsId, int roomId) throws DaoException;
+
+    List<Booking> findAll() throws DaoException;
+
 }

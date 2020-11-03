@@ -1,4 +1,4 @@
-package by.sergeev.hotel.controller.command.booking;
+package by.sergeev.hotel.controller.command.booking.show;
 
 import by.sergeev.hotel.controller.command.ShowCommand;
 import by.sergeev.hotel.entity.Booking;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class ShowAllUserBookingsCommand implements ShowCommand {
+public class ShowUserBookingsCommand implements ShowCommand {
 
     private BookingService bookingService = ServiceFactory.serviceFactory.getBookingService();
 

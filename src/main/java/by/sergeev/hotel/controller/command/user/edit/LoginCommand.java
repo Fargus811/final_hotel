@@ -26,7 +26,7 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         String email = request.getParameter(RequestParameter.EMAIL);
         String password = request.getParameter(RequestParameter.PASSWORD);
-        Optional<User> userOptional = null;
+        Optional<User> userOptional;
         try {
             userOptional = userService.logIn(email, password);
         } catch (ServiceException e) {
@@ -34,7 +34,7 @@ public class LoginCommand implements Command {
         }
         boolean isCommandSuccess = (userOptional.isPresent());
         HttpSession session = request.getSession(true);
-        String pagePath = null;
+        String pagePath;
         if (isCommandSuccess) {
             User user = userOptional.get();
             SessionUser sessionUser = new SessionUser(user.getId(),user.getFirstName(),user.getLastName(),user.getRole());

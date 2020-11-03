@@ -41,7 +41,7 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            Object commandResult = null;
+            String commandResult = null;
             CommandDefiner commandDefiner = new CommandDefiner();
             Command command = commandDefiner.define(request);
 //            if (command instanceof ShowCommand){
@@ -50,21 +50,20 @@ public class Controller extends HttpServlet {
 //            HttpSession session = request.getSession(true);
 //            session.setAttribute();}
             commandResult = command.execute(request);
-            if (commandResult instanceof String) {
-                String page = (String)commandResult;
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+            if (commandResult.endsWith("jsp")) {
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(commandResult);
                 dispatcher.forward(request, response);
-            }else if(commandResult instanceof Command){
-                Command showCommand = (Command) commandResult;
-                String page  = (String)showCommand.execute(request);
+            }else if(commandResult.startsWith("show")){
+                Command showCommand =CommandType.valueOf(commandResult.toUpperCase()).getCommand();
+                String page  = showCommand.execute(request);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
                 dispatcher.forward(request, response);
             }else {
                 throw new RuntimeException("Not supported command result");
             }
-        } catch (CommandException | DaoException e) {
+        } catch (CommandException  e) {
             LOGGER.error("Command failed", e);
-            throw new ServiceException("Command failed", e);
+            throw new ServletException("Command failed", e);
         }
     }
 

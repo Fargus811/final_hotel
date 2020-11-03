@@ -9,6 +9,7 @@ public class PagePath {
     public static final String CLIENT_SETTINGS = "/jsp/profileSettings.jsp";
     public static final String LOGIN = "/jsp/login.jsp";
     public static final String USER_BOOKINGS = "/jsp/clientBookings.jsp";
+    public static final String ALL_BOOKINGS = "/jsp/allBookings.jsp";
     public static final String ERROR = "/jsp/error/infoError.jsp";
 
     private PagePath(){

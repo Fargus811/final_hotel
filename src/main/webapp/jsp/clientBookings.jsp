@@ -39,7 +39,13 @@
                 <td>${elem.startDate}</td>
                 <td>${elem.endDate}</td>
                 <td>${elem.cost}</td>
-                <td>${elem.room}</td>
+                <td><c:choose>
+                      <c:when test="${empty elem.room}">
+                    No room
+                      </c:when>
+                      <c:otherwise>${elem.room}
+                      </c:otherwise>
+                     </c:choose></td>
                 <td>${elem.bookingStatus}</td>
             </tr>
         </c:forEach>

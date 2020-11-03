@@ -1,5 +1,7 @@
 package by.sergeev.hotel.entity;
 
+import by.sergeev.hotel.entity.enums.RoomGrade;
+
 import java.io.Serializable;
 
 public class Room implements Serializable {
@@ -16,13 +18,13 @@ public class Room implements Serializable {
     private int numberOfBeds;
     private String description;
     private String photoPath;
-    private String roomGrade;
+    private RoomGrade roomGrade;
 
     public Room() {
     }
 
     public Room(int id, String name, int numberOfRooms, int floor, int maxPersons, double cost, boolean hasWifi,
-                boolean hasTV, boolean hasBathroom, int numberOfBeds, String description, String photoPath, String roomGrade) {
+                boolean hasTV, boolean hasBathroom, int numberOfBeds, String description, String photoPath, RoomGrade roomGrade) {
         this.id = id;
         this.name = name;
         this.numberOfRooms = numberOfRooms;
@@ -134,11 +136,11 @@ public class Room implements Serializable {
         this.photoPath = photoPath;
     }
 
-    public String getRoomGrade() {
+    public RoomGrade getRoomGrade() {
         return roomGrade;
     }
 
-    public void setRoomGrade(String roomGrade) {
+    public void setRoomGrade(RoomGrade roomGrade) {
         this.roomGrade = roomGrade;
     }
 

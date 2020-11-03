@@ -4,6 +4,7 @@ import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.entity.SessionUser;
 import by.sergeev.hotel.entity.User;
 import by.sergeev.hotel.exception.CommandException;
+import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
 import by.sergeev.hotel.controller.command.PagePath;
@@ -17,7 +18,7 @@ public class UpdateUserInformationCommand implements Command {
     private UserService userService = ServiceFactory.serviceFactory.getUserService();
 
     @Override
-    public Object execute(HttpServletRequest request) throws CommandException {
+    public String execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         SessionUser sessionUser = (SessionUser) (session.getAttribute(RequestParameter.SESSION_USER));
         int userId = sessionUser.getId();
@@ -25,9 +26,12 @@ public class UpdateUserInformationCommand implements Command {
         String firstName = request.getParameter(RequestParameter.FIRST_NAME);
         String lastName = request.getParameter(RequestParameter.LAST_NAME);
         User user = new User(userId,email,firstName,lastName);
-        userService.updateUser(user);
-
-        String page = PagePath.REGISTRATION;
+        try {
+            userService.updateUser(user);
+        } catch (ServiceException e) {
+            throw new CommandException("Problem with user update", e);
+        }
+        String page = PagePath.CLIENT_PROFILE;
         return null;
     }
 }

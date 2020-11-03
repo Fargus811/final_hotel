@@ -15,6 +15,7 @@
 <fmt:bundle basename="text">
 <jsp:include page="/jsp/part/header.jsp"/>
 
+<div class="room-container">
 <c:forEach var="elem" items="${rooms}">
     <div class="room-item" style="float: left; margin-top: 50px">
         <img class="room-photo" src="${elem.photoPath}" alt="Room Image" width="210" height="120">
@@ -39,6 +40,7 @@
         </div>
     </div>
 </c:forEach>
+</div>
 </body>
 <jsp:include page="/jsp/part/footer.jsp"/>
 </fmt:bundle>

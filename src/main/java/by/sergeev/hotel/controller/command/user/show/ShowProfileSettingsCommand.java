@@ -4,6 +4,7 @@ import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.entity.SessionUser;
 import by.sergeev.hotel.entity.User;
 import by.sergeev.hotel.exception.CommandException;
+import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
 import by.sergeev.hotel.controller.command.PagePath;
@@ -21,7 +22,12 @@ public class ShowProfileSettingsCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession(true);
         SessionUser sessionUser = (SessionUser) session.getAttribute(RequestParameter.SESSION_USER);
-        Optional<User> userOptional = userService.findUserById(sessionUser.getId());
+        Optional<User> userOptional;
+        try {
+            userOptional = userService.findUserById(sessionUser.getId());
+        } catch (ServiceException e) {
+            throw new CommandException("Problem with find user by id", e);
+        }
         if (!userOptional.isPresent()) {
             return PagePath.ERROR;
         } else {
