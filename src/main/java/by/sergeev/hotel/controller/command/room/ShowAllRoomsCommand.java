@@ -7,7 +7,7 @@ import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.RoomService;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.controller.command.PagePath;
-import by.sergeev.hotel.controller.command.RequestParameter;
+import by.sergeev.hotel.controller.command.PageParameter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,10 +27,10 @@ public class ShowAllRoomsCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException("Problem with method findAll in room service", e);
         }
-        if (Objects.isNull(session.getAttribute(RequestParameter.LOCALE))) {
-            request.setAttribute(RequestParameter.LOCALE, RequestParameter.VALUE_OF_LOCALE);
+        if (Objects.isNull(session.getAttribute(PageParameter.LOCALE))) {
+            request.setAttribute(PageParameter.LOCALE, PageParameter.VALUE_OF_LOCALE);
         }
-        request.setAttribute(RequestParameter.ROOMS, rooms);
+        request.setAttribute(PageParameter.ROOMS, rooms);
         return PagePath.MAIN;
     }
 }

@@ -1,7 +1,7 @@
 package by.sergeev.hotel.controller.command.room;
 
 import by.sergeev.hotel.controller.command.Command;
-import by.sergeev.hotel.controller.command.RequestParameter;
+import by.sergeev.hotel.controller.command.PageParameter;
 import by.sergeev.hotel.entity.Room;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.ServiceException;
@@ -17,14 +17,14 @@ public class ShowFreeRoomByConditionCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-       int bookingId = Integer.parseInt(request.getParameter(RequestParameter.BOOKING_ID));
+       int bookingId = Integer.parseInt(request.getParameter(PageParameter.BOOKING_ID));
         List<Room> rooms;
         try {
-            rooms = roomService.findRoomsByBooking(bookingId);
+            rooms = roomService.findFreeRoomsByBooking(bookingId);
         }catch (ServiceException e){
             throw new CommandException("Problem with find rooms by condition in room service", e);
         }
-        request.setAttribute(RequestParameter.ROOMS, rooms);
+        request.setAttribute(PageParameter.ROOMS, rooms);
        return null;
     }
 }

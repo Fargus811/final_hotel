@@ -3,6 +3,7 @@ package by.sergeev.hotel.dao.impl;
 import by.sergeev.hotel.dao.AbstractDao;
 import by.sergeev.hotel.dao.UserDao;
 import by.sergeev.hotel.entity.User;
+import by.sergeev.hotel.entity.enums.AccountStatus;
 import by.sergeev.hotel.entity.enums.Role;
 import by.sergeev.hotel.exception.ConnectionPoolException;
 import by.sergeev.hotel.exception.DaoException;
@@ -11,6 +12,7 @@ import by.sergeev.hotel.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +24,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final Logger LOGGER = LogManager.getLogger(UserDaoImpl.class);
 
     private static final String SELECTED_COLUMNS = "id, email, first_name, last_name, balance," +
-            "role_id";
+            "role_id, account_status_id";
     private static final String FIND_ALL_USERS = "SELECT " + SELECTED_COLUMNS + " FROM users";
     private static final String INSERTED_COLUMNS = "email, password, first_name, last_name, role_id, account_status_id";
     private static final String FIND_USER_BY_EMAIL = "SELECT " + SELECTED_COLUMNS + " FROM users WHERE email = ?";
@@ -30,7 +32,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String FIND_USER_PASSWORD_BY_ID = "SELECT password FROM users WHERE id = ?";
     private static final String CREATE_USER = "INSERT INTO users (" + INSERTED_COLUMNS + ") VALUES (?, ?, ?, ?, ?, ?)";
     private static final String CHECK_USER_BALANCE = "SELECT balance FROM users WHERE id = ?";
-    private static final String UPDATE_USER_INFO = "UPDATE users SET email = ?, firstName = ?, lastName = ?, WHERE id = ?";
+    private static final String UPDATE_USER_INFO = "UPDATE users SET email = ?, first_name = ?, last_name = ? WHERE id = ?";
+    private static final String UPDATE_USER_PASSWORD = "UPDATE users SET password = ? WHERE id = ?";
+    private static final String UPDATE_USER_ACCOUNT_STATUS = "UPDATE users SET account_status_id = '2' WHERE id = ?";
+    private static final String UPDATE_USER_BALANCE = "UPDATE users SET balance = ? WHERE id = ?";
 
     @Override
     public List<User> findAll() throws DaoException {
@@ -77,8 +82,9 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         String email = rs.getString(2);
         String firstName = rs.getString(3);
         String lastName = rs.getString(4);
-        double balance = rs.getDouble(5);
+        BigDecimal balance = rs.getBigDecimal(5);
         Role role = Role.values()[(rs.getInt(6))];
+        AccountStatus accountStatus = AccountStatus.values()[rs.getInt(7)];
         User user = new User();
         user.setId(id);
         user.setEmail(email);
@@ -86,6 +92,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         user.setLastName(lastName);
         user.setBalance(balance);
         user.setRole(role);
+        user.setAccountStatus(accountStatus);
         return user;
     }
 
@@ -133,7 +140,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public void updateEntity(User entity, String password) throws DaoException{
+    public void updateEntity(User entity, String password) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(CHECK_USER_BALANCE)) {
                 preparedStatement.setInt(1, entity.getId());
@@ -141,13 +148,62 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 preparedStatement.setString(3, password);
                 preparedStatement.setString(4, entity.getFirstName());
                 preparedStatement.setString(5, entity.getLastName());
-                preparedStatement.setDouble(6, entity.getBalance());
+                preparedStatement.setBigDecimal(6, entity.getBalance());
                 preparedStatement.executeUpdate();
                 if (preparedStatement.getUpdateCount() != 1) {
                     throw new DaoException("User was not updated");
                 }
             }
         } catch (ConnectionPoolException | SQLException e) {
+            throw new DaoException("Problem with updating user", e);
+        }
+    }
+
+    @Override
+    public void updateUserPassword(int userId, String hashPassword) throws DaoException {
+        try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_PASSWORD)) {
+                preparedStatement.setString(1, hashPassword);
+                preparedStatement.setInt(2, userId);
+                preparedStatement.executeUpdate();
+                if (preparedStatement.getUpdateCount() != 1) {
+                    throw new DaoException("User was not updated");
+                }
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DaoException("Problem with updating user", e);
+        }
+    }
+
+    @Override
+    public void deleteAccount(int userId) throws DaoException {
+        try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_ACCOUNT_STATUS)) {
+                preparedStatement.setInt(1, userId);
+                preparedStatement.executeUpdate();
+                if (preparedStatement.getUpdateCount() != 1) {
+                    throw new DaoException("User was not updated");
+                }
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DaoException("Problem with updating user", e);
+        }
+    }
+
+    @Override
+    public void updateUserBalance(int userId, BigDecimal balance) throws DaoException {
+        try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_BALANCE)) {
+                preparedStatement.setBigDecimal(1, balance);
+                preparedStatement.setInt(2, userId);
+                preparedStatement.executeUpdate();
+                if (preparedStatement.getUpdateCount() != 1) {
+                    LOGGER.fatal("Problem with updating user");
+                    throw new DaoException("User balance was not updated");
+                }
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            LOGGER.fatal("Problem with updating user in database connection");
             throw new DaoException("Problem with updating user", e);
         }
     }

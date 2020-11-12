@@ -29,15 +29,10 @@ public abstract class AbstractDao<T> {
 
     protected List<T> tryFindEntityListByQuery(ProxyConnection proxyConnection, String query) throws SQLException {
         try (Statement st = proxyConnection.createStatement()) {
-            List<T> entityList = takeEntityListByQuery(query, st);
-            return entityList;
-        }
-    }
-
-    private List<T> takeEntityListByQuery(String query, Statement st) throws SQLException {
-        try (ResultSet rs = st.executeQuery(query)) {
-            List<T> entityList = makeEntityList(rs);
-            return entityList;
+            try (ResultSet rs = st.executeQuery(query)) {
+                List<T> entityList = makeEntityList(rs);
+                return entityList;
+            }
         }
     }
 

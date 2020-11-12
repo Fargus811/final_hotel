@@ -3,15 +3,15 @@ package by.sergeev.hotel.entity;
 import by.sergeev.hotel.entity.enums.RoomGrade;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class Room implements Serializable {
-//TODO add ENUM to поля класса
+
     private int id;
     private String name;
     private int numberOfRooms;
-    private int floor;
     private int maxPersons;
-    private double cost;
+    private BigDecimal cost;
     private boolean hasWifi;
     private boolean hasTV;
     private boolean hasBathroom;
@@ -23,12 +23,11 @@ public class Room implements Serializable {
     public Room() {
     }
 
-    public Room(int id, String name, int numberOfRooms, int floor, int maxPersons, double cost, boolean hasWifi,
+    public Room(int id, String name, int numberOfRooms, int maxPersons, BigDecimal cost, boolean hasWifi,
                 boolean hasTV, boolean hasBathroom, int numberOfBeds, String description, String photoPath, RoomGrade roomGrade) {
         this.id = id;
         this.name = name;
         this.numberOfRooms = numberOfRooms;
-        this.floor = floor;
         this.maxPersons = maxPersons;
         this.cost = cost;
         this.hasWifi = hasWifi;
@@ -64,13 +63,6 @@ public class Room implements Serializable {
         this.numberOfRooms = numberOfRooms;
     }
 
-    public int getFloor() {
-        return floor;
-    }
-
-    public void setFloor(int floor) {
-        this.floor = floor;
-    }
 
     public int getMaxPersons() {
         return maxPersons;
@@ -80,11 +72,11 @@ public class Room implements Serializable {
         this.maxPersons = maxPersons;
     }
 
-    public double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 
@@ -153,30 +145,25 @@ public class Room implements Serializable {
 
         if (id != room.id) return false;
         if (numberOfRooms != room.numberOfRooms) return false;
-        if (floor != room.floor) return false;
         if (maxPersons != room.maxPersons) return false;
-        if (Double.compare(room.cost, cost) != 0) return false;
         if (hasWifi != room.hasWifi) return false;
         if (hasTV != room.hasTV) return false;
         if (hasBathroom != room.hasBathroom) return false;
         if (numberOfBeds != room.numberOfBeds) return false;
         if (name != null ? !name.equals(room.name) : room.name != null) return false;
+        if (cost != null ? !cost.equals(room.cost) : room.cost != null) return false;
         if (description != null ? !description.equals(room.description) : room.description != null) return false;
         if (photoPath != null ? !photoPath.equals(room.photoPath) : room.photoPath != null) return false;
-        return roomGrade != null ? roomGrade.equals(room.roomGrade) : room.roomGrade == null;
+        return roomGrade == room.roomGrade;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = id;
+        int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + numberOfRooms;
-        result = 31 * result + floor;
         result = 31 * result + maxPersons;
-        temp = Double.doubleToLongBits(cost);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (cost != null ? cost.hashCode() : 0);
         result = 31 * result + (hasWifi ? 1 : 0);
         result = 31 * result + (hasTV ? 1 : 0);
         result = 31 * result + (hasBathroom ? 1 : 0);
@@ -193,7 +180,6 @@ public class Room implements Serializable {
         sb.append("id=").append(id);
         sb.append(", name='").append(name).append('\'');
         sb.append(", numberOfRooms=").append(numberOfRooms);
-        sb.append(", floor=").append(floor);
         sb.append(", maxPersons=").append(maxPersons);
         sb.append(", cost=").append(cost);
         sb.append(", hasWifi=").append(hasWifi);

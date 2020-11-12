@@ -1,6 +1,6 @@
 package by.sergeev.hotel.validator;
 
-public class RequestValidator {
+public class UserFormValidator {
 
     public static boolean isValidEmail(String email) {
         return email.matches("\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+");
@@ -16,5 +16,8 @@ public class RequestValidator {
 
     public static boolean isValidLastName(String lastName) {
         return lastName.matches("[A-ZА-Я][a-zа-я\\-]{1,32}");
+    }
+
+    private UserFormValidator() {
     }
 }

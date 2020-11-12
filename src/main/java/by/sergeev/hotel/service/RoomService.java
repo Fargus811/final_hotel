@@ -8,5 +8,11 @@ import java.util.List;
 public interface RoomService {
 
     List<Room> findAll() throws ServiceException;
-    List<Room> findRoomsByBooking(int bookingId) throws ServiceException;
+
+    List<Room> findFreeRoomsByBooking(int bookingId) throws ServiceException;
+
+    boolean createRoom(Room room) throws ServiceException;
+
+    void deleteRoom(String roomId) throws ServiceException;
+
 }

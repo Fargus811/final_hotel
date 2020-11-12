@@ -8,7 +8,7 @@ import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
 import by.sergeev.hotel.controller.command.PagePath;
-import by.sergeev.hotel.controller.command.RequestParameter;
+import by.sergeev.hotel.controller.command.PageParameter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,8 +24,8 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        String email = request.getParameter(RequestParameter.EMAIL);
-        String password = request.getParameter(RequestParameter.PASSWORD);
+        String email = request.getParameter(PageParameter.EMAIL);
+        String password = request.getParameter(PageParameter.PASSWORD);
         Optional<User> userOptional;
         try {
             userOptional = userService.logIn(email, password);
@@ -38,12 +38,12 @@ public class LoginCommand implements Command {
         if (isCommandSuccess) {
             User user = userOptional.get();
             SessionUser sessionUser = new SessionUser(user.getId(),user.getFirstName(),user.getLastName(),user.getRole());
-            session.setAttribute(RequestParameter.SESSION_USER, sessionUser);
-            request.setAttribute(RequestParameter.USER, user);
+            session.setAttribute(PageParameter.SESSION_USER, sessionUser);
+            request.setAttribute(PageParameter.USER, user);
             pagePath = PagePath.CLIENT_PROFILE;
             LOGGER.info(sessionUser + " logged in");
         } else {
-            request.setAttribute(RequestParameter.ERROR, RequestParameter.ERROR);
+            request.setAttribute(PageParameter.ERROR, PageParameter.ERROR);
             pagePath = PagePath.LOGIN;
             LOGGER.info("Log in was failed");
         }

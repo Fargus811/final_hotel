@@ -1,9 +1,11 @@
 package by.sergeev.hotel.controller.command;
 
-public class RequestParameter {
+public class PageParameter {
 
     //USER COMMAND
     public static final String USER = "user";
+    public static final String USER_ID = "userId";
+    public static final String ACCOUNT_STATUS = "accountStatus";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
     public static final String FIRST_NAME = "firstName";
@@ -11,6 +13,8 @@ public class RequestParameter {
     public static final String SESSION_USER = "sessionUser";
     public static final String AMOUNT = "amount";
     public static final String USERS = "users";
+    public static final String OLD_PASSWORD = "oldPassword";
+    public static final String NEW_PASSWORD = "newPassword";
 
     //BOOKING COMMAND
     public static final String BOOKINGS = "bookings";
@@ -22,13 +26,15 @@ public class RequestParameter {
     public static final String MAX_PERSONS = "maxPersons";
     public static final String NUMBER_OF_BEDS = "numberOfBeds";
     public static final String NUMBER_OF_ROOMS = "numberOfRooms";
-    public static final String FLOOR = "floor";
     public static final String GRADE_ID = "gradeId";
     public static final String HAS_WIFI = "hasWifi";
     public static final String HAS_TV = "hasTV";
     public static final String HAS_BATHROOM = "hasBathroom";
     //ROOM COMMAND
     public static final String ROOMS = "rooms";
+    public static final String ROOM_NAME = "roomName";
+    public static final String ROOM_DESCRIPTION = "roomDescription";
+    public static final String ROOM_COST = "roomCost";
     public static final String ROOM_ID = "roomId";
     //LOCALE
     public static final String LOCALE = "locale";
@@ -36,7 +42,11 @@ public class RequestParameter {
     public static final String LOCALE_PARAM = "lang";
     //ERROR
     public static final String ERROR = "error";
+    public static final String ERROR_INFO = "errorInfo";
+    public static final String ERROR_PASS = "errorPass";
+    //IMAGE CONTROLLER
+    public static final String DOWNLOAD_STATUS = "imageStatus";
 
-    private RequestParameter(){
+    private PageParameter(){
     }
 }

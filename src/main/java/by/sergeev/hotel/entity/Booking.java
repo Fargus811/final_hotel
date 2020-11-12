@@ -4,6 +4,7 @@ import by.sergeev.hotel.entity.enums.BookingStatus;
 import by.sergeev.hotel.entity.enums.RoomGrade;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Booking implements Serializable {
@@ -11,7 +12,7 @@ public class Booking implements Serializable {
     private int id;
     private String startDate;
     private String endDate;
-    private double cost;
+    private BigDecimal cost;
     private int maxPersons;
     private int numberOfBeds;
     private int numberOfRooms;
@@ -24,7 +25,7 @@ public class Booking implements Serializable {
     private Room room;
     private BookingStatus bookingStatus;
 
-    public Booking(int id, String startDate, String endDate, double cost, int maxPersons, int numberOfBeds,
+    public Booking(int id, String startDate, String endDate, BigDecimal cost, int maxPersons, int numberOfBeds,
                    RoomGrade roomGrade, boolean hasTV, boolean hasWifi, boolean hasBathroom, int userId, Room room,
                    BookingStatus bookingStatus, int numberOfRooms) {
         this.id = id;
@@ -70,11 +71,11 @@ public class Booking implements Serializable {
         this.endDate = endDate;
     }
 
-    public double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 
@@ -174,7 +175,6 @@ public class Booking implements Serializable {
         Booking booking = (Booking) o;
 
         if (id != booking.id) return false;
-        if (Double.compare(booking.cost, cost) != 0) return false;
         if (maxPersons != booking.maxPersons) return false;
         if (numberOfBeds != booking.numberOfBeds) return false;
         if (numberOfRooms != booking.numberOfRooms) return false;
@@ -185,6 +185,7 @@ public class Booking implements Serializable {
         if (userId != booking.userId) return false;
         if (startDate != null ? !startDate.equals(booking.startDate) : booking.startDate != null) return false;
         if (endDate != null ? !endDate.equals(booking.endDate) : booking.endDate != null) return false;
+        if (cost != null ? !cost.equals(booking.cost) : booking.cost != null) return false;
         if (roomGrade != booking.roomGrade) return false;
         if (room != null ? !room.equals(booking.room) : booking.room != null) return false;
         return bookingStatus == booking.bookingStatus;
@@ -192,13 +193,10 @@ public class Booking implements Serializable {
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = id;
+        int result = id;
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
-        temp = Double.doubleToLongBits(cost);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (cost != null ? cost.hashCode() : 0);
         result = 31 * result + maxPersons;
         result = 31 * result + numberOfBeds;
         result = 31 * result + numberOfRooms;
@@ -211,5 +209,27 @@ public class Booking implements Serializable {
         result = 31 * result + (room != null ? room.hashCode() : 0);
         result = 31 * result + (bookingStatus != null ? bookingStatus.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Booking{");
+        sb.append("id=").append(id);
+        sb.append(", startDate='").append(startDate).append('\'');
+        sb.append(", endDate='").append(endDate).append('\'');
+        sb.append(", cost=").append(cost);
+        sb.append(", maxPersons=").append(maxPersons);
+        sb.append(", numberOfBeds=").append(numberOfBeds);
+        sb.append(", numberOfRooms=").append(numberOfRooms);
+        sb.append(", floor=").append(floor);
+        sb.append(", roomGrade=").append(roomGrade);
+        sb.append(", hasTV=").append(hasTV);
+        sb.append(", hasWifi=").append(hasWifi);
+        sb.append(", hasBathroom=").append(hasBathroom);
+        sb.append(", userId=").append(userId);
+        sb.append(", room=").append(room);
+        sb.append(", bookingStatus=").append(bookingStatus);
+        sb.append('}');
+        return sb.toString();
     }
 }

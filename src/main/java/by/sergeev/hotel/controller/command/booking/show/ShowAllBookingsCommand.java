@@ -2,7 +2,7 @@ package by.sergeev.hotel.controller.command.booking.show;
 
 import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.controller.command.PagePath;
-import by.sergeev.hotel.controller.command.RequestParameter;
+import by.sergeev.hotel.controller.command.PageParameter;
 import by.sergeev.hotel.entity.Booking;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.ServiceException;
@@ -24,7 +24,7 @@ public class ShowAllBookingsCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException("Problem with find all bookings", e);
         }
-        request.setAttribute(RequestParameter.BOOKINGS, bookings);
+        request.setAttribute(PageParameter.BOOKINGS, bookings);
         return PagePath.ALL_BOOKINGS;
     }
 }

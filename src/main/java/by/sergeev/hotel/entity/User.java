@@ -4,6 +4,7 @@ import by.sergeev.hotel.entity.enums.AccountStatus;
 import by.sergeev.hotel.entity.enums.Role;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class User implements Serializable {
 
@@ -11,7 +12,7 @@ public class User implements Serializable {
     private String email;
     private String firstName;
     private String lastName;
-    private double balance;
+    private BigDecimal balance;
     private Role role;
     private AccountStatus accountStatus;
 
@@ -31,6 +32,7 @@ public class User implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
+        this.accountStatus = accountStatus;
     }
 
     public User(String email, String firstName, String lastName) {
@@ -39,7 +41,7 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-    public User(int id, String email, String firstName, String lastName, double balance, Role role) {
+    public User(int id, String email, String firstName, String lastName, BigDecimal balance, Role role) {
         this.id = this.id;
         this.email = email;
         this.firstName = firstName;
@@ -48,7 +50,7 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public User(String email, String firstName, String lastName, double balance, Role role) {
+    public User(String email, String firstName, String lastName, BigDecimal balance, Role role) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -88,11 +90,11 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
@@ -120,24 +122,21 @@ public class User implements Serializable {
         User user = (User) o;
 
         if (id != user.id) return false;
-        if (Double.compare(user.balance, balance) != 0) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (balance != null ? !balance.equals(user.balance) : user.balance != null) return false;
         if (role != user.role) return false;
         return accountStatus == user.accountStatus;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = id;
+        int result = id;
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        temp = Double.doubleToLongBits(balance);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (balance != null ? balance.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (accountStatus != null ? accountStatus.hashCode() : 0);
         return result;

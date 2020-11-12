@@ -45,18 +45,22 @@
                 <td>${elem.endDate}</td>
                 <td>${elem.cost}</td>
                 <td><c:choose>
-                      <c:when test="${empty elem.room}">
-                    No room
-                      </c:when>
-                      <c:otherwise>${elem.room.name}
-                      </c:otherwise>
-                     </c:choose></td>
+                    <c:when test="${empty elem.room}">
+                        <a class='button auth primary' style="margin-right: 110px;margin-bottom: 10px;"
+                           href="${pageContext.request.contextPath}/controller?command=show_free_room_by_condition"><fmt:message
+                                key="text.client.chooseRoom"/></a>
+                    </c:when>
+                    <c:otherwise>${elem.room.name}
+                    </c:otherwise>
+                </c:choose></td>
                 <td>${elem.bookingStatus}</td>
                 <td><c:choose>
                     <c:when test="${empty elem.room}">
                         Please wait
                     </c:when>
-                    <c:otherwise><button type="submit" class="btn-primary"><fmt:message key="text.bookings.viewDetails"/></button>
+                    <c:otherwise>
+                        <button type="submit" class="btn-primary"><fmt:message
+                                key="text.bookings.viewDetails"/></button>
                     </c:otherwise>
                 </c:choose></td>
             </tr>

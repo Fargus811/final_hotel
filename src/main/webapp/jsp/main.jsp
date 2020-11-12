@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -15,31 +16,38 @@
 <fmt:bundle basename="text">
 <jsp:include page="/jsp/part/header.jsp"/>
 
-<div class="room-container">
-<c:forEach var="elem" items="${rooms}">
-    <div class="room-item" style="float: left; margin-top: 50px">
-        <img class="room-photo" src="${elem.photoPath}" alt="Room Image" width="210" height="120">
-        <div class="room-name">${elem.name}</div>
-        <div class="roomGrade">${elem.roomGrade}</div>
-        <div class="room-desc">${elem.description}</div>
-        <div class="room-item-bottom">
-            <div class="room-cost">${elem.cost}💵</div>
-            <div class="room-beds">🛏 ${elem.numberOfBeds}</div>
-            <div class="room-max-persons">👥 ${elem.maxPersons}</div>
-            <div class="room-advantages">
-                <c:if test="${elem.hasWifi}">
-                    <div class="room-advantage">Wi-Fi</div>
-                </c:if>
-                <c:if test="${elem.hasTV}">
-                    <div class="room-advantage">📺</div>
-                </c:if>
-                <c:if test="${elem.hasBathroom}">
-                    <div class="room-advantage">🛁</div>
-                </c:if>
+<div class="room-container" style="margin-left: 95px">
+    <c:forEach var="elem" items="${rooms}">
+        <div class="room-item" style="float: left; margin-top: 50px">
+            <img class="room-photo" src="${elem.photoPath}" alt="Room Image" width="210" height="120">
+            <div class="room-name">${elem.name}</div>
+            <div class="roomGrade">${elem.roomGrade}</div>
+            <div class="room-desc">${elem.description}</div>
+            <div class="room-item-bottom">
+                <div class="room-cost">${elem.cost}💵</div>
+                <div class="room-beds">🛏 ${elem.numberOfBeds}</div>
+                <div class="room-max-persons">👥 ${elem.maxPersons}</div>
+                <div class="room-advantages">
+                    <c:if test="${elem.hasWifi}">
+                        <div class="room-advantage">Wi-Fi</div>
+                    </c:if>
+                    <c:if test="${elem.hasTV}">
+                        <div class="room-advantage">📺</div>
+                    </c:if>
+                    <c:if test="${elem.hasBathroom}">
+                        <div class="room-advantage">🛁</div>
+                    </c:if>
+                </div>
+                <ctg:onlyForAdmin>
+                    <form action="${pageContext.request.contextPath}/controller" method="POST" style="margin-top: 20px">
+                        <input type="hidden" name="command" value="update_room" />
+                        <input type="hidden" name="roomId" value="${elem.id}" />
+                    <button type="submit" class="button auth secondary" style="background-color: blue;"><fmt:message key="text.client.edit"/></button>
+                    </form>
+                </ctg:onlyForAdmin>
             </div>
         </div>
-    </div>
-</c:forEach>
+    </c:forEach>
 </div>
 </body>
 <jsp:include page="/jsp/part/footer.jsp"/>

@@ -18,18 +18,17 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="text">
 <jsp:include page="/jsp/part/header.jsp"/>
-<h1 style="margin: 60px"><fmt:message key="text.clientBook.h1"/></h1>
+<h1 style="margin-top: 80px; margin-left: 20px;"><fmt:message key="text.admin.users.h1"/></h1>
 <div id="MyTable_wrapper" class="dataTables_wrapper" style="margin: 40px; margin-bottom: 100px; margin-top: 50px">
     <table id="MyTable" class="display" cellspacing="0">
         <thead>
         <tr>
             <th>ID</th>
-            <th><fmt:message key="text.bookings.startDate"/></th>
-            <th><fmt:message key="text.bookings.endDate"/></th>
-            <th><fmt:message key="text.bookings.cost"/></th>
-            <th><fmt:message key="text.bookings.room"/></th>
-            <th><fmt:message key="text.bookings.status"/></th>
-            <th><fmt:message key="text.bookings.action"/></th>
+            <th><fmt:message key="text.client.name"/></th>
+            <th><fmt:message key="text.logIn.email"/></th>
+            <th><fmt:message key="text.client.balance"/></th>
+            <th><fmt:message key="text.admin.users.status"/></th>
+            <th><fmt:message key="text.admin.users.action"/></th>
         </tr>
         </thead>
         <tfoot>
@@ -38,27 +37,25 @@
         </tr>
         </tfoot>
         <tbody>
-        <c:forEach var="elem" items="${bookings}">
+        <c:forEach var="elem" items="${users}">
             <tr>
                 <td>${elem.id}</td>
-                <td>${elem.startDate}</td>
-                <td>${elem.endDate}</td>
-                <td>${elem.cost}</td>
-                <td><c:choose>
-                      <c:when test="${empty elem.room}">
-                    No room
-                      </c:when>
-                      <c:otherwise>${elem.room.name}
-                      </c:otherwise>
-                     </c:choose></td>
-                <td>${elem.bookingStatus}</td>
-                <td><c:choose>
-                    <c:when test="${empty elem.room}">
-                        Please wait
-                    </c:when>
-                    <c:otherwise><button type="submit" class="btn-primary"><fmt:message key="text.bookings.viewDetails"/></button>
+                <td>${elem.firstName} ${elem.lastName}</td>
+                <td>${elem.email}</td>
+                <td>${elem.balance}$</td>
+                <td>${elem.accountStatus}</td>
+                <td> <form action="${pageContext.request.contextPath}/controller" method="POST">
+                    <input type="hidden" name="command" value="show_user_bookings"/>
+                    <input type="hidden" name="userId" value="${elem.id}"/>
+                    <button type="submit" class="btn-primary" style="margin-right: 35px;background-color: #002583">View bookings</button>
+                    <c:choose>
+                        <c:when test="${elem.accountStatus == 'ACTIVE'}">
+                            <button type="submit" class="danger"><fmt:message key="text.admin.users.ban"/></button></c:when>
+                        <c:otherwise>
+                            <button type="submit" class="btn-primary" style="background-color: #002583"><fmt:message key="text.admin.users.unblock"/></button>
                     </c:otherwise>
-                </c:choose></td>
+                    </c:choose>
+                </td>
             </tr>
         </c:forEach>
         </tbody>

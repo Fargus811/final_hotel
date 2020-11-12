@@ -11,7 +11,7 @@ public class CommandDefiner {
 
     private static final String COMMAND_PARAM = "command";
 
-    public Command define(HttpServletRequest request) {
+    public static Command define(HttpServletRequest request) {
         String command = request.getParameter(COMMAND_PARAM);
         LOGGER.info("Command: " + command);
         CommandType currentEnum = CommandType.valueOf(command.toUpperCase());

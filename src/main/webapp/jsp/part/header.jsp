@@ -8,7 +8,7 @@
     <div class='header' style="z-index:2">
         <div><a class='site-name' href="${pageContext.request.contextPath}/index.jsp"><fmt:message
                 key="text.hotel"/></a></div>
-        <div class='button' href="catalog"><fmt:message key="text.catalog"/></div>
+        <div class='button'><a style="color: white" href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="text.catalog"/></a></div>
         <a class='button' href="partnership"><fmt:message key="text.partnership"/></a>
         <div class="lang-select">
             <select id="lang-select">
@@ -34,14 +34,13 @@
                          style="float: right;width: 60px; margin-top: 5px;">
                     <div class='userbox'>
                         <div class='personal-menu-button'><a style="color: white"
-                                               href="${pageContext.servletContext.contextPath}/controller?command=show_my_profile">Profile</a>
+                                               href="${pageContext.servletContext.contextPath}/controller?command=show_my_profile"><fmt:message key="text.client.profile"/></a>
                         </div>
                         <div class='personal-menu-button'><a style="color: white"
-                                               href="${pageContext.servletContext.contextPath}/controller?command=logout">LogOut</a>
-                        </div>
+                                                             href="${pageContext.servletContext.contextPath}/controller?command=show_user_bookings"><fmt:message key="text.client.bookings"/></a></div>
                         <div class='personal-menu-button'><a style="color: white"
-                                               href="${pageContext.servletContext.contextPath}/controller?command=show_user_bookings">My
-                            bookings</a></div>
+                                               href="${pageContext.servletContext.contextPath}/controller?command=logout"><fmt:message key="text.client.logout"/></a>
+                        </div>
                     </div>
                 </div>
             </c:otherwise>

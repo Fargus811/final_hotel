@@ -6,7 +6,7 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/base.css" type="text/css">
 <head>
     <fmt:setLocale value="${locale}"/>
@@ -40,11 +40,11 @@
                     <nav class="side-menu" style="width: 150px">
                         <ul class="nav">
                             <li class="active"><a
-                                    href="${pageContext.servletContext.contextPath}/controller?command=show_my_profile"><span
-                                    class="fa fa-user"></span> Show all users </a>
-                            <li><a href="${pageContext.servletContext.contextPath}/controller?command=show_user_bookings"><span
+                                    href="${pageContext.servletContext.contextPath}/controller?command=show_all_users"><span
+                                    class="fa fa-user"></span><fmt:message key="text.client.showAllUsers"/></a>
+                            <li><a href="${pageContext.servletContext.contextPath}/controller?command=show_all_bookings"><span
                                     class="fa fa-bookmark"></span> <fmt:message key="text.client.bookings"/></a></li>
-                            <li><a href="${pageContext.servletContext.contextPath}/jsp/createBooking.jsp"><span
+                            <li><a href="${pageContext.servletContext.contextPath}/jsp/createRoom.jsp"><span
                                     class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create room</a></li>
                         </ul>
                     </nav>

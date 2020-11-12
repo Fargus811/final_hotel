@@ -6,7 +6,7 @@ import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
 import by.sergeev.hotel.controller.command.PagePath;
-import by.sergeev.hotel.controller.command.RequestParameter;
+import by.sergeev.hotel.controller.command.PageParameter;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,10 +16,10 @@ public class RegistrationCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        String email = request.getParameter(RequestParameter.EMAIL);
-        String password = request.getParameter(RequestParameter.PASSWORD);
-        String firstName = request.getParameter(RequestParameter.FIRST_NAME);
-        String lastName = request.getParameter(RequestParameter.LAST_NAME);
+        String email = request.getParameter(PageParameter.EMAIL);
+        String password = request.getParameter(PageParameter.PASSWORD);
+        String firstName = request.getParameter(PageParameter.FIRST_NAME);
+        String lastName = request.getParameter(PageParameter.LAST_NAME);
         String page = PagePath.REGISTRATION;
         boolean isParamsValid ;
         try {
@@ -34,6 +34,8 @@ public class RegistrationCommand implements Command {
                 throw new CommandException("Problem with registration", e);
             }
             page = PagePath.LOGIN;
+        }else{
+            request.setAttribute(PageParameter.ERROR, PageParameter.ERROR_INFO);
         }
         return page;
     }

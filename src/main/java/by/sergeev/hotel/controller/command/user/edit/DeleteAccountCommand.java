@@ -2,43 +2,38 @@ package by.sergeev.hotel.controller.command.user.edit;
 
 import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.controller.command.CommandType;
+import by.sergeev.hotel.controller.command.PagePath;
+import by.sergeev.hotel.controller.command.PageParameter;
 import by.sergeev.hotel.entity.SessionUser;
-import by.sergeev.hotel.entity.User;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
-import by.sergeev.hotel.controller.command.PageParameter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class UpdateUserInformationCommand implements Command {
+public class DeleteAccountCommand implements Command {
 
     private UserService userService = ServiceFactory.serviceFactory.getUserService();
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        String result;
         HttpSession session = request.getSession();
         SessionUser sessionUser = (SessionUser) (session.getAttribute(PageParameter.SESSION_USER));
         int userId = sessionUser.getId();
-        String email = request.getParameter(PageParameter.EMAIL);
-        String firstName = request.getParameter(PageParameter.FIRST_NAME);
-        String lastName = request.getParameter(PageParameter.LAST_NAME);
-        User user = new User(userId,email,firstName,lastName);
+        String password = request.getParameter(PageParameter.PASSWORD);
         boolean isCommandSuccess;
         try {
-           isCommandSuccess = userService.updateUser(user);
+            isCommandSuccess = userService.deleteAccount(userId, password);
         } catch (ServiceException e) {
-            throw new CommandException("Problem with user update", e);
+            throw new CommandException("Problem with method delete account in user service", e);
         }
+        String result;
         if (isCommandSuccess) {
-            result = CommandType.SHOW_MY_PROFILE.name();
-            sessionUser.setFirstName(firstName);
-            sessionUser.setLastName(lastName);
-        }else {
-            request.setAttribute(PageParameter.ERROR_INFO, PageParameter.ERROR);
+            session.invalidate();
+            result = PagePath.INDEX;
+        } else {
             result = CommandType.SHOW_PROFILE_SETTINGS.name();
         }
         return result;

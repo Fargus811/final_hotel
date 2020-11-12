@@ -1,9 +1,6 @@
 package by.sergeev.hotel.controller;
 
-import by.sergeev.hotel.controller.command.Command;
-import by.sergeev.hotel.controller.command.CommandDefiner;
-import by.sergeev.hotel.controller.command.CommandType;
-import by.sergeev.hotel.controller.command.ShowCommand;
+import by.sergeev.hotel.controller.command.*;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.exception.ServiceException;
@@ -23,8 +20,10 @@ import java.util.Map;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
-    private static final Logger LOGGER = LogManager.getLogger();
 
+    private static final Logger LOGGER = LogManager.getLogger(Controller.class);
+    private static final String RESULT_JSP = "jsp";
+    private static final String RESULT_SHOW_COMMAND = "SHOW";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,29 +40,28 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String commandResult = null;
-            CommandDefiner commandDefiner = new CommandDefiner();
-            Command command = commandDefiner.define(request);
+            String commandResult;
+            Command command = CommandDefiner.define(request);
 //            if (command instanceof ShowCommand){
 //            Map<String,Object> map = command.getParameters();
 //            String name = command.getName();
 //            HttpSession session = request.getSession(true);
 //            session.setAttribute();}
             commandResult = command.execute(request);
-            if (commandResult.endsWith("jsp")) {
+            if (commandResult.endsWith(RESULT_JSP)) {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(commandResult);
                 dispatcher.forward(request, response);
-            }else if(commandResult.startsWith("show")){
+            }else if(commandResult.startsWith(RESULT_SHOW_COMMAND)){
                 Command showCommand =CommandType.valueOf(commandResult.toUpperCase()).getCommand();
                 String page  = showCommand.execute(request);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
                 dispatcher.forward(request, response);
             }else {
-                throw new RuntimeException("Not supported command result");
+                response.sendRedirect(PagePath.ERROR);
             }
         } catch (CommandException  e) {
             LOGGER.error("Command failed", e);
-            throw new ServletException("Command failed", e);
+            response.sendRedirect(PagePath.ERROR);
         }
     }
 

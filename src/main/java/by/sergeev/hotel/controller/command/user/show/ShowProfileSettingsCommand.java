@@ -8,7 +8,7 @@ import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
 import by.sergeev.hotel.controller.command.PagePath;
-import by.sergeev.hotel.controller.command.RequestParameter;
+import by.sergeev.hotel.controller.command.PageParameter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,7 +21,7 @@ public class ShowProfileSettingsCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession(true);
-        SessionUser sessionUser = (SessionUser) session.getAttribute(RequestParameter.SESSION_USER);
+        SessionUser sessionUser = (SessionUser) session.getAttribute(PageParameter.SESSION_USER);
         Optional<User> userOptional;
         try {
             userOptional = userService.findUserById(sessionUser.getId());
@@ -31,7 +31,7 @@ public class ShowProfileSettingsCommand implements Command {
         if (!userOptional.isPresent()) {
             return PagePath.ERROR;
         } else {
-            request.setAttribute(RequestParameter.USER, userOptional.get());
+            request.setAttribute(PageParameter.USER, userOptional.get());
             return PagePath.CLIENT_SETTINGS;
         }
     }
