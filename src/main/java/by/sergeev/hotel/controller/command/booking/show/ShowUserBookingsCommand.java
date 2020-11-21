@@ -21,7 +21,7 @@ public class ShowUserBookingsCommand implements ShowCommand {
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        int userId;
+        long userId;
         if (Objects.isNull(request.getParameter(PageParameter.USER_ID))) {
             HttpSession httpSession = request.getSession();
             SessionUser sessionUser = (SessionUser) httpSession.getAttribute(PageParameter.SESSION_USER);

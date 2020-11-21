@@ -21,7 +21,7 @@ public class DeleteAccountCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         SessionUser sessionUser = (SessionUser) (session.getAttribute(PageParameter.SESSION_USER));
-        int userId = sessionUser.getId();
+        long userId = sessionUser.getId();
         String password = request.getParameter(PageParameter.PASSWORD);
         boolean isCommandSuccess;
         try {

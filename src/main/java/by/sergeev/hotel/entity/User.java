@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 public class User implements Serializable {
 
-    private int id;
+    private long id;
     private String email;
     private String firstName;
     private String lastName;
@@ -20,7 +20,7 @@ public class User implements Serializable {
 
     }
 
-    public User(int id, String email, String firstName, String lastName) {
+    public User(long id, String email, String firstName, String lastName) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -41,7 +41,7 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-    public User(int id, String email, String firstName, String lastName, BigDecimal balance, Role role) {
+    public User(long id, String email, String firstName, String lastName, BigDecimal balance, Role role) {
         this.id = this.id;
         this.email = email;
         this.firstName = firstName;
@@ -58,11 +58,11 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -132,7 +132,7 @@ public class User implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);

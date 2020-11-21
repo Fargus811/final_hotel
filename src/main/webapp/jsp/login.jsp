@@ -16,7 +16,7 @@
 <jsp:include page="/jsp/part/header.jsp"/>
 <div class="row justify-content-center" style="margin-bottom: 50px;">
     <form action="${pageContext.request.contextPath}/controller" method="POST" style="margin-top: 50px">
-        <input type="hidden" name="command" value="login" />
+        <input type="hidden" name="command" value="login"/>
         <div class="form-group">
             <label for="inputEmail"><fmt:message key="text.logIn.email"/></label>
             <input name="email" type="email" class="form-control" id="InputEmail"
@@ -26,19 +26,26 @@
         </div>
         <div class="form-group">
             <label for="inputPassword"><fmt:message key="text.logIn.password"/></label>
-            <input name="password" type="password" class="form-control" id="InputPassword" placeholder="<fmt:message key="text.logIn.password"/>"
+            <input name="password" type="password" class="form-control" id="InputPassword"
+                   placeholder="<fmt:message key="text.logIn.password"/>"
                    pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,25}$" not-validated>
             <span class="text-danger" hidden><fmt:message key="text.logIn.password.error"/></span>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-success" style="margin-top: 25px;"><fmt:message key="text.logIn.button"/></button>
+            <button type="submit" class="btn btn-success" style="margin-top: 25px;"><fmt:message
+                    key="text.logIn.button"/></button>
         </div>
-        <c:if test="${not empty error}">
-            <span class="text-danger"><fmt:message key="text.logIn.error"/></span>
-        </c:if>
     </form>
-    <script src="${pageContext.servletContext.contextPath}/resources/js/login_validator.js"></script>
 </div>
+<div class="row justify-content-center" style="margin-bottom: 50px; margin-top: 20px">
+    <c:if test="${not empty error}">
+        <span class="text-danger"><fmt:message key="text.logIn.error"/></span>
+    </c:if>
+    <c:if test="${not empty errorBan}">
+        <span class="text-danger"><fmt:message key="text.logIn.banned.error"/></span>
+    </c:if>
+</div>
+<script src="${pageContext.servletContext.contextPath}/resources/js/login_validator.js"></script>
 </body>
 </fmt:bundle>
 <jsp:include page="/jsp/part/footer.jsp"/>

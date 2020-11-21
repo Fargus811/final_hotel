@@ -23,7 +23,7 @@ public class UpdateUserPasswordCommand implements EditCommand {
         String newPassword = request.getParameter(PageParameter.NEW_PASSWORD);
         HttpSession session = request.getSession();
         SessionUser sessionUser = (SessionUser) (session.getAttribute(PageParameter.SESSION_USER));
-        int userId = sessionUser.getId();
+        long userId = sessionUser.getId();
         boolean isCommandSuccess;
         try {
             isCommandSuccess =  userService.updateUserPassword(userId,oldPassword,newPassword);

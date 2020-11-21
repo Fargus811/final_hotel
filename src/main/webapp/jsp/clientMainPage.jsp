@@ -68,10 +68,12 @@
                             <h3 class="panel-title"><fmt:message key="text.logIn.email"/></h3>
                         </div>
                         <div class="panel-body">${user.email}</div>
+                        <c:if test="${sessionUser.role == 'USER'}">
                         <div class="panel-heading">
                             <h3 class="panel-title"><fmt:message key="text.client.balance"/></h3>
                         </div>
                         <div class="panel-body">${user.balance}$</div>
+                        </c:if>
                     </div>
                     <div class="panel-body">
                         <form action="${pageContext.request.contextPath}/controller?command=show_profile_settings"

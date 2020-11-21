@@ -44,16 +44,32 @@
                 <td>${elem.email}</td>
                 <td>${elem.balance}$</td>
                 <td>${elem.accountStatus}</td>
-                <td> <form action="${pageContext.request.contextPath}/controller" method="POST">
-                    <input type="hidden" name="command" value="show_user_bookings"/>
-                    <input type="hidden" name="userId" value="${elem.id}"/>
-                    <button type="submit" class="btn-primary" style="margin-right: 35px;background-color: #002583">View bookings</button>
+                <td>
+                    <form action="${pageContext.request.contextPath}/controller" method="POST">
+                        <input type="hidden" name="command" value="show_user_bookings"/>
+                        <input type="hidden" name="userId" value="${elem.id}"/>
+                        <button type="submit" class="btn-primary" style="margin-right: 35px;background-color: #002583">
+                            View bookings
+                        </button>
+                    </form>
                     <c:choose>
                         <c:when test="${elem.accountStatus == 'ACTIVE'}">
-                            <button type="submit" class="danger"><fmt:message key="text.admin.users.ban"/></button></c:when>
+                            <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                <input type="hidden" name="command" value="change_account_status"/>
+                                <input type="hidden" name="userId" value="${elem.id}"/>
+                                <input type="hidden" name="accountStatusId" value="1"/>
+                                <button type="submit" class="danger"><fmt:message key="text.admin.users.ban"/></button>
+                            </form>
+                        </c:when>
                         <c:otherwise>
-                            <button type="submit" class="btn-primary" style="background-color: #002583"><fmt:message key="text.admin.users.unblock"/></button>
-                    </c:otherwise>
+                            <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                <input type="hidden" name="command" value="change_account_status"/>
+                                <input type="hidden" name="userId" value="${elem.id}"/>
+                                <input type="hidden" name="accountStatusId" value="0"/>
+                                <button type="submit" class="btn-primary" style="background-color: #002583"><fmt:message
+                                        key="text.admin.users.unblock"/></button>
+                            </form>
+                        </c:otherwise>
                     </c:choose>
                 </td>
             </tr>

@@ -47,6 +47,5 @@ public abstract class AbstractDao<T> {
 
     protected abstract T makeEntity(ResultSet rs) throws SQLException;
 
-
 }
 

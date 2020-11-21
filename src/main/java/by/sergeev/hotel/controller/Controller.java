@@ -42,11 +42,6 @@ public class Controller extends HttpServlet {
         try {
             String commandResult;
             Command command = CommandDefiner.define(request);
-//            if (command instanceof ShowCommand){
-//            Map<String,Object> map = command.getParameters();
-//            String name = command.getName();
-//            HttpSession session = request.getSession(true);
-//            session.setAttribute();}
             commandResult = command.execute(request);
             if (commandResult.endsWith(RESULT_JSP)) {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(commandResult);

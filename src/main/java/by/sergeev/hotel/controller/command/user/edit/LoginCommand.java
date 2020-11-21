@@ -1,14 +1,14 @@
 package by.sergeev.hotel.controller.command.user.edit;
 
 import by.sergeev.hotel.controller.command.Command;
+import by.sergeev.hotel.controller.command.PageParameter;
+import by.sergeev.hotel.controller.command.PagePath;
 import by.sergeev.hotel.entity.SessionUser;
 import by.sergeev.hotel.entity.User;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
-import by.sergeev.hotel.controller.command.PagePath;
-import by.sergeev.hotel.controller.command.PageParameter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,6 +19,8 @@ import java.util.Optional;
 public class LoginCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger(LoginCommand.class);
+
+    private static final int ACOUNT_STATUS_ACCESS = 0;
 
     private static final UserService userService = ServiceFactory.serviceFactory.getUserService();
 
@@ -33,15 +35,20 @@ public class LoginCommand implements Command {
             throw new CommandException("Problem with login", e);
         }
         boolean isCommandSuccess = (userOptional.isPresent());
-        HttpSession session = request.getSession(true);
         String pagePath;
         if (isCommandSuccess) {
             User user = userOptional.get();
-            SessionUser sessionUser = new SessionUser(user.getId(),user.getFirstName(),user.getLastName(),user.getRole());
-            session.setAttribute(PageParameter.SESSION_USER, sessionUser);
-            request.setAttribute(PageParameter.USER, user);
-            pagePath = PagePath.CLIENT_PROFILE;
-            LOGGER.info(sessionUser + " logged in");
+            if (user.getAccountStatus().ordinal() == ACOUNT_STATUS_ACCESS) {
+                HttpSession session = request.getSession(true);
+                SessionUser sessionUser = new SessionUser(user.getId(), user.getFirstName(), user.getLastName(), user.getRole());
+                session.setAttribute(PageParameter.SESSION_USER, sessionUser);
+                request.setAttribute(PageParameter.USER, user);
+                pagePath = PagePath.CLIENT_PROFILE;
+                LOGGER.info(sessionUser + " logged in");
+            } else {
+                request.setAttribute(PageParameter.ERROR_BAN, PageParameter.ERROR);
+                pagePath = PagePath.LOGIN;
+            }
         } else {
             request.setAttribute(PageParameter.ERROR, PageParameter.ERROR);
             pagePath = PagePath.LOGIN;

@@ -1,6 +1,7 @@
 package by.sergeev.hotel.controller;
-import by.sergeev.hotel.controller.command.PagePath;
+
 import by.sergeev.hotel.controller.command.PageParameter;
+import by.sergeev.hotel.controller.command.PagePath;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,12 +19,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@WebServlet(urlPatterns = "/image_controller/*")
+@WebServlet(urlPatterns = "/upload_image_controller/*")
 @MultipartConfig(maxFileSize = 1024 * 1024 * 10,
         maxRequestSize = 1024 * 1024 * 50)
-public class UploadImageController extends HttpServlet {
+public class UploadImageServlet extends HttpServlet {
 
-    private static final Logger logger = LogManager.getLogger(UploadImageController.class);
+    private static final Logger logger = LogManager.getLogger(UploadImageServlet.class);
     private static final String UPLOAD_LOCATION = "/Users/mac/Downloads/hotel1/src/main/webapp/resources/images";
     private static final String FILE_PARAMETER = "file";
 

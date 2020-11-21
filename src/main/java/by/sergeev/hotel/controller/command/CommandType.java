@@ -1,13 +1,18 @@
 package by.sergeev.hotel.controller.command;
 
 import by.sergeev.hotel.controller.command.booking.edit.AddRoomToBookingCommand;
+import by.sergeev.hotel.controller.command.booking.edit.CalculateBookingCostCommand;
 import by.sergeev.hotel.controller.command.booking.edit.ChangeBookingStatusCommand;
 import by.sergeev.hotel.controller.command.booking.edit.CreateBookingCommand;
 import by.sergeev.hotel.controller.command.booking.show.ShowAllBookingsCommand;
 import by.sergeev.hotel.controller.command.booking.show.ShowUserBookingsCommand;
-import by.sergeev.hotel.controller.command.room.ShowAllRoomsCommand;
-import by.sergeev.hotel.controller.command.room.ShowFreeRoomByConditionCommand;
+import by.sergeev.hotel.controller.command.room.edit.UpdateRoomImageCommand;
+import by.sergeev.hotel.controller.command.room.edit.UpdateRoomInfoCommand;
+import by.sergeev.hotel.controller.command.room.show.ShowAllRoomsCommand;
+import by.sergeev.hotel.controller.command.room.show.ShowFreeRoomByConditionCommand;
 import by.sergeev.hotel.controller.command.room.edit.CreateRoomCommand;
+import by.sergeev.hotel.controller.command.room.show.ShowRoomToUpdateInfoCommand;
+import by.sergeev.hotel.controller.command.room.show.ShowRoomToUpdatePhotoCommand;
 import by.sergeev.hotel.controller.command.user.edit.*;
 import by.sergeev.hotel.controller.command.user.show.ShowAllUsersCommand;
 import by.sergeev.hotel.controller.command.user.show.ShowMyProfileCommand;
@@ -33,8 +38,13 @@ public enum CommandType {
     CREATE_ROOM(new CreateRoomCommand()),
     CHANGE_BOOKING_STATUS(new ChangeBookingStatusCommand()),
     SHOW_PROFILE_SETTINGS(new ShowProfileSettingsCommand()),
+    CALCULATE_BOOKING_COST(new CalculateBookingCostCommand()),
     SHOW_FREE_ROOM_BY_CONDITION(new ShowFreeRoomByConditionCommand()),
-    ADD_ROOM_TO_BOOIKING(new AddRoomToBookingCommand());
+    SHOW_ROOM_TO_UPDATE_INFO(new ShowRoomToUpdateInfoCommand()),
+    SHOW_ROOM_TO_UPDATE_PHOTO(new ShowRoomToUpdatePhotoCommand()),
+    UPDATE_ROOM_IMAGE(new UpdateRoomImageCommand()),
+    UPDATE_ROOM_INFO(new UpdateRoomInfoCommand()),
+    ADD_ROOM_TO_BOOKING(new AddRoomToBookingCommand());
 
     private Command command;
 

@@ -27,7 +27,7 @@ public class CreateBookingCommand implements EditCommand {
         String result;
         HttpSession session = request.getSession(true);
         SessionUser sessionUser = (SessionUser) (session.getAttribute(PageParameter.SESSION_USER));
-        int userId = sessionUser.getId();
+        long userId = sessionUser.getId();
         String startDate = request.getParameter(PageParameter.START_DATE);
         String endDate = request.getParameter(PageParameter.END_DATE);
         int maxPersons = Integer.parseInt(request.getParameter(PageParameter.MAX_PERSONS));

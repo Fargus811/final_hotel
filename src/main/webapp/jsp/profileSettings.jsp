@@ -54,6 +54,7 @@
                             </svg>
                             <fmt:message key="text.profileSettings.security"/>
                         </a>
+                        <c:if test="${sessionUser.role == 'USER'}">
                         <a href="#billing" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -63,6 +64,7 @@
                             </svg>
                             <fmt:message key="text.profileSettings.wallet"/>
                         </a>
+                        </c:if>
                     </nav>
                 </div>
             </div>
@@ -152,8 +154,7 @@
                                        value="${user.email}">
                                 <small id="emailHelp" class="form-text text-muted"><fmt:message key="text.profileSettings.infoEmail"/></small>
                             </div>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#infoModal">
-                                <fmt:message key="text.profileSettings.update"/>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#infoModal"><fmt:message key="text.profileSettings.update"/>
                             </button>
                             <button type="reset" class="btn btn-light"><fmt:message key="text.profileSettings.reset"/></button>
                             <c:if test="${not empty errorInfo}">
@@ -184,7 +185,10 @@
                         <h6><fmt:message key="text.profileSettings.h1.infoSettings"/></h6>
                         <hr>
                         <form action="${pageContext.request.contextPath}/controller" method="POST">
-                            <input type="hidden" name="command" value="delete_account_by_user"/>
+                            <input type="hidden" name="command" value="change_account_status"/>
+                            <input type="hidden" name="accountStatusId" value="2"/>
+                            <input type="hidden" name="userId" value="${user.id}"/>
+                            <input type="hidden" name="delete" value="true"/>
                             <div class="form-group">
                                 <label class="d-block"><fmt:message key="text.logIn.password.confirm"/></label>
                                 <input pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,25}$" title="<fmt:message key="text.registration.passwordError"/>"
@@ -213,6 +217,9 @@
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="text.profileSettings.close"/>
                                             </button>
                                             <button type="submit" class="btn btn-danger"><fmt:message key="text.profileSettings.deleteAccount"/></button>
+                                            <c:if test="${not empty error}">
+                                                <span class="text-danger"><fmt:message key="text.client.errorPassword"/></span>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
@@ -270,8 +277,8 @@
                         <h6><fmt:message key="text.profileSettings.h1.wallet"/></h6>
                         <hr>
                         <div class="form-group">
-                            <h3>Your balance: ${user.balance}</h3>
-                            <label class="d-block mb-0">Payment</label>
+                            <h3><fmt:message key="text.profileSettings.wallet.balance"/> ${user.balance}</h3>
+                            <label class="d-block mb-0"><fmt:message key="text.profileSettings.wallet.payment"/></label>
                             <div class="row" style="margin: 20px">
                                 <form action="${pageContext.request.contextPath}/controller" method="POST">
                                     <input type="hidden" name="command" value="add_balance"/>
@@ -294,7 +301,7 @@
                                 <form action="${pageContext.request.contextPath}/controller" method="POST">
                                     <input type="hidden" name="command" value="add_balance"/>
                                     <input type="hidden" name="amount" value="2500">
-                                    <button class="btn btn-info" type="submit" style="margin-right: 20px"><fmt:message key="text.profileSettings.add"/> 2500💵
+                                    <button class="btn btn-info" type="submit" style="margin-right: 20px; margin-top: 20px;"><fmt:message key="text.profileSettings.add"/> 2500💵
                                     </button>
                                 </form>
                             </div>

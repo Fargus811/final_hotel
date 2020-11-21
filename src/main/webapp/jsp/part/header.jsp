@@ -11,9 +11,17 @@
         <div class='button'><a style="color: white" href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="text.catalog"/></a></div>
         <a class='button' href="partnership"><fmt:message key="text.partnership"/></a>
         <div class="lang-select">
-            <select id="lang-select">
-                <option locale="ru">RU</option>
-                <option locale="en">EN</option>
+            <select id="lang-select" cur-lang="${locale}">
+                <c:choose>
+                    <c:when test="${locale == 'ru' }">
+                    <option locale="ru">🇷🇺RU</option>
+                    <option locale="en">🇺🇸EN</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option locale="en">🇺🇸EN</option>
+                        <option locale="ru">🇷🇺RU</option>
+                    </c:otherwise>
+                </c:choose>
             </select>
         </div>
         <c:choose>

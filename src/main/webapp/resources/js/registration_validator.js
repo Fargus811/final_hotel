@@ -14,6 +14,7 @@ jQuery(function () {
             $(this).attr("style", "border: 2px solid red")
             $(this).attr("not-validated")
             $("#error-"+$(this).attr("id")).removeAttr("hidden")
+            $("#submit-button").attr("disabled", "")
         }
         else {
             $(this).removeAttr("style")

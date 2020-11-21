@@ -22,7 +22,7 @@ public class UpdateUserInformationCommand implements Command {
         String result;
         HttpSession session = request.getSession();
         SessionUser sessionUser = (SessionUser) (session.getAttribute(PageParameter.SESSION_USER));
-        int userId = sessionUser.getId();
+        long userId = sessionUser.getId();
         String email = request.getParameter(PageParameter.EMAIL);
         String firstName = request.getParameter(PageParameter.FIRST_NAME);
         String lastName = request.getParameter(PageParameter.LAST_NAME);

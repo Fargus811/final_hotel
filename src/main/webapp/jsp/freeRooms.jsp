@@ -14,12 +14,11 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="text">
 <jsp:include page="/jsp/part/header.jsp"/>
-
+<div class="fade-block left"></div>
+<div class="fade-block right"></div>
+<div class="scroll">
 <div class="room-container" style="margin-left: 95px">
     <c:forEach var="elem" items="${rooms}">
-        <form action="${pageContext.request.contextPath}/controller" method="POST">
-        <input type="hidden" name="command" value="add_room_to_booking"/>
-        <input type="hidden" name="fileName" value="${elem.id}">
             <div class="room-item" style="float: left; margin-top: 50px">
                 <img class="room-photo" src="${elem.photoPath}" alt="Room Image" width="210" height="120">
                 <div class="room-name">${elem.name}</div>
@@ -39,12 +38,17 @@
                         <c:if test="${elem.hasBathroom}">
                             <div class="room-advantage">🛁</div>
                         </c:if>
+                        <form action="${pageContext.request.contextPath}/controller" method="POST">
+                            <input type="hidden" name="command" value="calculate_booking_cost"/>
+                            <input type="hidden" name="roomId" value="${elem.id}"/>
+                            <input type="hidden" name="bookingId" value="${requestScope.bookingId}"/>
+                            <button type="submit" class="btn btn-success"style="margin-top: 10px"><fmt:message key="text.admin.calculate"/></button>
+                        </form>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn-primary"><fmt:message key="text.bookings.addRoom"/></button>
-        </form>
     </c:forEach>
+</div>
 </div>
 </body>
 <jsp:include page="/jsp/part/footer.jsp"/>

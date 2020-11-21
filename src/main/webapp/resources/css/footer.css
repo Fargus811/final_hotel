@@ -4,6 +4,7 @@
     left: 0px;
     height: 100px;
     background-color: black;
+    z-index: 5;
 }
 
 .container {

@@ -24,12 +24,23 @@
         </div>
         </c:if>
         <c:if test="${empty sessionScope.imageStatus}">
-        <form action="${pageContext.request.contextPath}/image_controller" enctype="multipart/form-data" method="post">
-            <div class="form-group">
-                <label><fmt:message key="text.create.roomImage"/></label>
-                <input type="file" name="file" id="file"/>
-                <input type="hidden" name="image_type" value="exterior_small">
-                <button  type="submit" class="button auth secondary" style="background-color: blue;">Download</button>
+        <form action="${pageContext.request.contextPath}/upload_image_controller/" enctype="multipart/form-data" method="post">
+            <div class="form-group" style="margin-top: 50px">
+                <div class="col">
+                    <div class="row">
+                    <label><fmt:message key="text.create.roomImage"/></label>
+                    </div>
+                    <div class="row">
+                    <input type="file" name="file" id="file"/>
+                    </div>
+                    <div class="row">
+                    <input type="hidden" name="image_type" value="exterior_small">
+                    </div>
+                    <div class="row">
+                    <button  type="submit" class="button auth secondary" style="background-color: blue;background-color: blue;">Download</button>
+                    </div>
+                </div>
+
             </div>
         </form>
         </c:if>
@@ -73,10 +84,11 @@
                     <div class="form-group">
                         <span class="form-label"><fmt:message key="text.create.roomGrade"/></span>
                         <select class="form-control" name="gradeId">
-                            <option value="1"><fmt:message key="text.create.roomGrade.economy"/></option>
-                            <option value="2"><fmt:message key="text.create.roomGrade.standard"/></option>
+                            <option value="0"><fmt:message key="text.create.roomGrade.economy"/></option>
+                            <option value="1"><fmt:message key="text.create.roomGrade.standard"/></option>
+                            <option value="2"><fmt:message key="text.create.roomGrade.suite"/></option>
                             <option value="3"><fmt:message key="text.create.roomGrade.premium"/></option>
-                            <option value="4"><fmt:message key="text.create.roomGrade.elite"/></option>
+                            <option value="4"><fmt:message key="text.create.roomGrade.premier"/></option>
                         </select>
                         <span class="select-arrow"></span>
                     </div>
@@ -87,9 +99,9 @@
                     <div class="form-group">
                         <span class="form-label"><fmt:message key="text.create.rooms"/></span>
                         <select class="form-control" name="numberOfRooms">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
                         </select>
                         <span class="select-arrow"></span>
                     </div>
@@ -98,9 +110,9 @@
                     <div class="form-group">
                         <span class="form-label"><fmt:message key="text.create.beds"/></span>
                         <select class="form-control" name="numberOfBeds">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
                         </select>
                         <span class="select-arrow"></span>
                     </div>
@@ -122,9 +134,11 @@
                     <input pattern="^[А-Яа-яЁё\s]+$" class="form-control" name="roomDescription" id="inputRoomDescription" title="" rows="3">
                 </div>
             </div>
+            <c:if test="${not empty sessionScope.imageStatus}">
             <div class="form-btn">
-                <button type="submit" class="button auth secondary" style="background-color: blue;"><fmt:message key="text.createRoom.button"/></button>
+                <button type="submit" class="button auth secondary" style="background-color: blue; margin-bottom: 20px; background-color: blue;right: 940px;"><fmt:message key="text.createRoom.button"/></button>
             </div>
+            </c:if>
             <c:if test="${not empty error}">
                 <div class="alert alert-danger" role="alert" style="margin: 20px">
                     <fmt:message key="text.profileSettings.invalidData"/>

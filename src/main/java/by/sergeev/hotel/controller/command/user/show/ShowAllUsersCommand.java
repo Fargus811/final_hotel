@@ -20,7 +20,7 @@ public class ShowAllUsersCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         List<User> users;
         try {
-            users = userService.findAll();
+            users = userService.findAllUsers();
         } catch (ServiceException e) {
             throw new CommandException("Problem with find all users", e);
         }

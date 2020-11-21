@@ -5,27 +5,25 @@ import by.sergeev.hotel.entity.enums.RoomGrade;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class Booking implements Serializable {
-    //TODO BigDecimal
-    private int id;
+
+    private long id;
     private String startDate;
     private String endDate;
     private BigDecimal cost;
     private int maxPersons;
     private int numberOfBeds;
     private int numberOfRooms;
-    private int floor;
     private RoomGrade roomGrade;
     private boolean hasTV;
     private boolean hasWifi;
     private boolean hasBathroom;
-    private int userId;
+    private long userId;
     private Room room;
     private BookingStatus bookingStatus;
 
-    public Booking(int id, String startDate, String endDate, BigDecimal cost, int maxPersons, int numberOfBeds,
+    public Booking(long id, String startDate, String endDate, BigDecimal cost, int maxPersons, int numberOfBeds,
                    RoomGrade roomGrade, boolean hasTV, boolean hasWifi, boolean hasBathroom, int userId, Room room,
                    BookingStatus bookingStatus, int numberOfRooms) {
         this.id = id;
@@ -47,11 +45,11 @@ public class Booking implements Serializable {
     public Booking() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -127,11 +125,11 @@ public class Booking implements Serializable {
         this.hasBathroom = hasBathroom;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -159,14 +157,6 @@ public class Booking implements Serializable {
         this.numberOfRooms = numberOfRooms;
     }
 
-    public int getFloor() {
-        return floor;
-    }
-
-    public void setFloor(int floor) {
-        this.floor = floor;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -178,7 +168,6 @@ public class Booking implements Serializable {
         if (maxPersons != booking.maxPersons) return false;
         if (numberOfBeds != booking.numberOfBeds) return false;
         if (numberOfRooms != booking.numberOfRooms) return false;
-        if (floor != booking.floor) return false;
         if (hasTV != booking.hasTV) return false;
         if (hasWifi != booking.hasWifi) return false;
         if (hasBathroom != booking.hasBathroom) return false;
@@ -193,19 +182,18 @@ public class Booking implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         result = 31 * result + (cost != null ? cost.hashCode() : 0);
         result = 31 * result + maxPersons;
         result = 31 * result + numberOfBeds;
         result = 31 * result + numberOfRooms;
-        result = 31 * result + floor;
         result = 31 * result + (roomGrade != null ? roomGrade.hashCode() : 0);
         result = 31 * result + (hasTV ? 1 : 0);
         result = 31 * result + (hasWifi ? 1 : 0);
         result = 31 * result + (hasBathroom ? 1 : 0);
-        result = 31 * result + userId;
+        result = 31 * result + (int) (userId ^ (userId >>> 32));
         result = 31 * result + (room != null ? room.hashCode() : 0);
         result = 31 * result + (bookingStatus != null ? bookingStatus.hashCode() : 0);
         return result;
@@ -221,7 +209,6 @@ public class Booking implements Serializable {
         sb.append(", maxPersons=").append(maxPersons);
         sb.append(", numberOfBeds=").append(numberOfBeds);
         sb.append(", numberOfRooms=").append(numberOfRooms);
-        sb.append(", floor=").append(floor);
         sb.append(", roomGrade=").append(roomGrade);
         sb.append(", hasTV=").append(hasTV);
         sb.append(", hasWifi=").append(hasWifi);

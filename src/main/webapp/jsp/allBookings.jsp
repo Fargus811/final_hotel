@@ -46,9 +46,15 @@
                 <td>${elem.cost}</td>
                 <td><c:choose>
                     <c:when test="${empty elem.room}">
-                        <a class='button auth primary' style="margin-right: 110px;margin-bottom: 10px;"
-                           href="${pageContext.request.contextPath}/controller?command=show_free_room_by_condition"><fmt:message
-                                key="text.client.chooseRoom"/></a>
+                        <form action="${pageContext.request.contextPath}/controller" method="POST">
+                        <input type="hidden" name="command" value="show_free_room_by_condition"/>
+                        <input type="hidden" name="bookingId" value="${elem.id}"/>
+                        <button type="submit" class='button auth primary'
+                                style="margin-right: 110px;margin-bottom: 10px;"
+                                href="${pageContext.request.contextPath}/controller?command=show_free_room_by_condition">
+                            <fmt:message
+                                    key="text.client.chooseRoom"/></>
+                        </form>
                     </c:when>
                     <c:otherwise>${elem.room.name}
                     </c:otherwise>
@@ -56,11 +62,13 @@
                 <td>${elem.bookingStatus}</td>
                 <td><c:choose>
                     <c:when test="${empty elem.room}">
-                        Please wait
+                        <button class='button auth disabled' style="margin-right: 75px;margin-bottom: 10px;" disabled>
+                            <fmt:message
+                                    key="text.bookings.viewDetails"/></button>
                     </c:when>
-                    <c:otherwise>
-                        <button type="submit" class="btn-primary"><fmt:message
-                                key="text.bookings.viewDetails"/></button>
+                    <c:otherwise> <a class='button auth primary' style="margin-right: 110px;margin-bottom: 10px;"
+                                     href="${pageContext.request.contextPath}/controller?command=show_free_room_by_condition"><fmt:message
+                            key="text.bookings.viewDetails"/></a>
                     </c:otherwise>
                 </c:choose></td>
             </tr>

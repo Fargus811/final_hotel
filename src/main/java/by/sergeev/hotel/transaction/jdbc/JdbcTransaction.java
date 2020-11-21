@@ -8,5 +8,5 @@ public abstract class JdbcTransaction implements Transaction {
 
     public abstract void commit();
 
-   public abstract void rollback();
+    public abstract void rollback();
 }

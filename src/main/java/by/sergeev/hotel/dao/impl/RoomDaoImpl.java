@@ -24,24 +24,30 @@ public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
     private static final Logger LOGGER = LogManager.getLogger(RoomDaoImpl.class);
 
     private static final String INSERTED_COLUMNS = "rooms.name, rooms.number_of_rooms, rooms.max_persons, " +
-            "rooms.cost, rooms.has_Wifi, rooms.has_TV, rooms.has_bathroom, rooms.number_of_beds,rooms.room_description, rooms.photo_path, grades.grade_name";
+            "rooms.cost, rooms.has_Wifi, rooms.has_TV, rooms.has_bathroom, rooms.number_of_beds,rooms.room_description, rooms.photo_path, rooms.grade_id";
     private static final String SELECTED_COLUMNS = "rooms.id, " + INSERTED_COLUMNS;
     private static final String CREATE_ROOM = "INSERT INTO rooms ( rooms.name, rooms.number_of_rooms, rooms.max_persons, " +
             "rooms.cost, rooms.has_Wifi, rooms.has_TV, rooms.has_bathroom, rooms.number_of_beds, rooms.room_description," +
             " rooms.photo_path, rooms.grade_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String FIND_ALL_ROOMS = "SELECT " + SELECTED_COLUMNS + " FROM rooms INNER JOIN grades ON " +
-            "grades.id  = rooms.grade_id";
+    private static final String UPDATE_ROOM_INFO = "UPDATE rooms SET rooms.name = ?, rooms.number_of_rooms= ?, rooms.max_persons = ?, " +
+            "rooms.cost = ?, rooms.has_Wifi = ?, rooms.has_TV=?, rooms.has_bathroom=?, rooms.number_of_beds=?, rooms.room_description=?," +
+            " rooms.photo_path=?, rooms.grade_id=?  WHERE id = ?";
+    private static final String UPDATE_ROOM_PHOTO = "UPDATE rooms SET rooms.photo_path = ? WHERE id = ?";
+    private static final String FIND_ALL_ROOMS = "SELECT " + SELECTED_COLUMNS + " FROM rooms";
+    private static final String GET_ROOMS_BY_PAGE = "SELECT " + SELECTED_COLUMNS + " FROM rooms INNER JOIN grades ON " +
+            "grades.id  = rooms.grade_id LIMIT ?, 5";
     private static final String FIND_ROOM_BY_ID = "SELECT " + SELECTED_COLUMNS + " FROM rooms INNER JOIN grades ON " +
             "grades.id  = rooms.grade_id WHERE rooms.id = ?";
+    private static final String GET_COUNT_OF_ROWS = "SELECT COUNT(*) FROM rooms";
     private static final String DELETE_ROOM = "DELETE FROM rooms WHERE id = ? ";
-    private static final String FIND_FREE_ROOMS_BY_BOOKING = "SELECT " + SELECTED_COLUMNS + " FROM rooms r INNER JOIN grades ON " +
-            "grades.id  = rooms.grade_id WHERE rooms.number_of_rooms = ? AND rooms.number_of_beds = ? AND rooms.max_persons = ? " +
-            "AND rooms.has_Wifi = ? AND rooms.has_TV = ? AND room.has_bathroom = ? " +
-            "AND NOT EXISTS (" +
-            "    SELECT 1 FROM bookings WHERE room_id = r.id AND " +
-            "  (startDate BETWEEN ? AND ? OR endDate BETWEEN ? AND ? OR ? BETWEEN startDate AND endDate)";
+    private static final String FIND_FREE_ROOMS_BY_BOOKING = "SELECT " + SELECTED_COLUMNS + " FROM rooms " +
+            "WHERE rooms.number_of_rooms >= ? AND rooms.number_of_beds >= ? AND rooms.max_persons >= ?" +
+            " AND rooms.grade_id = ? AND rooms.has_Wifi >= ? AND rooms.has_TV >= ? AND rooms.has_bathroom = ?" +
+            " AND id NOT IN (" +
+            "SELECT bookings.room_id FROM bookings WHERE" +
+            "(DATE(?) >= bookings.end_date AND bookings.start_date <= DATE(?)))";
 
-
+    // page parameter in find All
     @Override
     public List<Room> findAll() throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
@@ -52,18 +58,38 @@ public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
     }
 
     @Override
-    public Optional<Room> findRoomById(int roomId) throws DaoException {
+    public List<Room> getRoomsByPage(int offset) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
-            return Optional.ofNullable(tryFindEntityByPrStatement(connection, FIND_ROOM_BY_ID,
-                    ((preparedStatement, params) -> preparedStatement.setInt(1, roomId)), roomId));
+            return tryFindEntityListByPrStatement(connection, GET_ROOMS_BY_PAGE,
+                    ((preparedStatement, params) -> preparedStatement.setInt(1, offset)), offset);
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Problem with bookingDao to find Bookings by userID", e);
+            throw new DaoException("Problem in RoomDao, while trying to find all rooms", e);
         }
     }
 
     @Override
-    public Room sortRoomByCost(double cost) throws DaoException {
-        return null;
+    public int getCountOfRows() throws DaoException {
+        try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
+            try (PreparedStatement preparedSt = connection.prepareStatement(GET_COUNT_OF_ROWS)) {
+                ResultSet resultSet = preparedSt.executeQuery();
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DaoException("Problem with create room", e);
+        }
+        return 0;
+    }
+
+    @Override
+    public Optional<Room> findRoomById(long roomId) throws DaoException {
+        try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
+            return Optional.ofNullable(tryFindEntityByPrStatement(connection, FIND_ROOM_BY_ID,
+                    ((preparedStatement, params) -> preparedStatement.setLong(1, roomId)), roomId));
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Problem with bookingDao to find Bookings by userID", e);
+        }
     }
 
     @Override
@@ -71,14 +97,15 @@ public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
         try (ProxyConnection proxyConnection = ConnectionPool.getInstance().takeConnection()) {
             return tryFindEntityListByPrStatement(proxyConnection, FIND_FREE_ROOMS_BY_BOOKING,
                     (preparedStatement, params) -> {
-                        preparedStatement.setString(1, booking.getStartDate());
-                        preparedStatement.setString(2, booking.getEndDate());
-                        preparedStatement.setInt(3, booking.getNumberOfRooms());
-                        preparedStatement.setInt(4, booking.getNumberOfBeds());
-                        preparedStatement.setInt(5, booking.getMaxPersons());
+                        preparedStatement.setInt(1, booking.getNumberOfRooms());
+                        preparedStatement.setInt(2, booking.getNumberOfBeds());
+                        preparedStatement.setInt(3, booking.getMaxPersons());
+                        preparedStatement.setInt(4, booking.getRoomGrade().ordinal());
                         preparedStatement.setBoolean(5, booking.isHasWifi());
-                        preparedStatement.setBoolean(5, booking.isHasTV());
-                        preparedStatement.setBoolean(5, booking.isHasBathroom());
+                        preparedStatement.setBoolean(6, booking.isHasTV());
+                        preparedStatement.setBoolean(7, booking.isHasBathroom());
+                        preparedStatement.setString(8, booking.getStartDate());
+                        preparedStatement.setString(9, booking.getEndDate());
                     }, booking);
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Problem in UserDao, while trying to fina all users", e);
@@ -87,7 +114,7 @@ public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
 
     @Override
     protected Room makeEntity(ResultSet rs) throws SQLException {
-        int id = rs.getInt(1);
+        long id = rs.getInt(1);
         String roomName = rs.getString(2);
         int numberOfRooms = rs.getInt(3);
         int maxPersons = rs.getInt(4);
@@ -98,7 +125,7 @@ public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
         int numberOfBeds = rs.getInt(9);
         String description = rs.getString(10);
         String photoPath = rs.getString(11);
-        RoomGrade gradeName = RoomGrade.valueOf(rs.getString(12).toUpperCase());
+        RoomGrade gradeName = RoomGrade.values()[(rs.getInt(12))];
         return new Room(id, roomName, numberOfRooms, maxPersons, cost, hasWifi, hasTV, hasBathroom, numberOfBeds, description, photoPath, gradeName);
     }
 
@@ -106,17 +133,7 @@ public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
     public void createRoom(Room room) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             try (PreparedStatement preparedSt = connection.prepareStatement(CREATE_ROOM)) {
-                preparedSt.setString(1, room.getName());
-                preparedSt.setInt(2, room.getNumberOfRooms());
-                preparedSt.setInt(3, room.getMaxPersons());
-                preparedSt.setBigDecimal(4, room.getCost());
-                preparedSt.setBoolean(5, room.isHasWifi());
-                preparedSt.setBoolean(6, room.isHasTV());
-                preparedSt.setBoolean(7, room.isHasBathroom());
-                preparedSt.setInt(8, room.getNumberOfBeds());
-                preparedSt.setString(9, room.getDescription());
-                preparedSt.setString(10, room.getPhotoPath());
-                preparedSt.setInt(11, room.getRoomGrade().ordinal());
+                prepareStatement(room, preparedSt);
                 if (preparedSt.executeUpdate() != 1) {
                     throw new DaoException("Room was not created");
                 }
@@ -126,11 +143,25 @@ public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
         }
     }
 
+    private void prepareStatement(Room room, PreparedStatement preparedSt) throws SQLException {
+        preparedSt.setString(1, room.getName());
+        preparedSt.setInt(2, room.getNumberOfRooms());
+        preparedSt.setInt(3, room.getMaxPersons());
+        preparedSt.setBigDecimal(4, room.getCost());
+        preparedSt.setBoolean(5, room.isHasWifi());
+        preparedSt.setBoolean(6, room.isHasTV());
+        preparedSt.setBoolean(7, room.isHasBathroom());
+        preparedSt.setInt(8, room.getNumberOfBeds());
+        preparedSt.setString(9, room.getDescription());
+        preparedSt.setString(10, room.getPhotoPath());
+        preparedSt.setInt(11, room.getRoomGrade().ordinal());
+    }
+
     @Override
-    public void deleteRoomById(int roomId) throws DaoException {
+    public void deleteRoomById(long roomId) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             try (PreparedStatement preparedSt = connection.prepareStatement(DELETE_ROOM)) {
-                preparedSt.setInt(1, roomId);
+                preparedSt.setLong(1, roomId);
                 if (preparedSt.executeUpdate() != 1) {
                     throw new DaoException("Room was not created");
                 }
@@ -141,14 +172,33 @@ public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
     }
 
     @Override
-    public Room sortRoomsByGrade() throws DaoException {
-        return null;
+    public void updateRoomInfo(Room room) throws DaoException {
+        try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
+            try (PreparedStatement preparedSt = connection.prepareStatement(UPDATE_ROOM_INFO)) {
+                prepareStatement(room, preparedSt);
+                preparedSt.setLong(12, room.getId());
+                if (preparedSt.executeUpdate() != 1) {
+                    throw new DaoException("Room was not updated");
+                }
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DaoException("Problem with update room", e);
+        }
     }
 
     @Override
-    public Room sortRoomsByPeopleCount() throws DaoException {
-        return null;
+    public void updateRoomPhoto(long roomId, String newPath) throws DaoException {
+        try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
+            try (PreparedStatement preparedSt = connection.prepareStatement(UPDATE_ROOM_INFO)) {
+                preparedSt.setString(1, newPath);
+                preparedSt.setLong(2, roomId);
+                if (preparedSt.executeUpdate() != 1) {
+                    throw new DaoException("Room was not update");
+                }
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DaoException("Problem with create room", e);
+        }
     }
-
-
 }
+

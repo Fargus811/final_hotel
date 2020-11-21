@@ -4,23 +4,23 @@ import by.sergeev.hotel.entity.enums.Role;
 
 public class SessionUser {
 
-    private int id;
+    private long id;
     private String firstName;
     private String lastName;
     private Role role;
 
-    public SessionUser(int id, String firstName, String lastName, Role role) {
+    public SessionUser(long id, String firstName, String lastName, Role role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -63,7 +63,7 @@ public class SessionUser {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);

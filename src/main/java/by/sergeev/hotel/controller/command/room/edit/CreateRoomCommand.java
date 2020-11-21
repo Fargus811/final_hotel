@@ -62,7 +62,8 @@ public class CreateRoomCommand implements Command {
             throw new CommandException("Problem with create booking", e);
         }
         if (isCommandSuccess) {
-            result = PagePath.INDEX;
+            result = PagePath.INFO_SUCCESS;
+            session.removeAttribute(PageParameter.DOWNLOAD_STATUS);
         }
         else {
             request.setAttribute(PageParameter.ERROR, PageParameter.ERROR);

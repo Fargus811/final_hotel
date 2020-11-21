@@ -10,7 +10,6 @@ import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.BookingService;
 import by.sergeev.hotel.validator.DateValidator;
-import by.sergeev.hotel.validator.UserFormValidator;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,7 +24,7 @@ public class BookingServiceImpl implements BookingService {
     private RoomDao roomDao = DaoFactory.daoFactory.getRoomDao();
 
     @Override
-    public List<Booking> findBookingsByUserId(int userId) throws ServiceException {
+    public List<Booking> findBookingsByUserId(long userId) throws ServiceException {
         try {
             return bookingDao.findBookingsByUserId(userId);
         } catch (DaoException e) {
@@ -34,7 +33,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void changeBookingStatusById(int bookingId, String bookingStatus) throws ServiceException {
+    public void changeBookingStatusById(long bookingId, String bookingStatus) throws ServiceException {
         int statusId = BookingStatus.valueOf(bookingStatus).ordinal();
         try {
             bookingDao.changeBookingStatusById(bookingId, statusId);
@@ -49,7 +48,7 @@ public class BookingServiceImpl implements BookingService {
         if (DateValidator.isValidStartAndEndDate(freshBooking.getStartDate(), freshBooking.getEndDate())) {
             try {
                 bookingDao.createBooking(freshBooking);
-                isCommandSuccess =true;
+                isCommandSuccess = true;
             } catch (DaoException e) {
                 throw new ServiceException("Problem in method createBooking in bookingDao", e);
             }
@@ -58,28 +57,33 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void addRoomToBooking(int bookingId, int roomId) throws ServiceException {
+    public void addRoomToBooking(long bookingId, long roomId, BigDecimal totalCost) throws ServiceException {
         try {
-            BigDecimal totalСost = getTotalCostOfBooking(bookingId, roomId);
-            bookingDao.addRoomToBooking(bookingId, roomId, totalСost);
+            bookingDao.addRoomToBooking(bookingId, roomId, totalCost);
         } catch (DaoException e) {
             throw new ServiceException("Problem in method addRoomToBooking in bookingDao", e);
         }
     }
 
-    private BigDecimal getTotalCostOfBooking(int bookingId, int roomId) throws DaoException {
-        Optional<Booking> booking = bookingDao.findBookingById(bookingId);
-        Optional<Room> room = roomDao.findRoomById(roomId);
-        BigDecimal totalСost = BigDecimal.ZERO;
-        if (booking.isPresent() & room.isPresent()){
+    public BigDecimal getTotalCostOfBooking(long bookingId, long roomId) throws ServiceException {
+        Optional<Booking> booking;
+        Optional<Room> room;
+        try {
+            booking = bookingDao.findBookingById(bookingId);
+            room = roomDao.findRoomById(roomId);
+        } catch (DaoException e) {
+            throw new ServiceException("Problem with getting total cost in booking service", e);
+        }
+        BigDecimal totalCost = BigDecimal.ZERO;
+        if (booking.isPresent() && room.isPresent()) {
             String startDate = booking.get().getStartDate();
             String endDate = booking.get().getEndDate();
-            LocalDate dateBefore = LocalDate.parse(startDate) ;
+            LocalDate dateBefore = LocalDate.parse(startDate);
             LocalDate dateAfter = LocalDate.parse(endDate);
-            long daysBetween =DAYS.between(dateBefore, dateAfter);
-            totalСost = room.get().getCost().multiply(BigDecimal.valueOf(daysBetween));
+            long daysBetween = DAYS.between(dateBefore, dateAfter);
+            totalCost = room.get().getCost().multiply(BigDecimal.valueOf(daysBetween));
         }
-        return totalСost;
+        return totalCost;
     }
 
     @Override
@@ -87,7 +91,7 @@ public class BookingServiceImpl implements BookingService {
         try {
             return bookingDao.findAll();
         } catch (DaoException e) {
-            throw new ServiceException("Problem in method findAll in bookingDao", e);
+            throw new ServiceException("Problem in method findAllUsers in bookingDao", e);
         }
     }
 }

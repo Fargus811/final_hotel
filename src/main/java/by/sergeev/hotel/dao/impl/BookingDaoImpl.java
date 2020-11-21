@@ -38,34 +38,34 @@ public class BookingDaoImpl extends AbstractDao<Booking> implements BookingDao {
     private static final String FIND_ALL_BOOKINGS = "SELECT id, start_date, end_date, cost, max_persons, number_of_beds," +
             " grade_id, has_Wifi, has_TV , has_bathroom, user_id, room_id, number_of_rooms, booking_status_id FROM bookings";
     private static final String UPDATE_BOOKING_STATUS_BY_ID = "UPDATE bookings SET status_id = ? WHERE id = ?";
-    private static final String ADD_ROOM_TO_BOOKING_BY_ID = "UPDATE bookings SET room_id = ? cost = ? booking_status_id = ? WHERE id = ?";
+    private static final String ADD_ROOM_TO_BOOKING_BY_ID = "UPDATE bookings SET room_id = ?, cost = ?, booking_status_id = ? WHERE id = ?";
 
     @Override
-    public List<Booking> findBookingsByUserId(int userId) throws DaoException {
+    public List<Booking> findBookingsByUserId(long userId) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             return tryFindEntityListByPrStatement(connection, FIND_BOOKINGS_BY_USER,
-                    ((preparedStatement, params) -> preparedStatement.setInt(1, userId)), userId);
+                    ((preparedStatement, params) -> preparedStatement.setLong(1, userId)), userId);
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Problem with bookingDao to find Bookings by userID", e);
         }
     }
 
     @Override
-    public Optional<Booking> findBookingById(int bookingId) throws DaoException {
+    public Optional<Booking> findBookingById(long bookingId) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             return Optional.ofNullable(tryFindEntityByPrStatement(connection, FIND_BOOKING_BY_ID,
-                    ((preparedStatement, params) -> preparedStatement.setInt(1, bookingId)), bookingId));
+                    ((preparedStatement, params) -> preparedStatement.setLong(1, bookingId)), bookingId));
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Problem with bookingDao to find Bookings by userID", e);
         }
     }
 
     @Override
-    public void changeBookingStatusById(int bookingId, int statusId) throws DaoException {
+    public void changeBookingStatusById(long bookingId, int statusId) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             try (PreparedStatement preparedSt = connection.prepareStatement(UPDATE_BOOKING_STATUS_BY_ID)) {
-                preparedSt.setInt(1, bookingId);
-                preparedSt.setInt(2, statusId);
+                preparedSt.setInt(1, statusId);
+                preparedSt.setLong(2, bookingId);
                 if (preparedSt.getUpdateCount() != 1) {
                     throw new DaoException("Status was not updated");
                 }
@@ -88,7 +88,7 @@ public class BookingDaoImpl extends AbstractDao<Booking> implements BookingDao {
                 preparedSt.setBoolean(7, freshBooking.isHasWifi());
                 preparedSt.setBoolean(8, freshBooking.isHasTV());
                 preparedSt.setBoolean(9, freshBooking.isHasBathroom());
-                preparedSt.setInt(10, freshBooking.getUserId());
+                preparedSt.setLong(10, freshBooking.getUserId());
                 preparedSt.setInt(11, freshBooking.getNumberOfRooms());
                 if (preparedSt.executeUpdate() != 1) {
                     throw new DaoException("Status was not updated");
@@ -101,7 +101,7 @@ public class BookingDaoImpl extends AbstractDao<Booking> implements BookingDao {
 
     @Override
     protected Booking makeEntity(ResultSet rs) throws SQLException {
-        int id = rs.getInt(1);
+        long id = rs.getInt(1);
         String startDate = rs.getString(2);
         String endDate = rs.getString(3);
         BigDecimal cost = rs.getBigDecimal(4);
@@ -131,13 +131,13 @@ public class BookingDaoImpl extends AbstractDao<Booking> implements BookingDao {
     }
 
     @Override
-    public void addRoomToBooking(int bookingsId, int roomId, BigDecimal cost) throws DaoException {
+    public void addRoomToBooking(long bookingsId, long roomId, BigDecimal cost) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             try (PreparedStatement preparedSt = connection.prepareStatement(ADD_ROOM_TO_BOOKING_BY_ID)) {
-                preparedSt.setInt(1, roomId);
+                preparedSt.setLong(1, roomId);
                 preparedSt.setBigDecimal(2, cost);
                 preparedSt.setInt(3, BookingStatus.WAITING_FOR_PAYMENT.ordinal());
-                preparedSt.setInt(4, bookingsId);
+                preparedSt.setLong(4, bookingsId);
                 if (preparedSt.executeUpdate() != 1) {
                     throw new DaoException("Status was not updated");
                 }
@@ -154,6 +154,24 @@ public class BookingDaoImpl extends AbstractDao<Booking> implements BookingDao {
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Problem in RoomDao, while trying to find all rooms", e);
         }
+    }
+
+    @Override
+    public boolean changeBookingStatusForPayment(ProxyConnection proxyConnection, long bookingId) throws DaoException {
+        boolean isChanged = false;
+        try (PreparedStatement preparedStatement = proxyConnection.prepareStatement(UPDATE_BOOKING_STATUS_BY_ID)) {
+            preparedStatement.setInt(1, 3);
+            preparedStatement.setLong(2, bookingId);
+            isChanged = (preparedStatement.executeUpdate() == 1);
+            if (preparedStatement.getUpdateCount() != 1) {
+                LOGGER.fatal("Problem with updating booking");
+                throw new DaoException("Booking status was not updated");
+            }
+        } catch (SQLException e) {
+            LOGGER.fatal("Problem with updating booking in database connection");
+            throw new DaoException("Problem with updating booking", e);
+        }
+        return isChanged;
     }
 }
 

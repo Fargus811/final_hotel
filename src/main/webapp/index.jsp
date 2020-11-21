@@ -8,6 +8,7 @@
 <body>
 <jsp:forward page="/controller" >
     <jsp:param name="command" value="show_all_rooms" />
+    <jsp:param name="numberOfPage" value="1" />
 </jsp:forward>
 </body>
 </html>

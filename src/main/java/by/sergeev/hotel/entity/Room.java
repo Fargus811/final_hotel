@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 public class Room implements Serializable {
 
-    private int id;
+    private long id;
     private String name;
     private int numberOfRooms;
     private int maxPersons;
@@ -23,7 +23,7 @@ public class Room implements Serializable {
     public Room() {
     }
 
-    public Room(int id, String name, int numberOfRooms, int maxPersons, BigDecimal cost, boolean hasWifi,
+    public Room(long id, String name, int numberOfRooms, int maxPersons, BigDecimal cost, boolean hasWifi,
                 boolean hasTV, boolean hasBathroom, int numberOfBeds, String description, String photoPath, RoomGrade roomGrade) {
         this.id = id;
         this.name = name;
@@ -39,11 +39,11 @@ public class Room implements Serializable {
         this.roomGrade = roomGrade;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -62,7 +62,6 @@ public class Room implements Serializable {
     public void setNumberOfRooms(int numberOfRooms) {
         this.numberOfRooms = numberOfRooms;
     }
-
 
     public int getMaxPersons() {
         return maxPersons;
@@ -159,7 +158,7 @@ public class Room implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + numberOfRooms;
         result = 31 * result + maxPersons;

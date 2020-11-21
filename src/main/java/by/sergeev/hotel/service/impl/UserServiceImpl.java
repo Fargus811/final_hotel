@@ -13,7 +13,6 @@ import by.sergeev.hotel.validator.UserFormValidator;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
@@ -21,30 +20,26 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao = DaoFactory.daoFactory.getUserDao();
 
     @Override
-    public List<User> findAll() throws ServiceException {
+    public List<User> findAllUsers() throws ServiceException {
         try {
-            return userDao.findAll();
+            return userDao.findAllUsers();
         } catch (DaoException e) {
-            throw new ServiceException("Problem in method findAll in roomDao", e);
+            throw new ServiceException("Problem in method findAllUsers in roomDao", e);
         }
     }
 
     @Override
     public boolean checkIsValid(String email, String password, String firstName, String lastName) throws ServiceException {
-        boolean isValid = false;
-        if (UserFormValidator.isValidEmail(email) && UserFormValidator.isValidPassword(password) &&
-                UserFormValidator.isValidFirstName(firstName) && UserFormValidator.isValidLastName(lastName)) {
-            try {
-                isValid = checkIsEmailFree(email);
-            } catch (DaoException e) {
-                throw new ServiceException(e);
-            }
-        }
-        return isValid;
+        return UserFormValidator.isValidEmail(email) && UserFormValidator.isValidPassword(password) &&
+                UserFormValidator.isValidFirstName(firstName) && UserFormValidator.isValidLastName(lastName);
     }
 
-    private boolean checkIsEmailFree(String email) throws DaoException {
-        return !(userDao.findUserByEmail(email).isPresent());
+    public boolean checkIsEmailFree(String email) throws ServiceException {
+        try {
+            return !(userDao.findUserByEmail(email).isPresent());
+        } catch (DaoException e) {
+            throw new ServiceException("Problem with find user by email");
+        }
     }
 
     @Override
@@ -78,7 +73,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addBalance(int userId, BigDecimal amount) throws ServiceException {
+    public void addBalance(long userId, BigDecimal amount) throws ServiceException {
         try {
             Optional<User> userOptional = userDao.findEntityById(userId);
             if (userOptional.isPresent()) {
@@ -93,7 +88,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findUserById(int userId) throws ServiceException {
+    public Optional<User> findUserById(long userId) throws ServiceException {
         try {
             return userDao.findEntityById(userId);
         } catch (DaoException e) {
@@ -117,7 +112,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUserPassword(int userId, String oldPassword, String newPassword) throws ServiceException {
+    public boolean updateUserPassword(long userId, String oldPassword, String newPassword) throws ServiceException {
         boolean isUpdated = false;
         String userPassword = getUserPassword(userId);
         if (!oldPassword.equals(newPassword) && UserFormValidator.isValidPassword(oldPassword) && UserFormValidator.isValidPassword(newPassword)
@@ -132,7 +127,7 @@ public class UserServiceImpl implements UserService {
         return isUpdated;
     }
 
-    private String getUserPassword(int userId) throws ServiceException {
+    private String getUserPassword(long userId) throws ServiceException {
         String userPassword;
         try {
             userPassword = userDao.findPasswordById(userId);
@@ -143,12 +138,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteAccount(int userId, String password) throws ServiceException {
+    public boolean deleteAccount(long userId, String password) throws ServiceException {
         boolean isDeleted = false;
         String userPassword = getUserPassword(userId);
         if (BCryptHash.checkPassword(password, userPassword)) {
             try {
-                userDao.deleteAccount(userId);
+                userDao.changeAccountStatus(userId,3);
             } catch (DaoException e) {
                 throw new ServiceException("Problem with method delete account in user dao", e);
             }
@@ -156,6 +151,15 @@ public class UserServiceImpl implements UserService {
         }
 
         return isDeleted;
+    }
+
+    @Override
+    public void changeAccountStatus(long userId, int statusId) throws ServiceException {
+        try{
+            userDao.changeAccountStatus(userId,statusId);
+        }catch (DaoException e){
+            throw new ServiceException("Problem with changing account status", e);
+        }
     }
 }
 

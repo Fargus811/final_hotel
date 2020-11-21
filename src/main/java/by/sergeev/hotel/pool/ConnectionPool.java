@@ -26,6 +26,10 @@ public class ConnectionPool {
 
     private static ConnectionPool instance = null;
 
+    /**
+     *  
+     * @return
+     */
     public static ConnectionPool getInstance() {
         if (instance == null) {
             if (isInitialized.compareAndSet(false, true)) {

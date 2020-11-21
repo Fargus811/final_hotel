@@ -7,7 +7,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/base.css" type="text/css">
     <title>Grand Hotel</title>
 </head>
@@ -15,39 +21,90 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="text">
 <jsp:include page="/jsp/part/header.jsp"/>
-
-<div class="room-container" style="margin-left: 95px">
-    <c:forEach var="elem" items="${rooms}">
-        <div class="room-item" style="float: left; margin-top: 50px">
-            <img class="room-photo" src="${elem.photoPath}" alt="Room Image" width="210" height="120">
-            <div class="room-name">${elem.name}</div>
-            <div class="roomGrade">${elem.roomGrade}</div>
-            <div class="room-desc">${elem.description}</div>
-            <div class="room-item-bottom">
-                <div class="room-cost">${elem.cost}💵</div>
-                <div class="room-beds">🛏 ${elem.numberOfBeds}</div>
-                <div class="room-max-persons">👥 ${elem.maxPersons}</div>
-                <div class="room-advantages">
-                    <c:if test="${elem.hasWifi}">
-                        <div class="room-advantage">Wi-Fi</div>
-                    </c:if>
-                    <c:if test="${elem.hasTV}">
-                        <div class="room-advantage">📺</div>
-                    </c:if>
-                    <c:if test="${elem.hasBathroom}">
-                        <div class="room-advantage">🛁</div>
-                    </c:if>
+<div class="fade-block left"></div>
+<div class="fade-block right"></div>
+<div class="scroll">
+    <div class="room-container">
+        <c:forEach var="elem" items="${rooms}">
+            <div class="room-item" style="float: left; margin-top: 50px">
+                <img class="room-photo" src="${elem.photoPath}" alt="Room Image" width="210" height="120">
+                <div class="room-name">${elem.name}</div>
+                <div class="roomGrade">${elem.roomGrade}</div>
+                <div class="room-desc">${elem.description}</div>
+                <div class="room-item-bottom">
+                    <div class="room-cost">${elem.cost}💵</div>
+                    <div class="room-beds">🛏 ${elem.numberOfBeds}</div>
+                    <div class="room-max-persons">👥 ${elem.maxPersons}</div>
+                    <div class="room-advantages">
+                        <c:if test="${elem.hasWifi}">
+                            <div class="room-advantage">Wi-Fi</div>
+                        </c:if>
+                        <c:if test="${elem.hasTV}">
+                            <div class="room-advantage">📺</div>
+                        </c:if>
+                        <c:if test="${elem.hasBathroom}">
+                            <div class="room-advantage">🛁</div>
+                        </c:if>
+                    </div>
+                    <ctg:onlyForAdmin>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateRoomModal"
+                                style="background-color: blue; left: 20px"><fmt:message
+                                key="text.client.edit"/></button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="updateRoomModal" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel"><fmt:message key="text.confirm"/></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="margin-bottom: 25px">
+                                        <fmt:message key="text.updateRoom.confirm"/>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                            <input type="hidden" name="command" value="show_room_to_update_photo"/>
+                                            <input type="hidden" name="roomId" value="${elem.id}"/>
+                                            <button type="submit" class="btn btn-secondary"><fmt:message key="text.client.edit.roomPhoto"/></button>
+                                        </form>
+                                        <form action="${pageContext.request.contextPath}/controller" method="POST" style="margin-top: 20px">
+                                            <input type="hidden" name="command" value="show_room_to_update_info"/>
+                                            <input type="hidden" name="roomId" value="${elem.id}"/>
+                                            <button type="submit" class="btn btn-primary"><fmt:message
+                                                    key="text.client.edit.roomInfo"/></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ctg:onlyForAdmin>
                 </div>
-                <ctg:onlyForAdmin>
-                    <form action="${pageContext.request.contextPath}/controller" method="POST" style="margin-top: 20px">
-                        <input type="hidden" name="command" value="update_room" />
-                        <input type="hidden" name="roomId" value="${elem.id}" />
-                    <button type="submit" class="button auth secondary" style="background-color: blue;"><fmt:message key="text.client.edit"/></button>
-                    </form>
-                </ctg:onlyForAdmin>
             </div>
-        </div>
-    </c:forEach>
+        </c:forEach>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <c:if test="${hasPrev}">
+                <form action="${pageContext.request.contextPath}/controller" method="POST">
+                    <input type="hidden" name="command" value="show_all_rooms"/>
+                    <input type="hidden" name="numberOfPage" value="${numberOfPage-1}"/>
+            <li class="page-item"><button type="submit" class="page-link">Previous</button></li>
+                </form>
+            </c:if>
+            <c:if test="${hasNext}">
+                <form action="${pageContext.request.contextPath}/controller" method="POST">
+                    <input type="hidden" name="command" value="show_all_rooms"/>
+                    <input type="hidden" name="numberOfPage" value="${numberOfPage+1}"/>
+            <li class="page-item"><button type="submit" class="page-link">Next</button></li>
+                </form>
+            </c:if>
+        </ul>
+    </nav>
 </div>
 </body>
 <jsp:include page="/jsp/part/footer.jsp"/>
