@@ -1,6 +1,7 @@
 package by.sergeev.hotel.controller.command.room.show;
 
 import by.sergeev.hotel.controller.command.Command;
+import by.sergeev.hotel.controller.command.ShowCommand;
 import by.sergeev.hotel.entity.Room;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.ServiceException;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Objects;
 
-public class ShowAllRoomsCommand implements Command {
+public class ShowAllRoomsCommand implements ShowCommand {
 
     private static final String NUMBER_OF_PAGE = "numberOfPage";
     private static final String HAS_PREV = "hasPrev";

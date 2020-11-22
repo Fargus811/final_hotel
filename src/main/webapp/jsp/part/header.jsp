@@ -6,8 +6,7 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="text">
     <div class='header' style="z-index:2">
-        <div><a class='site-name' href="${pageContext.request.contextPath}/index.jsp"><fmt:message
-                key="text.hotel"/></a></div>
+        <div><a class='site-name' href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="text.hotel"/></a></div>
         <div class='button'><a style="color: white" href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="text.catalog"/></a></div>
         <a class='button' href="partnership"><fmt:message key="text.partnership"/></a>
         <div class="lang-select">

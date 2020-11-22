@@ -37,7 +37,7 @@ public class TransactionManager {
     }
 
     /**
-     * Add image and tattoo transaction.
+     * Add balance and status transaction.
      *
      * @param userId    the user id
      * @param bookingId the booking id
@@ -49,23 +49,19 @@ public class TransactionManager {
         try {
             proxyConnection = ConnectionPool.getInstance().takeConnection();
             proxyConnection.setAutoCommit(false);
-        } catch (ConnectionPoolException | SQLException e) {
-            throw new DaoException("Problem with taking proxyConnection", e);
-        }
-        boolean isBookingPaid = userDao.payForBooking(proxyConnection, userId, totalBalance);
-        boolean isStatusChanged = false;
-        if (isBookingPaid) {
-            isStatusChanged = bookingDao.changeBookingStatusForPayment(proxyConnection, bookingId);
-        }
-        try {
+            boolean isBookingPaid = userDao.payForBooking(proxyConnection, userId, totalBalance);
+            boolean isStatusChanged = false;
+            if (isBookingPaid) {
+                isStatusChanged = bookingDao.changeBookingStatusForPayment(proxyConnection, bookingId);
+            }
             proxyConnection.commit();
-        } catch (SQLException ex) {
+            return isStatusChanged;
+        } catch (ConnectionPoolException | SQLException ex) {
             rollbackConnection(proxyConnection);
             throw new DaoException("Error while pay for booking ", ex);
         } finally {
             closeConnection(proxyConnection);
         }
-        return isStatusChanged;
     }
 
     private void rollbackConnection(ProxyConnection connection) {

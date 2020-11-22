@@ -1,6 +1,7 @@
 package by.sergeev.hotel.controller;
 
 import by.sergeev.hotel.controller.command.*;
+import by.sergeev.hotel.controller.command.user.edit.ChangeLanguageCommand;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.exception.ServiceException;
@@ -42,12 +43,18 @@ public class Controller extends HttpServlet {
         try {
             String commandResult;
             Command command = CommandDefiner.define(request);
+            if (command instanceof ChangeLanguageCommand){
+                ChangeLanguageCommand changeLanguageCommand = (ChangeLanguageCommand)command;
+                request = changeLanguageCommand.setLastShowCommandParameters(request);
+            }
             commandResult = command.execute(request);
             if (commandResult.endsWith(RESULT_JSP)) {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(commandResult);
                 dispatcher.forward(request, response);
             }else if(commandResult.startsWith(RESULT_SHOW_COMMAND)){
-                Command showCommand =CommandType.valueOf(commandResult.toUpperCase()).getCommand();
+                String showCommandName = commandResult.toUpperCase();
+                saveLastShowCommandWithParams(showCommandName, request);
+                Command showCommand =CommandType.valueOf(showCommandName).getCommand();
                 String page  = showCommand.execute(request);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
                 dispatcher.forward(request, response);
@@ -58,6 +65,12 @@ public class Controller extends HttpServlet {
             LOGGER.error("Command failed", e);
             response.sendRedirect(PagePath.ERROR);
         }
+    }
+
+    private void saveLastShowCommandWithParams(String name, HttpServletRequest request){
+        HttpSession httpSession = request.getSession(true);
+        httpSession.setAttribute("lastShowCommandName", name);
+        httpSession.setAttribute("lastShowCommandParameters",request.getParameterMap());
     }
 
     @Override

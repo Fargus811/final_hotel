@@ -1,7 +1,7 @@
 package by.sergeev.hotel.controller.command;
 
 import by.sergeev.hotel.controller.command.booking.edit.AddRoomToBookingCommand;
-import by.sergeev.hotel.controller.command.booking.edit.CalculateBookingCostCommand;
+import by.sergeev.hotel.controller.command.booking.show.CalculateBookingCostCommand;
 import by.sergeev.hotel.controller.command.booking.edit.ChangeBookingStatusCommand;
 import by.sergeev.hotel.controller.command.booking.edit.CreateBookingCommand;
 import by.sergeev.hotel.controller.command.booking.show.ShowAllBookingsCommand;

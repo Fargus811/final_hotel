@@ -1,4 +1,4 @@
-package by.sergeev.hotel.controller.command.booking.edit;
+package by.sergeev.hotel.controller.command.booking.show;
 
 import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.controller.command.PageParameter;
@@ -23,13 +23,9 @@ public class CalculateBookingCostCommand implements Command {
         long roomId = Long.parseLong(request.getParameter(PageParameter.ROOM_ID));
         long bookingId = Long.parseLong(request.getParameter(PageParameter.BOOKING_ID));
         BigDecimal totalCost;
-        try {
-            totalCost = bookingService.getTotalCostOfBooking(bookingId, roomId);
-        } catch (ServiceException e) {
-            throw new CommandException("Problem with get total cost in command", e);
-        }
         Room room;
         try {
+            totalCost = bookingService.getTotalCostOfBooking(bookingId, roomId);
             room = roomService.findRoomById(roomId);
         } catch (ServiceException e) {
             throw new CommandException("Problem with find room by id", e);
