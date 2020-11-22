@@ -6,6 +6,7 @@ import by.sergeev.hotel.controller.command.booking.edit.ChangeBookingStatusComma
 import by.sergeev.hotel.controller.command.booking.edit.CreateBookingCommand;
 import by.sergeev.hotel.controller.command.booking.show.ShowAllBookingsCommand;
 import by.sergeev.hotel.controller.command.booking.show.ShowUserBookingsCommand;
+import by.sergeev.hotel.controller.command.room.edit.DeleteRoomCommand;
 import by.sergeev.hotel.controller.command.room.edit.UpdateRoomImageCommand;
 import by.sergeev.hotel.controller.command.room.edit.UpdateRoomInfoCommand;
 import by.sergeev.hotel.controller.command.room.show.ShowAllRoomsCommand;
@@ -44,6 +45,7 @@ public enum CommandType {
     SHOW_ROOM_TO_UPDATE_PHOTO(new ShowRoomToUpdatePhotoCommand()),
     UPDATE_ROOM_IMAGE(new UpdateRoomImageCommand()),
     UPDATE_ROOM_INFO(new UpdateRoomInfoCommand()),
+    DELETE_ROOM(new DeleteRoomCommand()),
     ADD_ROOM_TO_BOOKING(new AddRoomToBookingCommand());
 
     private Command command;

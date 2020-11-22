@@ -1,7 +1,8 @@
 package by.sergeev.hotel.controller;
 
-import by.sergeev.hotel.controller.command.PageParameter;
-import by.sergeev.hotel.controller.command.PagePath;
+import by.sergeev.hotel.controller.command.*;
+import by.sergeev.hotel.controller.command.room.show.ShowRoomToUpdateInfoCommand;
+import by.sergeev.hotel.exception.CommandException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
         maxRequestSize = 1024 * 1024 * 50)
 public class UploadImageServlet extends HttpServlet {
 
-    private static final Logger logger = LogManager.getLogger(UploadImageServlet.class);
+    private static final Logger LOGGER = LogManager.getLogger(UploadImageServlet.class);
     private static final String UPLOAD_LOCATION = "/Users/mac/Downloads/hotel1/src/main/webapp/resources/images";
     private static final String FILE_PARAMETER = "file";
 
@@ -41,7 +43,6 @@ public class UploadImageServlet extends HttpServlet {
         String fileName = request.getPart(FILE_PARAMETER).getSubmittedFileName();
         Path path = Paths.get(UPLOAD_LOCATION);
         Path fullPath = Paths.get(path + File.separator + fileName);
-
         if (Files.notExists(path)) {
             Files.createDirectory(path);
         }
@@ -53,10 +54,24 @@ public class UploadImageServlet extends HttpServlet {
                     part.write(fullPath.toString());
                     session.setAttribute(PageParameter.DOWNLOAD_STATUS, fileName);
                 } catch (IOException e) {
-                    logger.log(Level.ERROR, "FileName " + fileName, e);
+                    LOGGER.log(Level.ERROR, "FileName " + fileName, e);
                 }
             });
         }
-        request.getRequestDispatcher(PagePath.CREATE_ROOM).forward(request, response);
+        if (Objects.isNull(request.getParameter("update"))) {
+            request.getRequestDispatcher(PagePath.CREATE_ROOM).forward(request, response);
+        } else {
+            forwardToUpdateForm(request, response);
+        }
+    }
+
+    private void forwardToUpdateForm(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        try {
+            new ShowRoomToUpdateInfoCommand().execute(request);
+        } catch (CommandException e) {
+            LOGGER.error("Upload command failed", e);
+            response.sendRedirect(PagePath.ERROR);
+        }
+        request.getRequestDispatcher(PagePath.UPDATE_ROOM_INFO).forward(request, response);
     }
 }

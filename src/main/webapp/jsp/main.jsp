@@ -76,6 +76,11 @@
                                             <button type="submit" class="btn btn-primary"><fmt:message
                                                     key="text.client.edit.roomInfo"/></button>
                                         </form>
+                                        <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                            <input type="hidden" name="command" value="delete_room"/>
+                                            <input type="hidden" name="roomId" value="${elem.id}"/>
+                                            <button type="submit" class="btn btn-danger" style="margin-top: 16.5px"><fmt:message key="text.admin.delete"/></button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

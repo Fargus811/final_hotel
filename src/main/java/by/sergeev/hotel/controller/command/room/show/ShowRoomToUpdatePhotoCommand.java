@@ -10,6 +10,7 @@ import by.sergeev.hotel.service.RoomService;
 import by.sergeev.hotel.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class ShowRoomToUpdatePhotoCommand implements Command {
 
@@ -17,6 +18,9 @@ public class ShowRoomToUpdatePhotoCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+        String result;
+        HttpSession session = request.getSession();
+        String fileName = session.getAttribute(PageParameter.DOWNLOAD_STATUS).toString();
         long roomId = Long.parseLong(request.getParameter(PageParameter.ROOM_ID));
         Room room;
         try {

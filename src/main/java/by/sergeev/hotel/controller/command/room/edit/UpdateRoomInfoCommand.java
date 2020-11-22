@@ -10,7 +10,9 @@ import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.RoomService;
 import by.sergeev.hotel.service.ServiceFactory;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -21,7 +23,9 @@ public class UpdateRoomInfoCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
     String result;
+    HttpSession session = request.getSession();
     long id = Long.parseLong(request.getParameter(PageParameter.ROOM_ID));
+    String fileName = session.getAttribute(PageParameter.DOWNLOAD_STATUS).toString();
     String roomName = request.getParameter(PageParameter.ROOM_NAME);
     String roomDescription = request.getParameter(PageParameter.ROOM_DESCRIPTION);
     double cost = Double.parseDouble(request.getParameter(PageParameter.ROOM_COST));
@@ -44,6 +48,7 @@ public class UpdateRoomInfoCommand implements Command {
     Room room = new Room();
         room.setId(id);
         room.setName(roomName);
+        room.setPhotoPath(fileName);
         room.setDescription(roomDescription);
         room.setCost(BigDecimal.valueOf(cost));
         room.setMaxPersons(maxPersons);
@@ -61,7 +66,7 @@ public class UpdateRoomInfoCommand implements Command {
         throw new CommandException("Problem with create booking", e);
     }
         if (isCommandSuccess) {
-        result = PagePath.INDEX;
+        result = PagePath.INFO_SUCCESS;
     }
         else {
         request.setAttribute(PageParameter.ERROR, PageParameter.ERROR);

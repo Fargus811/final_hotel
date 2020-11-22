@@ -15,7 +15,7 @@ public interface RoomService {
 
     boolean createRoom(Room room) throws ServiceException;
 
-    void deleteRoom(String roomId) throws ServiceException;
+    void deleteRoom(long roomId) throws ServiceException;
 
     boolean updateRoomInfo(Room room) throws ServiceException;
 

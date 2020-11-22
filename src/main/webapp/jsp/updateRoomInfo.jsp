@@ -18,6 +18,34 @@
 <jsp:include page="/jsp/part/header.jsp"/>
 <div class="justify-content-center">
     <div class="container" style="margin: 50px 20px 20px 40px">
+        <c:if test="${not empty sessionScope.imageStatus}">
+            <div class="alert alert-success" role="alert">
+                Success
+            </div>
+        </c:if>
+        <c:if test="${empty sessionScope.imageStatus}">
+            <form action="${pageContext.request.contextPath}/upload_image_controller/" enctype="multipart/form-data" method="post">
+                <div class="form-group" style="margin-top: 50px">
+                    <div class="col">
+                        <div class="row">
+                            <label><fmt:message key="text.create.roomImage"/></label>
+                        </div>
+                        <div class="row">
+                            <input type="file" name="file" id="file"/>
+                        </div>
+                        <div class="row">
+                            <input type="hidden" name="image_type" value="exterior_small">
+                            <input type="hidden" name="update" value="1">
+                            <input type="hidden" name="roomId" value="${room.id}"/>
+                        </div>
+                        <div class="row">
+                            <button  type="submit" class="button auth secondary" style="background-color: blue;background-color: blue;margin-right: 1011px">Download</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </c:if>
         <form action="${pageContext.request.contextPath}/controller" method="POST">
             <input type="hidden" name="command" value="update_room_info"/>
             <input type="hidden" name="roomId" value="${room.id}"/>
@@ -39,19 +67,46 @@
                 </div>
             </div>
             <div class="form-check form-check-inline" style="margin-bottom: 20px">
-                <input class="form-check-input" name="hasWifi" type="checkbox"
-                       id="inlineCheckbox1"
-                       value="${room.hasWifi}">
+                <c:choose>
+                    <c:when test="${room.hasWifi}">
+                        <input class="form-check-input" name="hasWifi" type="checkbox"
+                               id="inlineCheckbox1"
+                               value="${room.hasWifi}" checked>
+                    </c:when>
+                    <c:otherwise>
+                        <input class="form-check-input" name="hasWifi" type="checkbox"
+                               id="inlineCheckbox1"
+                               value="${room.hasWifi}">
+                    </c:otherwise>
+                </c:choose>
                 <label class="form-check-label" for="inlineCheckbox1"
                        style="margin-right: 20px">Wifi</label>
-                <input class="form-check-input" name="hasTV" type="checkbox"
-                       id="inlineCheckbox2"
-                       value="${room.hasTV}">
+                <c:choose>
+                    <c:when test="${room.hasTV}">
+                        <input class="form-check-input" name="hasTV" type="checkbox"
+                               id="inlineCheckbox2"
+                               value="${room.hasTV}" checked>
+                    </c:when>
+                    <c:otherwise>
+                        <input class="form-check-input" name="hasTV" type="checkbox"
+                               id="inlineCheckbox2"
+                               value="${room.hasTV}">
+                    </c:otherwise>
+                </c:choose>
                 <label class="form-check-label" for="inlineCheckbox2"
                        style="margin-right: 20px">TV</label>
+                <c:choose>
+                <c:when test="${room.hasBathroom}">
                 <input class="form-check-input" name="hasBathroom" type="checkbox"
                        id="inlineCheckbox3"
-                       value="${room.hasBathroom}">
+                       value="${room.hasBathroom}" checked>
+                </c:when>
+                <c:otherwise>
+                    <input class="form-check-input" name="hasBathroom" type="checkbox"
+                           id="inlineCheckbox3"
+                           value="${room.hasBathroom}">
+                </c:otherwise>
+                </c:choose>
                 <label class="form-check-label" for="inlineCheckbox3"
                        style="margin-right: 20px"><fmt:message key="text.create.bathroom"/></label>
             </div>
@@ -60,6 +115,7 @@
                     <div class="form-group">
                         <span class="form-label"><fmt:message key="text.create.roomGrade"/></span>
                         <select class="form-control" name="gradeId">
+                            <option value="${room.roomGrade.ordinal()}" selected>${room.roomGrade.name()}</option>
                             <option value="0"><fmt:message key="text.create.roomGrade.economy"/></option>
                             <option value="1"><fmt:message key="text.create.roomGrade.standard"/></option>
                             <option value="2"><fmt:message key="text.create.roomGrade.suite"/></option>
@@ -75,6 +131,7 @@
                     <div class="form-group">
                         <span class="form-label"><fmt:message key="text.create.rooms"/></span>
                         <select class="form-control" name="numberOfRooms">
+                            <option value="${room.numberOfRooms}" selected>${room.numberOfRooms}</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -86,6 +143,7 @@
                     <div class="form-group">
                         <span class="form-label"><fmt:message key="text.create.beds"/></span>
                         <select class="form-control" name="numberOfBeds">
+                            <option value="${room.numberOfBeds}" selected>${room.numberOfBeds}</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -97,6 +155,7 @@
                     <div class="form-group">
                         <span class="form-label"><fmt:message key="text.create.persons"/></span>
                         <select class="form-control" name="maxPersons">
+                            <option value="${room.maxPersons}" selected>${room.maxPersons}</option>
                             <option value="2">2</option>
                             <option value="4">4</option>
                             <option value="6">6</option>
@@ -108,15 +167,15 @@
                 <div class="form-group col-md-6">
                     <label for="inputRoomDescription">Room description</label>
                     <input pattern="^[А-Яа-яЁё\s]+$" class="form-control" name="roomDescription"
-                           id="inputRoomDescription" maxlength="50"
+                           id="inputRoomDescription" maxlength="50" value="${room.description}"
                            title="<fmt:message key="text.create.roomDesc.title"/>">
                 </div>
             </div>
-            <div class="form-btn">
-                <button type="submit" class="button auth secondary"
-                        style="background-color: blue; margin-bottom: 20px; right: 940px;"><fmt:message
-                        key="text.profileSettings.save"/></button>
-            </div>
+            <c:if test="${not empty sessionScope.imageStatus}">
+                <div class="form-btn">
+                    <button type="submit" class="button auth secondary" style="background-color: blue; margin-bottom: 20px; background-color: blue;right: 940px;"><fmt:message key="text.admin.update"/></button>
+                </div>
+            </c:if>
             <c:if test="${not empty error}">
                 <div class="alert alert-danger" role="alert" style="margin: 20px">
                     <fmt:message key="text.profileSettings.invalidData"/>

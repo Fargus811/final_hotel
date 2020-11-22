@@ -25,6 +25,6 @@ public class UpdateRoomImageCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException("Problem with updating room", e);
         }
-        return PagePath.INDEX;
+        return PagePath.INFO_SUCCESS;
     }
 }

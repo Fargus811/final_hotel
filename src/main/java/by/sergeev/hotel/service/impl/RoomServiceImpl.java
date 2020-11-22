@@ -121,6 +121,10 @@ public class RoomServiceImpl implements RoomService {
         boolean isCommandSuccess = false;
         if (RoomValidator.isRoomValid(room)) {
             try {
+                String oldPath = room.getPhotoPath();
+                File fileToDelete = new File(oldPath);
+                isCommandSuccess = fileToDelete.delete();
+                String newPath = PHOTO_RELATIVE_PATH + room.getPhotoPath();
                 roomDao.updateRoomInfo(room);
                 isCommandSuccess = true;
             } catch (DaoException e) {
@@ -131,8 +135,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void deleteRoom(String roomIdLine) throws ServiceException {
-        long roomId = Long.parseLong(roomIdLine);
+    public void deleteRoom(long roomId) throws ServiceException {
         try {
             roomDao.deleteRoomById(roomId);
         } catch (DaoException e) {
