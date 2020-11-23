@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 
+/**
+ * The type Refill user balance command.
+ */
 public class AddUserBalanceCommand implements Command {
 
     private static final UserService userService = ServiceFactory.serviceFactory.getUserService();

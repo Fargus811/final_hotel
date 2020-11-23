@@ -1,10 +1,9 @@
 package by.sergeev.hotel.service.impl;
 
-import by.sergeev.hotel.dao.BookingDao;
-import by.sergeev.hotel.dao.DaoFactory;
-import by.sergeev.hotel.dao.RoomDao;
+import by.sergeev.hotel.dao.*;
 import by.sergeev.hotel.entity.Booking;
 import by.sergeev.hotel.entity.Room;
+import by.sergeev.hotel.entity.User;
 import by.sergeev.hotel.entity.enums.BookingStatus;
 import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.exception.ServiceException;
@@ -22,13 +21,23 @@ public class BookingServiceImpl implements BookingService {
 
     private BookingDao bookingDao = DaoFactory.daoFactory.getBookingDao();
     private RoomDao roomDao = DaoFactory.daoFactory.getRoomDao();
+    private UserDao userDao = DaoFactory.daoFactory.getUserDao();
+
+    @Override
+    public Optional<Booking> findBookingById(long bookingId) throws ServiceException {
+        try {
+            return bookingDao.findBookingById(bookingId);
+        } catch (DaoException e) {
+            throw new ServiceException("Problem in method findBooking by id in booking service", e);
+        }
+    }
 
     @Override
     public List<Booking> findBookingsByUserId(long userId) throws ServiceException {
         try {
             return bookingDao.findBookingsByUserId(userId);
         } catch (DaoException e) {
-            throw new ServiceException("Problem in method findBookingsByUserId in bookingDao", e);
+            throw new ServiceException("Problem in method findBookingsByUserId in booking service", e);
         }
     }
 
@@ -38,9 +47,10 @@ public class BookingServiceImpl implements BookingService {
         try {
             bookingDao.changeBookingStatusById(bookingId, statusId);
         } catch (DaoException e) {
-            throw new ServiceException("Problem in method changeBookingsByUserId in bookingDao", e);
+            throw new ServiceException("Problem in method changeBookingsByUserId in booking service", e);
         }
     }
+
 
     @Override
     public boolean createBooking(Booking freshBooking) throws ServiceException {
@@ -50,7 +60,7 @@ public class BookingServiceImpl implements BookingService {
                 bookingDao.createBooking(freshBooking);
                 isCommandSuccess = true;
             } catch (DaoException e) {
-                throw new ServiceException("Problem in method createBooking in bookingDao", e);
+                throw new ServiceException("Problem in method createBooking in booking service", e);
             }
         }
         return isCommandSuccess;
@@ -61,7 +71,7 @@ public class BookingServiceImpl implements BookingService {
         try {
             bookingDao.addRoomToBooking(bookingId, roomId, totalCost);
         } catch (DaoException e) {
-            throw new ServiceException("Problem in method addRoomToBooking in bookingDao", e);
+            throw new ServiceException("Problem in method addRoomToBooking in booking service", e);
         }
     }
 
@@ -91,7 +101,32 @@ public class BookingServiceImpl implements BookingService {
         try {
             return bookingDao.findAll();
         } catch (DaoException e) {
-            throw new ServiceException("Problem in method findAllUsers in bookingDao", e);
+            throw new ServiceException("Problem in method findAllUsers in booking service", e);
+        }
+    }
+
+    @Override
+    public boolean payForBooking(long userId, long bookingId, BigDecimal totalCost) throws ServiceException {
+        boolean isCommandSuccess = false;
+        try {
+            Optional<User> user = userDao.findEntityById(userId);
+            BigDecimal balance = user.get().getBalance();
+            BigDecimal totalBalance = balance.subtract(totalCost);
+            if (totalBalance.compareTo(BigDecimal.ZERO) >= 0) {
+                isCommandSuccess = TransactionManager.getInstance().payForBooking(userId, bookingId, totalBalance);
+            }
+        } catch (DaoException e) {
+            throw new ServiceException("Problem with pay for booking in booking service", e);
+        }
+        return isCommandSuccess;
+    }
+
+    @Override
+    public boolean deleteRoomFromBooking(long bookingId) throws ServiceException {
+        try {
+            return bookingDao.deleteRoomFromBooking(bookingId);
+        } catch (DaoException e) {
+            throw new ServiceException("Problem in method deleteRoomFromBooking in booking service", e);
         }
     }
 }

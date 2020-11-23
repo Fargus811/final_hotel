@@ -13,6 +13,9 @@ import by.sergeev.hotel.controller.command.PageParameter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Update user information command.
+ */
 public class UpdateUserInformationCommand implements Command {
 
     private UserService userService = ServiceFactory.serviceFactory.getUserService();

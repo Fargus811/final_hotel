@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * The type Show profile settings command.
+ */
 public class ShowProfileSettingsCommand implements Command {
 
     private UserService userService = ServiceFactory.serviceFactory.getUserService();

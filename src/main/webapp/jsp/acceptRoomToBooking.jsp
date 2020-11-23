@@ -16,30 +16,48 @@
     <fmt:setLocale value="${locale}"/>
     <jsp:include page="/jsp/part/header.jsp"/>
     <div class="d-flex justify-content-center">
+        <div class="container" style="text-align: center; margin: 20px">
+            <label>  ✅ Заселение ${booking.startDate} ➖ ❌ Выселение ${booking.endDate}</label>
+            <label>Итоговая сумма бронирования составляет: ${cost}💵</label></div>
+        <c:if test="${booking.bookingStatus.ordinal() != 3 }">
         <c:if test="${sessionUser.role == 'ADMIN'}">
             <form action="${pageContext.request.contextPath}/controller" method="post">
                 <input type="hidden" name="command" value="add_room_to_booking">
                 <input type="hidden" name="cost" value="${cost}">
                 <input type="hidden" name="roomId" value="${room.id}">
-                <input type="hidden" name="bookingId" value="${bookingId}">
+                <input type="hidden" name="bookingId" value="${booking.id}">
                 <div class="form-group" style="margin-top: 50px">
-                    <div class="row"><label>Итоговая сумма бронирования составляет: ${cost}💵</label></div>
-                    <div class="row"><button type="submit" class="button auth secondary"
-                                             style="background-color: blue;background-color: blue; top: 10px;">
-                        Добавить</button></div>
+                    <div class="row">
+                        <button type="submit" class="button auth secondary" style="background-color: blue;
+                    top: 40px;right: 250px;">Добавить</button>
+                    </div>
                 </div>
             </form>
         </c:if>
         <c:if test="${sessionUser.role == 'USER'}">
             <form action="${pageContext.request.contextPath}/controller" method="post">
                 <input type="hidden" name="command" value="pay_for_booking">
+                <input type="hidden" name="cost" value="${cost}">
+                <input type="hidden" name="roomId" value="${room.id}">
+                <input type="hidden" name="bookingId" value="${booking.id}">
                 <div class="form-group" style="margin-top: 50px">
-                    <div class="row"><label>Итоговая сумма бронирования составляет: ${cost}💵</label></div>
-                    <div class="row"><button type="submit" class="button auth secondary"
-                                             style="background-color: blue;background-color: blue; top: 10px;">
-                        Pay</button></div>
+                    <div class="row">
+                        <button type="submit" class="button auth secondary" style="background-color: blue; top: 40px;
+                        right: 250px; margin-left: 20px">Pay</button>
+                    </div>
                 </div>
             </form>
+            <form action="${pageContext.request.contextPath}/controller" method="post">
+                <input type="hidden" name="command" value="delete_room_from_booking">
+                <input type="hidden" name="bookingId" value="${booking.id}">
+                <div class="form-group" style="margin-top: 50px">
+                    <div class="row">
+                        <button type="submit" class="button auth secondary" style="background-color: red; top: 40px;
+                        right: 250px;">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </c:if>
         </c:if>
         <div class="room-container">
             <div class="room-item" style="margin-top: 50px">
@@ -67,7 +85,6 @@
                             Success
                         </div>
                     </c:if>
-
                 </div>
             </div>
         </div>

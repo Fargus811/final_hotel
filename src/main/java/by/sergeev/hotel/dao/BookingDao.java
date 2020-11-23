@@ -23,4 +23,6 @@ public interface BookingDao {
     List<Booking> findAll() throws DaoException;
 
     boolean changeBookingStatusForPayment(ProxyConnection proxyConnection, long bookingId) throws DaoException;
+
+    boolean deleteRoomFromBooking(long bookingId) throws DaoException;
 }

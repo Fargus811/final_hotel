@@ -19,6 +19,7 @@ public class PageParameter {
 
     //BOOKING COMMAND
     public static final String BOOKINGS = "bookings";
+    public static final String BOOKING = "booking";
     public static final String BOOKING_STATUS = "bookingStatus";
     public static final String BOOKING_ID = "bookingId";
     public static final String START_DATE = "startDate";
@@ -38,10 +39,16 @@ public class PageParameter {
     public static final String ROOM_DESCRIPTION = "roomDescription";
     public static final String ROOM_COST = "roomCost";
     public static final String ROOM_ID = "roomId";
+    public static final String NUMBER_OF_PAGE = "numberOfPage";
+    public static final String HAS_PREV = "hasPrev";
+    public static final String HAS_NEXT = "hasNext";
+    public static final int FIRST_PAGE = 1;
     //LOCALE
     public static final String LOCALE = "locale";
     public static final String VALUE_OF_LOCALE = "ru";
     public static final String LOCALE_PARAM = "lang";
+    public static final String LAST_PAGE_NAME = "lastPageName";
+    public static final String LAST_PAGE_ATTRIBUTES = "lastPageAttributes";
     //ERROR
     public static final String ERROR = "error";
     public static final String ERROR_INFO = "errorInfo";

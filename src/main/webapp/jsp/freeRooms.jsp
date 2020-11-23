@@ -39,7 +39,7 @@
                             <div class="room-advantage">🛁</div>
                         </c:if>
                         <form action="${pageContext.request.contextPath}/controller" method="POST">
-                            <input type="hidden" name="command" value="calculate_booking_cost"/>
+                            <input type="hidden" name="command" value="see_details_of_booking"/>
                             <input type="hidden" name="roomId" value="${elem.id}"/>
                             <input type="hidden" name="bookingId" value="${requestScope.bookingId}"/>
                             <button type="submit" class="btn btn-success"style="margin-top: 10px"><fmt:message key="text.admin.calculate"/></button>

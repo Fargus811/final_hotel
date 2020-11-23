@@ -13,6 +13,9 @@ import by.sergeev.hotel.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Delete account by user command.
+ */
 public class DeleteAccountCommand implements Command {
 
     private UserService userService = ServiceFactory.serviceFactory.getUserService();

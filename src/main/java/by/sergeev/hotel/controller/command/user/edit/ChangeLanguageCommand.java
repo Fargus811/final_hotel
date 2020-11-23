@@ -13,16 +13,18 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * The type Change language command.
+ */
 public class ChangeLanguageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String locale = request.getParameter(PageParameter.LOCALE_PARAM);
-        System.out.println(locale);
         HttpSession session = request.getSession(true);
         session.setAttribute(PageParameter.LOCALE, locale);
-        String lastPageName = session.getAttribute("lastPageName").toString();
-        Map<String, String[]> parameters = (Map<String, String[]>) session.getAttribute("lastPageAttributes");
+        String lastPageName = session.getAttribute(PageParameter.LAST_PAGE_NAME).toString();
+        Map<String, String[]> parameters = (Map<String, String[]>) session.getAttribute(PageParameter.LAST_PAGE_ATTRIBUTES);
         if (Objects.isNull(parameters) || parameters == null) {
             String curPage = PagePath.INDEX;
             return curPage;
@@ -32,7 +34,7 @@ public class ChangeLanguageCommand implements Command {
 
     public HttpServletRequest setLastPageAttributes(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
-        Map<String, Object> lastPageAttributes = (Map<String, Object>) session.getAttribute("lastPageAttributes");
+        Map<String, Object> lastPageAttributes = (Map<String, Object>) session.getAttribute(PageParameter.LAST_PAGE_ATTRIBUTES);
         return new HttpServletRequestWrapper(request) {
             @Override
             public Object getAttribute(String name) {

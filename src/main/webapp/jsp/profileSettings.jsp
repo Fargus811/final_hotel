@@ -283,25 +283,25 @@
                                 <form action="${pageContext.request.contextPath}/controller" method="POST">
                                     <input type="hidden" name="command" value="add_balance"/>
                                     <input type="hidden" name="amount" value="250">
-                                    <button class="btn btn-info" type="submit" style="margin-right: 20px"><fmt:message key="text.profileSettings.add"/> 250💵
+                                    <button class="btn btn-info" type="submit" style="margin: 20px"><fmt:message key="text.profileSettings.add"/> 250💵
                                     </button>
                                 </form>
                                 <form action="${pageContext.request.contextPath}/controller" method="POST">
                                     <input type="hidden" name="command" value="add_balance"/>
                                     <input type="hidden" name="amount" value="500">
-                                    <button class="btn btn-info" type="submit" style="margin-right: 20px"><fmt:message key="text.profileSettings.add"/> 500💵
+                                    <button class="btn btn-info" type="submit" style="margin: 20px"><fmt:message key="text.profileSettings.add"/> 500💵
                                     </button>
                                 </form>
                                 <form action="${pageContext.request.contextPath}/controller" method="POST">
                                     <input type="hidden" name="command" value="add_balance"/>
                                     <input type="hidden" name="amount" value="1000">
-                                    <button class="btn btn-info" type="submit" style="margin-right: 20px"><fmt:message key="text.profileSettings.add"/> 1000💵
+                                    <button class="btn btn-info" type="submit" style="margin: 20px"><fmt:message key="text.profileSettings.add"/> 1000💵
                                     </button>
                                 </form>
                                 <form action="${pageContext.request.contextPath}/controller" method="POST">
                                     <input type="hidden" name="command" value="add_balance"/>
                                     <input type="hidden" name="amount" value="2500">
-                                    <button class="btn btn-info" type="submit" style="margin-right: 20px; margin-top: 20px;"><fmt:message key="text.profileSettings.add"/> 2500💵
+                                    <button class="btn btn-info" type="submit" style="margin: 20px"><fmt:message key="text.profileSettings.add"/> 2500💵
                                     </button>
                                 </form>
                             </div>

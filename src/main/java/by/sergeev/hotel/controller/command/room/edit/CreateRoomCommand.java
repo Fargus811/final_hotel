@@ -15,6 +15,9 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * The type Create room command.
+ */
 public class CreateRoomCommand implements Command {
 
     private RoomService roomService = ServiceFactory.serviceFactory.getRoomService();

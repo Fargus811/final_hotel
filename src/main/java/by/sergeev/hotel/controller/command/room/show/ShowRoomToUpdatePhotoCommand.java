@@ -12,6 +12,9 @@ import by.sergeev.hotel.service.ServiceFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Show the room photo to update command.
+ */
 public class ShowRoomToUpdatePhotoCommand implements Command {
 
     private RoomService roomService = ServiceFactory.serviceFactory.getRoomService();
@@ -24,7 +27,7 @@ public class ShowRoomToUpdatePhotoCommand implements Command {
         long roomId = Long.parseLong(request.getParameter(PageParameter.ROOM_ID));
         Room room;
         try {
-            room = roomService.findRoomById(roomId);
+            room = roomService.findRoomById(roomId).get();
         } catch (ServiceException e) {
             throw new CommandException("Problem with find room by id in room service", e);
         }

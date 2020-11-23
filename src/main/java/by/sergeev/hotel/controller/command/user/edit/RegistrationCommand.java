@@ -12,6 +12,9 @@ import by.sergeev.hotel.util.ClientNotificationSenderImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Registration command.
+ */
 public class RegistrationCommand implements Command {
 
     private static final UserService userService = ServiceFactory.serviceFactory.getUserService();

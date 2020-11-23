@@ -16,11 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * The type Login command.
+ */
 public class LoginCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger(LoginCommand.class);
 
-    private static final int ACOUNT_STATUS_ACCESS = 0;
+    private static final int ACCOUNT_STATUS_ACCESS = 0;
 
     private static final UserService userService = ServiceFactory.serviceFactory.getUserService();
 
@@ -34,11 +37,11 @@ public class LoginCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException("Problem with login", e);
         }
-        boolean isCommandSuccess = (userOptional.isPresent());
+        boolean isCommandSuccess = userOptional.isPresent();
         String pagePath;
         if (isCommandSuccess) {
             User user = userOptional.get();
-            if (user.getAccountStatus().ordinal() == ACOUNT_STATUS_ACCESS) {
+            if (user.getAccountStatus().ordinal() == ACCOUNT_STATUS_ACCESS) {
                 HttpSession session = request.getSession(true);
                 SessionUser sessionUser = new SessionUser(user.getId(), user.getFirstName(), user.getLastName(), user.getRole());
                 session.setAttribute(PageParameter.SESSION_USER, sessionUser);

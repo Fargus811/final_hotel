@@ -12,6 +12,9 @@ import by.sergeev.hotel.service.ServiceFactory;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * The type Show all users bookings command.
+ */
 public class ShowAllBookingsCommand implements Command {
 
     private BookingService bookingService = ServiceFactory.serviceFactory.getBookingService();

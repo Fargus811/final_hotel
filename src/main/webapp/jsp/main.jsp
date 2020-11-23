@@ -65,11 +65,6 @@
                                         <fmt:message key="text.updateRoom.confirm"/>
                                     </div>
                                     <div class="modal-footer">
-                                        <form action="${pageContext.request.contextPath}/controller" method="POST">
-                                            <input type="hidden" name="command" value="show_room_to_update_photo"/>
-                                            <input type="hidden" name="roomId" value="${elem.id}"/>
-                                            <button type="submit" class="btn btn-secondary"><fmt:message key="text.client.edit.roomPhoto"/></button>
-                                        </form>
                                         <form action="${pageContext.request.contextPath}/controller" method="POST" style="margin-top: 20px">
                                             <input type="hidden" name="command" value="show_room_to_update_info"/>
                                             <input type="hidden" name="roomId" value="${elem.id}"/>

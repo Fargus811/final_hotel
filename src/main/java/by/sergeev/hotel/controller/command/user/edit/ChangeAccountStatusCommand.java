@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
+/**
+ * The type Change account status command.
+ */
 public class ChangeAccountStatusCommand implements Command {
 
     private UserService userService = ServiceFactory.serviceFactory.getUserService();

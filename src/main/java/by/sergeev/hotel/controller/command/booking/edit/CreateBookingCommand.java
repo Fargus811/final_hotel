@@ -17,7 +17,9 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-
+/**
+ * The type Create booking command.
+ */
 public class CreateBookingCommand implements EditCommand {
 
     private BookingService bookingService = ServiceFactory.serviceFactory.getBookingService();

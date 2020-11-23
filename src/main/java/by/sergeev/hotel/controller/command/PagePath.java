@@ -18,6 +18,7 @@ public class PagePath {
     public static final String ALL_USERS = "/jsp/allUsers.jsp";
     public static final String ACCEPT_ROOM_TO_BOOKING = "/jsp/acceptRoomToBooking.jsp";
     public static final String INFO_SUCCESS = "/jsp/infoSuccess.jsp";
+    public static final String INFO_FAIL = "/jsp/infoFail.jsp";
     public static final String ERROR = "/jsp/error/infoError.jsp";
 
     private PagePath(){

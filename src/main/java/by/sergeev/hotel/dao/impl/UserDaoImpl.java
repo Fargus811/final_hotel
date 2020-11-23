@@ -211,7 +211,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public boolean payForBooking(ProxyConnection proxyConnection, long userId, BigDecimal totalBalance) throws DaoException {
+    public boolean payForBookingTransaction(ProxyConnection proxyConnection, long userId, BigDecimal totalBalance) throws DaoException {
         boolean isPaid = false;
         try (PreparedStatement preparedStatement = proxyConnection.prepareStatement(UPDATE_USER_BALANCE)) {
             preparedStatement.setBigDecimal(1, totalBalance);

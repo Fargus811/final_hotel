@@ -56,7 +56,14 @@
                     <c:when test="${empty elem.room}">
                         Please wait
                     </c:when>
-                    <c:otherwise><button type="submit" class="btn-primary"><fmt:message key="text.bookings.viewDetails"/></button>
+                    <c:otherwise>
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
+                        <input type="hidden" name="command" value="see_details_of_booking">
+                        <input type="hidden" name="cost" value="${elem.cost}">
+                        <input type="hidden" name="roomId" value="${elem.room.id}">
+                        <input type="hidden" name="bookingId" value="${elem.id}">
+                        <button type="submit" class="btn-primary"><fmt:message key="text.bookings.viewDetails"/></button>
+                        </form>
                     </c:otherwise>
                 </c:choose></td>
             </tr>

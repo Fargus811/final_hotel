@@ -31,7 +31,7 @@
                             class="fa fa-user"></span> <fmt:message key="text.client.profile"/></a>
                     <li><a href="${pageContext.servletContext.contextPath}/controller?command=show_user_bookings"><span
                             class="fa fa-bookmark"></span> <fmt:message key="text.client.bookings"/></a></li>
-                    <li><a href="${pageContext.servletContext.contextPath}/jsp/createBooking.jsp"><span
+                    <li><a href="${pageContext.servletContext.contextPath}/controller?command=pass_to_create_booking"><span
                             class="glyphicon glyphicon-plus" aria-hidden="true"></span> <fmt:message key="text.client.сreateBooking"/></a></li>
                 </ul>
             </nav>

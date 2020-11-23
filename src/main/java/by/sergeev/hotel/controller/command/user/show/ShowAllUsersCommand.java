@@ -12,6 +12,9 @@ import by.sergeev.hotel.controller.command.PageParameter;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * The type Show all users command.
+ */
 public class ShowAllUsersCommand implements Command {
 
     private static final UserService userService = ServiceFactory.serviceFactory.getUserService();

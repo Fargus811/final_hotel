@@ -32,16 +32,6 @@
                     <div class="block-list-element"><fmt:message key="text.footer.cookie"/></div>
                 </div>
             </div>
-            <div class="col-md-5"></div>
-            <form id = "ruForm" action="${pageContext.request.contextPath}/controller" method = "post" style = "display:none;">
-                <input type="hidden" name="command" value="language" />
-                <input type="hidden" name="lang" value="ru"/>
-            </form>
-            <form id = "enForm" action="${pageContext.request.contextPath}/controller" method = "post" style = "display:none;">
-                <input type="hidden" name="command" value="language" />
-                <input type="hidden" name="lang" value="en"/>
-            </form>
-        </div>
 </div>
 </div>
 </fmt:bundle>

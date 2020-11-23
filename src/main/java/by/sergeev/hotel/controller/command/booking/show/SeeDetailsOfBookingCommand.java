@@ -3,6 +3,7 @@ package by.sergeev.hotel.controller.command.booking.show;
 import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.controller.command.PageParameter;
 import by.sergeev.hotel.controller.command.PagePath;
+import by.sergeev.hotel.entity.Booking;
 import by.sergeev.hotel.entity.Room;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.ServiceException;
@@ -12,8 +13,12 @@ import by.sergeev.hotel.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.Optional;
 
-public class CalculateBookingCostCommand implements Command {
+/**
+ * The type Show detail of user's booking.
+ */
+public class SeeDetailsOfBookingCommand implements Command {
 
     private BookingService bookingService = ServiceFactory.serviceFactory.getBookingService();
     private RoomService roomService = ServiceFactory.serviceFactory.getRoomService();
@@ -23,16 +28,20 @@ public class CalculateBookingCostCommand implements Command {
         long roomId = Long.parseLong(request.getParameter(PageParameter.ROOM_ID));
         long bookingId = Long.parseLong(request.getParameter(PageParameter.BOOKING_ID));
         BigDecimal totalCost;
-        Room room;
+        Optional<Room> room;
+        Optional<Booking> booking;
         try {
             totalCost = bookingService.getTotalCostOfBooking(bookingId, roomId);
             room = roomService.findRoomById(roomId);
+            booking = bookingService.findBookingById(bookingId);
         } catch (ServiceException e) {
             throw new CommandException("Problem with find room by id", e);
         }
-        request.setAttribute(PageParameter.COST, totalCost);
-        request.setAttribute(PageParameter.ROOM, room);
-        request.setAttribute(PageParameter.BOOKING_ID, bookingId);
+        if (booking.isPresent() && room.isPresent()) {
+            request.setAttribute(PageParameter.COST, totalCost);
+            request.setAttribute(PageParameter.ROOM, room.get());
+            request.setAttribute(PageParameter.BOOKING, booking.get());
+        }
         return PagePath.ACCEPT_ROOM_TO_BOOKING;
     }
 }

@@ -1,16 +1,16 @@
 package by.sergeev.hotel.controller.command;
 
-import by.sergeev.hotel.controller.command.booking.edit.AddRoomToBookingCommand;
-import by.sergeev.hotel.controller.command.booking.show.CalculateBookingCostCommand;
-import by.sergeev.hotel.controller.command.booking.edit.ChangeBookingStatusCommand;
-import by.sergeev.hotel.controller.command.booking.edit.CreateBookingCommand;
+import by.sergeev.hotel.controller.command.booking.edit.*;
+import by.sergeev.hotel.controller.command.booking.show.SeeDetailsOfBookingCommand;
 import by.sergeev.hotel.controller.command.booking.show.ShowAllBookingsCommand;
 import by.sergeev.hotel.controller.command.booking.show.ShowUserBookingsCommand;
+import by.sergeev.hotel.controller.command.passing.PassingToCreateBookingCommand;
+import by.sergeev.hotel.controller.command.passing.PassingToLoginCommand;
+import by.sergeev.hotel.controller.command.passing.PassingToRegistrationCommand;
 import by.sergeev.hotel.controller.command.room.edit.DeleteRoomCommand;
-import by.sergeev.hotel.controller.command.room.edit.UpdateRoomImageCommand;
 import by.sergeev.hotel.controller.command.room.edit.UpdateRoomInfoCommand;
 import by.sergeev.hotel.controller.command.room.show.ShowAllRoomsCommand;
-import by.sergeev.hotel.controller.command.room.show.ShowFreeRoomByConditionCommand;
+import by.sergeev.hotel.controller.command.room.show.ShowFreeRoomsByConditionCommand;
 import by.sergeev.hotel.controller.command.room.edit.CreateRoomCommand;
 import by.sergeev.hotel.controller.command.room.show.ShowRoomToUpdateInfoCommand;
 import by.sergeev.hotel.controller.command.room.show.ShowRoomToUpdatePhotoCommand;
@@ -21,6 +21,9 @@ import by.sergeev.hotel.controller.command.user.show.ShowProfileSettingsCommand;
 
 public enum CommandType {
 
+    PASS_TO_LOGIN(new PassingToLoginCommand()),
+    PASS_TO_REGISTRATION(new PassingToRegistrationCommand()),
+    PASS_TO_CREATE_BOOKING(new PassingToCreateBookingCommand()),
     SHOW_ALL_ROOMS(new ShowAllRoomsCommand()),
     SHOW_ALL_BOOKINGS(new ShowAllBookingsCommand()),
     SHOW_ALL_USERS(new ShowAllUsersCommand()),
@@ -35,12 +38,14 @@ public enum CommandType {
     CHANGE_ACCOUNT_STATUS(new ChangeAccountStatusCommand()),
     LANGUAGE(new ChangeLanguageCommand()),
     ADD_BALANCE(new AddUserBalanceCommand()),
+    PAY_FOR_BOOKING(new PayForBookingCommand()),
     CREATE_BOOKING(new CreateBookingCommand()),
     CREATE_ROOM(new CreateRoomCommand()),
     CHANGE_BOOKING_STATUS(new ChangeBookingStatusCommand()),
     SHOW_PROFILE_SETTINGS(new ShowProfileSettingsCommand()),
-    CALCULATE_BOOKING_COST(new CalculateBookingCostCommand()),
-    SHOW_FREE_ROOM_BY_CONDITION(new ShowFreeRoomByConditionCommand()),
+    DELETE_ROOM_FROM_BOOKING(new DeleteRoomFromBookingCommand()),
+    SEE_DETAILS_OF_BOOKING(new SeeDetailsOfBookingCommand()),
+    SHOW_FREE_ROOM_BY_CONDITION(new ShowFreeRoomsByConditionCommand()),
     SHOW_ROOM_TO_UPDATE_INFO(new ShowRoomToUpdateInfoCommand()),
     SHOW_ROOM_TO_UPDATE_PHOTO(new ShowRoomToUpdatePhotoCommand()),
     UPDATE_ROOM_IMAGE(new UpdateRoomImageCommand()),

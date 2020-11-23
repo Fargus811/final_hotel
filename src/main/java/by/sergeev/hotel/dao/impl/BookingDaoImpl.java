@@ -22,6 +22,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *
+ */
 public class BookingDaoImpl extends AbstractDao<Booking> implements BookingDao {
 
     private static final Logger LOGGER = LogManager.getLogger(BookingDaoImpl.class);
@@ -37,8 +40,16 @@ public class BookingDaoImpl extends AbstractDao<Booking> implements BookingDao {
             " grade_id, has_Wifi, has_TV , has_bathroom, user_id, room_id, number_of_rooms, booking_status_id FROM bookings WHERE id = ?";
     private static final String FIND_ALL_BOOKINGS = "SELECT id, start_date, end_date, cost, max_persons, number_of_beds," +
             " grade_id, has_Wifi, has_TV , has_bathroom, user_id, room_id, number_of_rooms, booking_status_id FROM bookings";
-    private static final String UPDATE_BOOKING_STATUS_BY_ID = "UPDATE bookings SET status_id = ? WHERE id = ?";
+    private static final String UPDATE_BOOKING_STATUS_BY_ID = "UPDATE bookings SET booking_status_id = ? WHERE id = ?";
     private static final String ADD_ROOM_TO_BOOKING_BY_ID = "UPDATE bookings SET room_id = ?, cost = ?, booking_status_id = ? WHERE id = ?";
+    private static final String DELETE_ROOM_FROM_BOOKING_BY_ID = "UPDATE bookings SET room_id = NULL , cost = 0.00 , booking_status_id = 0 WHERE id = ?";
+
+    /**
+     *
+     * @param userId
+     * @return
+     * @throws DaoException
+     */
 
     @Override
     public List<Booking> findBookingsByUserId(long userId) throws DaoException {
@@ -50,6 +61,12 @@ public class BookingDaoImpl extends AbstractDao<Booking> implements BookingDao {
         }
     }
 
+    /**
+     *
+     * @param bookingId
+     * @return
+     * @throws DaoException
+     */
     @Override
     public Optional<Booking> findBookingById(long bookingId) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
@@ -60,6 +77,11 @@ public class BookingDaoImpl extends AbstractDao<Booking> implements BookingDao {
         }
     }
 
+    /**
+     * @param bookingId
+     * @param statusId
+     * @throws DaoException
+     */
     @Override
     public void changeBookingStatusById(long bookingId, int statusId) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
@@ -75,6 +97,11 @@ public class BookingDaoImpl extends AbstractDao<Booking> implements BookingDao {
         }
     }
 
+    /**
+     *
+     * @param freshBooking
+     * @throws DaoException
+     */
     @Override
     public void createBooking(Booking freshBooking) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
@@ -99,22 +126,28 @@ public class BookingDaoImpl extends AbstractDao<Booking> implements BookingDao {
         }
     }
 
+    /**
+     *
+     * @param resultSet
+     * @return
+     * @throws SQLException
+     */
     @Override
-    protected Booking makeEntity(ResultSet rs) throws SQLException {
-        long id = rs.getInt(1);
-        String startDate = rs.getString(2);
-        String endDate = rs.getString(3);
-        BigDecimal cost = rs.getBigDecimal(4);
-        int maxPersons = rs.getInt(5);
-        int numberOfBeds = rs.getInt(6);
-        int gradeId = rs.getInt(7);
-        boolean hasWifi = rs.getBoolean(8);
-        boolean hasTV = rs.getBoolean(9);
-        boolean hasBathroom = rs.getBoolean(10);
-        int userId = rs.getInt(11);
-        int roomId = Optional.ofNullable(rs.getInt(12)).orElse(-1);
-        int numberOfRooms = rs.getInt(13);
-        int statusId = rs.getInt(14);
+    protected Booking makeEntity(ResultSet resultSet) throws SQLException {
+        long id = resultSet.getInt(1);
+        String startDate = resultSet.getString(2);
+        String endDate = resultSet.getString(3);
+        BigDecimal cost = resultSet.getBigDecimal(4);
+        int maxPersons = resultSet.getInt(5);
+        int numberOfBeds = resultSet.getInt(6);
+        int gradeId = resultSet.getInt(7);
+        boolean hasWifi = resultSet.getBoolean(8);
+        boolean hasTV = resultSet.getBoolean(9);
+        boolean hasBathroom = resultSet.getBoolean(10);
+        int userId = resultSet.getInt(11);
+        int roomId = Optional.ofNullable(resultSet.getInt(12)).orElse(-1);
+        int numberOfRooms = resultSet.getInt(13);
+        int statusId = resultSet.getInt(14);
         Room room = null;
         if (roomId > 0) {
             RoomDao roomDao = DaoFactory.daoFactory.getRoomDao();
@@ -139,12 +172,26 @@ public class BookingDaoImpl extends AbstractDao<Booking> implements BookingDao {
                 preparedSt.setInt(3, BookingStatus.WAITING_FOR_PAYMENT.ordinal());
                 preparedSt.setLong(4, bookingsId);
                 if (preparedSt.executeUpdate() != 1) {
-                    throw new DaoException("Status was not updated");
+                    throw new DaoException("Booking was not updated");
                 }
             }
         } catch (ConnectionPoolException | SQLException e) {
-            throw new DaoException("Problem with change book status", e);
+            throw new DaoException("Problem with add room to booking", e);
         }
+    }
+
+    @Override
+    public boolean deleteRoomFromBooking(long bookingId) throws DaoException {
+        boolean isCommandSuccess;
+        try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
+            try (PreparedStatement preparedSt = connection.prepareStatement(DELETE_ROOM_FROM_BOOKING_BY_ID)) {
+                preparedSt.setLong(1, bookingId);
+                isCommandSuccess = preparedSt.executeUpdate() == 1;
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DaoException("Problem with add room to booking", e);
+        }
+        return isCommandSuccess;
     }
 
     @Override

@@ -53,14 +53,9 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room findRoomById(long roomId) throws ServiceException {
+    public Optional<Room> findRoomById(long roomId) throws ServiceException {
         try {
-            Optional<Room> room = roomDao.findRoomById(roomId);
-            if (room.isPresent()) {
-                return room.get();
-            }else {
-                throw new ServiceException("This room is not present");
-            }
+             return roomDao.findRoomById(roomId);
         } catch (DaoException e) {
             throw new ServiceException("Problem in method find room by id in roomDao", e);
         }
@@ -123,8 +118,9 @@ public class RoomServiceImpl implements RoomService {
             try {
                 String oldPath = room.getPhotoPath();
                 File fileToDelete = new File(oldPath);
-                isCommandSuccess = fileToDelete.delete();
+                fileToDelete.delete();
                 String newPath = PHOTO_RELATIVE_PATH + room.getPhotoPath();
+                room.setPhotoPath(newPath);
                 roomDao.updateRoomInfo(room);
                 isCommandSuccess = true;
             } catch (DaoException e) {

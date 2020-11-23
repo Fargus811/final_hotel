@@ -10,6 +10,9 @@ import by.sergeev.hotel.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Delete room command.
+ */
 public class DeleteRoomCommand implements Command {
 
     private RoomService roomService = ServiceFactory.serviceFactory.getRoomService();

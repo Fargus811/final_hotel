@@ -12,7 +12,10 @@ import by.sergeev.hotel.service.ServiceFactory;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class ShowFreeRoomByConditionCommand implements Command {
+/**
+ * The type Show free rooms by condition command.
+ */
+public class ShowFreeRoomsByConditionCommand implements Command {
 
     private RoomService roomService = ServiceFactory.serviceFactory.getRoomService();
 

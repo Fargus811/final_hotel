@@ -4,12 +4,13 @@ import by.sergeev.hotel.entity.Room;
 import by.sergeev.hotel.exception.ServiceException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RoomService {
 
     List<Room> findAll() throws ServiceException;
 
-    Room findRoomById(long roomId) throws ServiceException;
+    Optional<Room> findRoomById(long roomId) throws ServiceException;
 
     List<Room> findFreeRoomsByBooking(long bookingId) throws ServiceException;
 

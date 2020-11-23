@@ -1,9 +1,6 @@
 package by.sergeev.hotel.controller;
 
-import by.sergeev.hotel.controller.command.Command;
-import by.sergeev.hotel.controller.command.CommandDefiner;
-import by.sergeev.hotel.controller.command.CommandType;
-import by.sergeev.hotel.controller.command.PagePath;
+import by.sergeev.hotel.controller.command.*;
 import by.sergeev.hotel.controller.command.user.edit.ChangeLanguageCommand;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.pool.ConnectionPool;
@@ -73,9 +70,8 @@ public class Controller extends HttpServlet {
 
     private void saveLastPageNameAndAttributes(String pageName, HttpServletRequest request) {
         HttpSession httpSession = request.getSession(true);
-        httpSession.setAttribute("lastPageName", pageName);
-        httpSession.setAttribute("lastPageAttributes", getAttributesMap(request));
-        System.out.println(getAttributesMap(request));
+        httpSession.setAttribute(PageParameter.LAST_PAGE_NAME, pageName);
+        httpSession.setAttribute(PageParameter.LAST_PAGE_ATTRIBUTES, getAttributesMap(request));
     }
 
     private Map<String, Object> getAttributesMap(HttpServletRequest request) {
@@ -83,7 +79,7 @@ public class Controller extends HttpServlet {
         Enumeration<String> attributeNames = request.getAttributeNames();
         while (attributeNames.hasMoreElements()) {
             String name = attributeNames.nextElement();
-            if (!name.equals("locale")) {
+            if (!name.equals(PageParameter.LOCALE)) {
                 mapAttributes.put(name, request.getAttribute(name));
             }
         }

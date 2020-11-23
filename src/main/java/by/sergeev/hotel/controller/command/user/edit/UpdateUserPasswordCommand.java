@@ -2,8 +2,8 @@ package by.sergeev.hotel.controller.command.user.edit;
 
 import by.sergeev.hotel.controller.command.CommandType;
 import by.sergeev.hotel.controller.command.EditCommand;
-import by.sergeev.hotel.controller.command.PagePath;
 import by.sergeev.hotel.controller.command.PageParameter;
+import by.sergeev.hotel.controller.command.PagePath;
 import by.sergeev.hotel.entity.SessionUser;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.ServiceException;
@@ -13,9 +13,13 @@ import by.sergeev.hotel.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Update user password command.
+ */
 public class UpdateUserPasswordCommand implements EditCommand {
 
     private UserService userService = ServiceFactory.serviceFactory.getUserService();
+
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String result;
@@ -26,14 +30,14 @@ public class UpdateUserPasswordCommand implements EditCommand {
         long userId = sessionUser.getId();
         boolean isCommandSuccess;
         try {
-            isCommandSuccess =  userService.updateUserPassword(userId,oldPassword,newPassword);
+            isCommandSuccess = userService.updateUserPassword(userId, oldPassword, newPassword);
         } catch (ServiceException e) {
             throw new CommandException("Problem with update user password", e);
         }
         if (isCommandSuccess) {
             session.invalidate();
             result = PagePath.LOGIN;
-        }else {
+        } else {
             request.setAttribute(PageParameter.ERROR_INFO, PageParameter.ERROR);
             result = CommandType.SHOW_PROFILE_SETTINGS.name();
         }

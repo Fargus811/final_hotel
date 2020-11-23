@@ -15,6 +15,9 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The type Show user's bookings command.
+ */
 public class ShowUserBookingsCommand implements ShowCommand {
 
     private BookingService bookingService = ServiceFactory.serviceFactory.getBookingService();

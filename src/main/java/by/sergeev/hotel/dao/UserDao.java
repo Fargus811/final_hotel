@@ -28,5 +28,5 @@ public interface UserDao {
 
     void changeAccountStatus(long userId, int statusId) throws DaoException;
 
-    boolean payForBooking(ProxyConnection proxyConnection, long userId, BigDecimal cost) throws DaoException;
+    boolean payForBookingTransaction(ProxyConnection proxyConnection, long userId, BigDecimal cost) throws DaoException;
 }

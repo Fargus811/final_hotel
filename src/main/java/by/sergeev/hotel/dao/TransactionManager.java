@@ -44,12 +44,12 @@ public class TransactionManager {
      * @return the boolean
      * @throws DaoException the dao exception
      */
-    public boolean payForBooking(BigDecimal totalBalance, long userId, long bookingId) throws DaoException {
+    public boolean payForBooking(long userId, long bookingId, BigDecimal totalBalance) throws DaoException {
         ProxyConnection proxyConnection = null;
         try {
             proxyConnection = ConnectionPool.getInstance().takeConnection();
             proxyConnection.setAutoCommit(false);
-            boolean isBookingPaid = userDao.payForBooking(proxyConnection, userId, totalBalance);
+            boolean isBookingPaid = userDao.payForBookingTransaction(proxyConnection, userId, totalBalance);
             boolean isStatusChanged = false;
             if (isBookingPaid) {
                 isStatusChanged = bookingDao.changeBookingStatusForPayment(proxyConnection, bookingId);
