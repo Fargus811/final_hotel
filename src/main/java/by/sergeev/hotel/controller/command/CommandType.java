@@ -5,6 +5,7 @@ import by.sergeev.hotel.controller.command.booking.show.SeeDetailsOfBookingComma
 import by.sergeev.hotel.controller.command.booking.show.ShowAllBookingsCommand;
 import by.sergeev.hotel.controller.command.booking.show.ShowUserBookingsCommand;
 import by.sergeev.hotel.controller.command.passing.PassingToCreateBookingCommand;
+import by.sergeev.hotel.controller.command.passing.PassingToCreateRoom;
 import by.sergeev.hotel.controller.command.passing.PassingToLoginCommand;
 import by.sergeev.hotel.controller.command.passing.PassingToRegistrationCommand;
 import by.sergeev.hotel.controller.command.room.edit.DeleteRoomCommand;
@@ -13,7 +14,6 @@ import by.sergeev.hotel.controller.command.room.show.ShowAllRoomsCommand;
 import by.sergeev.hotel.controller.command.room.show.ShowFreeRoomsByConditionCommand;
 import by.sergeev.hotel.controller.command.room.edit.CreateRoomCommand;
 import by.sergeev.hotel.controller.command.room.show.ShowRoomToUpdateInfoCommand;
-import by.sergeev.hotel.controller.command.room.show.ShowRoomToUpdatePhotoCommand;
 import by.sergeev.hotel.controller.command.user.edit.*;
 import by.sergeev.hotel.controller.command.user.show.ShowAllUsersCommand;
 import by.sergeev.hotel.controller.command.user.show.ShowMyProfileCommand;
@@ -24,6 +24,7 @@ public enum CommandType {
     PASS_TO_LOGIN(new PassingToLoginCommand()),
     PASS_TO_REGISTRATION(new PassingToRegistrationCommand()),
     PASS_TO_CREATE_BOOKING(new PassingToCreateBookingCommand()),
+    PASS_TO_CREATE_ROOM(new PassingToCreateRoom()),
     SHOW_ALL_ROOMS(new ShowAllRoomsCommand()),
     SHOW_ALL_BOOKINGS(new ShowAllBookingsCommand()),
     SHOW_ALL_USERS(new ShowAllUsersCommand()),
@@ -47,8 +48,6 @@ public enum CommandType {
     SEE_DETAILS_OF_BOOKING(new SeeDetailsOfBookingCommand()),
     SHOW_FREE_ROOM_BY_CONDITION(new ShowFreeRoomsByConditionCommand()),
     SHOW_ROOM_TO_UPDATE_INFO(new ShowRoomToUpdateInfoCommand()),
-    SHOW_ROOM_TO_UPDATE_PHOTO(new ShowRoomToUpdatePhotoCommand()),
-    UPDATE_ROOM_IMAGE(new UpdateRoomImageCommand()),
     UPDATE_ROOM_INFO(new UpdateRoomInfoCommand()),
     DELETE_ROOM(new DeleteRoomCommand()),
     ADD_ROOM_TO_BOOKING(new AddRoomToBookingCommand());

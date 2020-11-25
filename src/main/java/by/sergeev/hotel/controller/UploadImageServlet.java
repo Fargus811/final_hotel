@@ -58,7 +58,7 @@ public class UploadImageServlet extends HttpServlet {
                 }
             });
         }
-        if (Objects.isNull(request.getParameter("update"))) {
+        if (Objects.isNull(request.getParameter(PageParameter.UPDATE))) {
             request.getRequestDispatcher(PagePath.CREATE_ROOM).forward(request, response);
         } else {
             forwardToUpdateForm(request, response);

@@ -19,7 +19,7 @@ public class ChangeBookingStatusCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        String bookingStatus = request.getParameter(PageParameter.BOOKING_STATUS);
+        int bookingStatus = Integer.parseInt(request.getParameter(PageParameter.BOOKING_STATUS_ID));
         long bookingId = Long.parseLong(request.getParameter(PageParameter.BOOKING_ID));
         try {
             bookingService.changeBookingStatusById(bookingId, bookingStatus);

@@ -42,10 +42,9 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void changeBookingStatusById(long bookingId, String bookingStatus) throws ServiceException {
-        int statusId = BookingStatus.valueOf(bookingStatus).ordinal();
+    public void changeBookingStatusById(long bookingId, int bookingStatus) throws ServiceException {
         try {
-            bookingDao.changeBookingStatusById(bookingId, statusId);
+            bookingDao.changeBookingStatusById(bookingId, bookingStatus);
         } catch (DaoException e) {
             throw new ServiceException("Problem in method changeBookingsByUserId in booking service", e);
         }

@@ -17,7 +17,7 @@ public interface BookingService {
 
     BigDecimal getTotalCostOfBooking(long bookingId, long roomId) throws ServiceException;
 
-    void changeBookingStatusById(long bookingId, String bookingStatus) throws ServiceException;
+    void changeBookingStatusById(long bookingId, int bookingStatus) throws ServiceException;
 
     boolean createBooking(Booking freshBooking) throws ServiceException;
 

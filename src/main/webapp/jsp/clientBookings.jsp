@@ -46,15 +46,26 @@
                 <td>${elem.cost}</td>
                 <td><c:choose>
                       <c:when test="${empty elem.room}">
-                    No room
+                          <fmt:message key="text.bookings.no.room"/>
                       </c:when>
                       <c:otherwise>${elem.room.name}
                       </c:otherwise>
                      </c:choose></td>
-                <td>${elem.bookingStatus}</td>
+                <td><c:if test="${elem.bookingStatus == 'IN_PROCESS'}">
+                    <fmt:message key="text.bookings.status.inProcess"/>
+                </c:if>
+                    <c:if test="${elem.bookingStatus == 'WAITING_FOR_PAYMENT'}">
+                        <fmt:message key="text.bookings.status.waiting"/>
+                    </c:if>
+                    <c:if test="${elem.bookingStatus == 'CANCELLED'}">
+                        <fmt:message key="text.bookings.status.cancelled"/>
+                    </c:if>
+                    <c:if test="${elem.bookingStatus == 'PAID'}">
+                        <fmt:message key="text.bookings.status.paid"/>
+                    </c:if></td>
                 <td><c:choose>
                     <c:when test="${empty elem.room}">
-                        Please wait
+                        <fmt:message key="text.bookings.please"/>
                     </c:when>
                     <c:otherwise>
                         <form action="${pageContext.request.contextPath}/controller" method="post">
@@ -62,7 +73,7 @@
                         <input type="hidden" name="cost" value="${elem.cost}">
                         <input type="hidden" name="roomId" value="${elem.room.id}">
                         <input type="hidden" name="bookingId" value="${elem.id}">
-                        <button type="submit" class="btn-primary"><fmt:message key="text.bookings.viewDetails"/></button>
+                        <button type="submit" class="btn btn-outline-primary"><fmt:message key="text.bookings.viewDetails"/></button>
                         </form>
                     </c:otherwise>
                 </c:choose></td>

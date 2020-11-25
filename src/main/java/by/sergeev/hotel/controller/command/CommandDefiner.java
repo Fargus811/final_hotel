@@ -7,12 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 
 public class CommandDefiner {
 
-    private static final Logger LOGGER = LogManager.getLogger();
-
-    private static final String COMMAND_PARAM = "command";
+    private static final Logger LOGGER = LogManager.getLogger(CommandDefiner.class);
 
     public static Command define(HttpServletRequest request) {
-        String command = request.getParameter(COMMAND_PARAM);
+        String command = request.getParameter(PageParameter.COMMAND);
         LOGGER.info("Command: " + command);
         CommandType currentEnum = CommandType.valueOf(command.toUpperCase());
         Command currentCommand = currentEnum.getCommand();

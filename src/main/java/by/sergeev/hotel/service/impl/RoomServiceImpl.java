@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public class RoomServiceImpl implements RoomService {
 
-    private static final String PHOTO_RELATIVE_PATH = "../resources/images/";
+    private static final String PHOTO_PATH = "/Users/mac/Downloads/projectImages/";
     private static final double COUNT_OF_VALUES = 5.0;
 
     private RoomDao roomDao = DaoFactory.daoFactory.getRoomDao();
@@ -81,7 +81,7 @@ public class RoomServiceImpl implements RoomService {
         boolean isCommandSuccess = false;
         if (RoomValidator.isRoomValid(room)) {
             try {
-                room.setPhotoPath(PHOTO_RELATIVE_PATH + room.getPhotoPath());
+                room.setPhotoPath(PHOTO_PATH + room.getPhotoPath());
                 roomDao.createRoom(room);
                 isCommandSuccess = true;
             } catch (DaoException e) {
@@ -96,7 +96,7 @@ public class RoomServiceImpl implements RoomService {
         boolean isCommandSuccess = false;
             try {
                 Room room;
-                String newPath = PHOTO_RELATIVE_PATH + fileName;
+                String newPath = PHOTO_PATH + fileName;
                 Optional<Room> roomOptional = roomDao.findRoomById(roomId);
                 if (roomOptional.isPresent()) {
                     room = roomOptional.get();
@@ -119,7 +119,7 @@ public class RoomServiceImpl implements RoomService {
                 String oldPath = room.getPhotoPath();
                 File fileToDelete = new File(oldPath);
                 fileToDelete.delete();
-                String newPath = PHOTO_RELATIVE_PATH + room.getPhotoPath();
+                String newPath = PHOTO_PATH + room.getPhotoPath();
                 room.setPhotoPath(newPath);
                 roomDao.updateRoomInfo(room);
                 isCommandSuccess = true;

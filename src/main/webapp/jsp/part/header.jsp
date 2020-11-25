@@ -46,9 +46,16 @@
                                                              href="${pageContext.servletContext.contextPath}/controller?command=show_my_profile"><fmt:message
                                 key="text.client.profile"/></a>
                         </div>
+                        <c:if test="${sessionUser.role == 'USER'}">
                         <div class='personal-menu-button'><a style="color: white"
                                                              href="${pageContext.servletContext.contextPath}/controller?command=show_user_bookings"><fmt:message
                                 key="text.client.bookings"/></a></div>
+                         </c:if>
+                        <c:if test="${sessionUser.role == 'ADMIN'}">
+                            <div class='personal-menu-button'><a style="color: white"
+                                                                 href="${pageContext.servletContext.contextPath}/controller?command=show_all_bookings"><fmt:message
+                                    key="text.client.bookings"/></a></div>
+                        </c:if>
                         <div class='personal-menu-button'><a style="color: white"
                                                              href="${pageContext.servletContext.contextPath}/controller?command=logout"><fmt:message
                                 key="text.client.logout"/></a>

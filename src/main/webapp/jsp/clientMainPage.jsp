@@ -44,8 +44,8 @@
                                     class="fa fa-user"></span><fmt:message key="text.client.showAllUsers"/></a>
                             <li><a href="${pageContext.servletContext.contextPath}/controller?command=show_all_bookings"><span
                                     class="fa fa-bookmark"></span> <fmt:message key="text.client.bookings"/></a></li>
-                            <li><a href="${pageContext.servletContext.contextPath}/jsp/createRoom.jsp"><span
-                                    class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create room</a></li>
+                            <li><a href="${pageContext.servletContext.contextPath}/controller?command=pass_to_create_room"><span
+                                    class="glyphicon glyphicon-plus" aria-hidden="true"></span><fmt:message key="text.admin.create.room"/></a></li>
                         </ul>
                     </nav>
                 </c:otherwise>

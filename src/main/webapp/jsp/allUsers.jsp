@@ -43,12 +43,21 @@
                 <td>${elem.firstName} ${elem.lastName}</td>
                 <td>${elem.email}</td>
                 <td>${elem.balance}$</td>
-                <td>${elem.accountStatus}</td>
+                <td><c:if test="${elem.accountStatus == 'ACTIVE'}">
+                    <fmt:message key="text.admin.users.active"/>
+                    </c:if>
+                    <c:if test="${elem.accountStatus == 'BANNED'}">
+                        <fmt:message key="text.admin.users.banned"/>
+                    </c:if>
+                    <c:if test="${elem.accountStatus == 'DELETED'}">
+                        <fmt:message key="text.admin.users.deleted"/>
+                    </c:if>
+                </td>
                 <td>
                     <form action="${pageContext.request.contextPath}/controller" method="POST">
                         <input type="hidden" name="command" value="show_user_bookings"/>
                         <input type="hidden" name="userId" value="${elem.id}"/>
-                        <button type="submit" class="btn-primary" style="margin-right: 35px;background-color: #002583">
+                        <button type="submit" class="btn btn-outline-primary">
                             View bookings
                         </button>
                     </form>
@@ -58,7 +67,8 @@
                                 <input type="hidden" name="command" value="change_account_status"/>
                                 <input type="hidden" name="userId" value="${elem.id}"/>
                                 <input type="hidden" name="accountStatusId" value="1"/>
-                                <button type="submit" class="danger"><fmt:message key="text.admin.users.ban"/></button>
+                                <button type="submit" class="btn btn-outline-danger"><fmt:message
+                                        key="text.admin.users.ban"/></button>
                             </form>
                         </c:when>
                         <c:otherwise>
@@ -66,7 +76,7 @@
                                 <input type="hidden" name="command" value="change_account_status"/>
                                 <input type="hidden" name="userId" value="${elem.id}"/>
                                 <input type="hidden" name="accountStatusId" value="0"/>
-                                <button type="submit" class="btn-primary" style="background-color: #002583"><fmt:message
+                                <button type="submit" class="btn btn-outline-primary"><fmt:message
                                         key="text.admin.users.unblock"/></button>
                             </form>
                         </c:otherwise>

@@ -1,6 +1,7 @@
 package by.sergeev.hotel.controller.command.room.edit;
 
 import by.sergeev.hotel.controller.command.Command;
+import by.sergeev.hotel.controller.command.CommandType;
 import by.sergeev.hotel.controller.command.PageParameter;
 import by.sergeev.hotel.controller.command.PagePath;
 import by.sergeev.hotel.entity.Room;
@@ -72,7 +73,7 @@ public class UpdateRoomInfoCommand implements Command {
             result = PagePath.INFO_SUCCESS;
         } else {
             request.setAttribute(PageParameter.ERROR, PageParameter.ERROR);
-            result = PagePath.CREATE_ROOM;
+            result = CommandType.UPDATE_ROOM_INFO.name();
         }
         return result;
     }

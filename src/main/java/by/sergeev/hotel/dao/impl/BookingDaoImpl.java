@@ -88,7 +88,7 @@ public class BookingDaoImpl extends AbstractDao<Booking> implements BookingDao {
             try (PreparedStatement preparedSt = connection.prepareStatement(UPDATE_BOOKING_STATUS_BY_ID)) {
                 preparedSt.setInt(1, statusId);
                 preparedSt.setLong(2, bookingId);
-                if (preparedSt.getUpdateCount() != 1) {
+                if (preparedSt.executeUpdate() != 1) {
                     throw new DaoException("Status was not updated");
                 }
             }

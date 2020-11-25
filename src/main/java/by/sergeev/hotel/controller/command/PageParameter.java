@@ -2,6 +2,8 @@ package by.sergeev.hotel.controller.command;
 
 public class PageParameter {
 
+    public static final String COMMAND = "command";
+
     //USER COMMAND
     public static final String USER = "user";
     public static final String USER_ID = "userId";
@@ -21,6 +23,7 @@ public class PageParameter {
     public static final String BOOKINGS = "bookings";
     public static final String BOOKING = "booking";
     public static final String BOOKING_STATUS = "bookingStatus";
+    public static final String BOOKING_STATUS_ID = "bookingStatusId";
     public static final String BOOKING_ID = "bookingId";
     public static final String START_DATE = "startDate";
     public static final String END_DATE = "endDate";
@@ -57,6 +60,7 @@ public class PageParameter {
     public static final String ERROR_PARAMETERS = "errorPass";
     //IMAGE CONTROLLER
     public static final String DOWNLOAD_STATUS = "imageStatus";
+    public static final String UPDATE = "update";
 
     private PageParameter(){
     }

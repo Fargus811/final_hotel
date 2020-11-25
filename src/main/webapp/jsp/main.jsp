@@ -47,38 +47,17 @@
                         </c:if>
                     </div>
                     <ctg:onlyForAdmin>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateRoomModal"
-                                style="background-color: blue; left: 20px"><fmt:message
-                                key="text.client.edit"/></button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="updateRoomModal" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel"><fmt:message key="text.confirm"/></h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body" style="margin-bottom: 25px">
-                                        <fmt:message key="text.updateRoom.confirm"/>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <form action="${pageContext.request.contextPath}/controller" method="POST" style="margin-top: 20px">
-                                            <input type="hidden" name="command" value="show_room_to_update_info"/>
-                                            <input type="hidden" name="roomId" value="${elem.id}"/>
-                                            <button type="submit" class="btn btn-primary"><fmt:message
-                                                    key="text.client.edit.roomInfo"/></button>
-                                        </form>
-                                        <form action="${pageContext.request.contextPath}/controller" method="POST">
-                                            <input type="hidden" name="command" value="delete_room"/>
-                                            <input type="hidden" name="roomId" value="${elem.id}"/>
-                                            <button type="submit" class="btn btn-danger" style="margin-top: 16.5px"><fmt:message key="text.admin.delete"/></button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="modal-footer">
+                            <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                <input type="hidden" name="command" value="show_room_to_update_info"/>
+                                <input type="hidden" name="roomId" value="${elem.id}"/>
+                                <button type="submit" class="btn btn-outline-info">✏️</button>
+                            </form>
+                            <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                <input type="hidden" name="command" value="delete_room"/>
+                                <input type="hidden" name="roomId" value="${elem.id}"/>
+                                <button type="submit" class="btn btn-outline-danger">🗑</button>
+                            </form>
                         </div>
                     </ctg:onlyForAdmin>
                 </div>
@@ -93,14 +72,18 @@
                 <form action="${pageContext.request.contextPath}/controller" method="POST">
                     <input type="hidden" name="command" value="show_all_rooms"/>
                     <input type="hidden" name="numberOfPage" value="${numberOfPage-1}"/>
-            <li class="page-item"><button type="submit" class="page-link">Previous</button></li>
+                    <li class="page-item">
+                        <button type="submit" class="page-link">Previous</button>
+                    </li>
                 </form>
             </c:if>
             <c:if test="${hasNext}">
                 <form action="${pageContext.request.contextPath}/controller" method="POST">
                     <input type="hidden" name="command" value="show_all_rooms"/>
                     <input type="hidden" name="numberOfPage" value="${numberOfPage+1}"/>
-            <li class="page-item"><button type="submit" class="page-link">Next</button></li>
+                    <li class="page-item">
+                        <button type="submit" class="page-link">Next</button>
+                    </li>
                 </form>
             </c:if>
         </ul>

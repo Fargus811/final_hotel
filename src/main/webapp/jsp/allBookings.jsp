@@ -46,29 +46,62 @@
                 <td>${elem.cost}</td>
                 <td><c:choose>
                     <c:when test="${empty elem.room}">
+                        <c:if test="${elem.bookingStatus.ordinal() != 2}">
                         <form action="${pageContext.request.contextPath}/controller" method="POST">
-                        <input type="hidden" name="command" value="show_free_room_by_condition"/>
-                        <input type="hidden" name="bookingId" value="${elem.id}"/>
-                        <button type="submit" class='button auth primary'
-                                style="margin-right: 110px;margin-bottom: 10px;"
-                                href="${pageContext.request.contextPath}/controller?command=show_free_room_by_condition">
-                            <fmt:message
-                                    key="text.client.chooseRoom"/></>
+                            <input type="hidden" name="command" value="show_free_room_by_condition"/>
+                            <input type="hidden" name="bookingId" value="${elem.id}"/>
+                            <button type="submit" class='btn btn-outline-primary'
+                                    href="${pageContext.request.contextPath}/controller?command=show_free_room_by_condition">
+                                <fmt:message key="text.client.chooseRoom"/></button>
                         </form>
+                        </c:if>
+                        <c:if test="${elem.bookingStatus.ordinal() == 2}">
+                            <fmt:message key="text.bookings.no.room"/>
+                        </c:if>
                     </c:when>
-                    <c:otherwise>${elem.room.name}
+                    <c:otherwise>
+                        ${elem.room.name}
                     </c:otherwise>
-                </c:choose></td>
-                <td>${elem.bookingStatus}</td>
+                </c:choose>
+                </td>
+                <td><c:if test="${elem.bookingStatus == 'IN_PROCESS'}">
+                    <fmt:message key="text.bookings.status.inProcess"/>
+                    </c:if>
+                    <c:if test="${elem.bookingStatus == 'WAITING_FOR_PAYMENT'}">
+                        <fmt:message key="text.bookings.status.waiting"/>
+                    </c:if>
+                    <c:if test="${elem.bookingStatus == 'CANCELLED'}">
+                        <fmt:message key="text.bookings.status.cancelled"/>
+                    </c:if>
+                    <c:if test="${elem.bookingStatus == 'PAID'}">
+                        <fmt:message key="text.bookings.status.paid"/>
+                    </c:if>
+                </td>
                 <td><c:choose>
                     <c:when test="${empty elem.room}">
-                        <button class='button auth disabled' style="margin-right: 75px;margin-bottom: 10px;" disabled>
-                            <fmt:message
-                                    key="text.bookings.viewDetails"/></button>
+                        <c:if test="${elem.bookingStatus.ordinal() != 2}">
+                            <form action="${pageContext.request.contextPath}/controller" method="post">
+                                <input type="hidden" name="command" value="change_booking_status">
+                                <input type="hidden" name="bookingId" value="${elem.id}">
+                                <input type="hidden" name="bookingStatusId" value="2">
+                                <button class='btn btn-outline-danger'>
+                                    <fmt:message key="text.admin.booking.cancel"/></button>
+                            </form>
+                        </c:if>
+                        <c:if test="${elem.bookingStatus.ordinal() == 2}">
+                                <fmt:message key="text.admin.booking.cancelled"/>
+                        </c:if>
                     </c:when>
-                    <c:otherwise> <a class='button auth primary' style="margin-right: 110px;margin-bottom: 10px;"
-                                     href="${pageContext.request.contextPath}/controller?command=show_free_room_by_condition"><fmt:message
-                            key="text.bookings.viewDetails"/></a>
+                    <c:otherwise>
+                        <form action="${pageContext.request.contextPath}/controller" method="POST">
+                            <input type="hidden" name="command" value="see_details_of_booking"/>
+                            <input type="hidden" name="bookingId" value="${elem.id}"/>
+                            <input type="hidden" name="roomId" value="${elem.room.id}"/>
+                            <button type="submit" class='btn btn-outline-primary'
+                                    href="${pageContext.request.contextPath}/controller?command=see_details_of_booking">
+                                <fmt:message
+                                        key="text.bookings.viewDetails"/></button>
+                        </form>
                     </c:otherwise>
                 </c:choose></td>
             </tr>
