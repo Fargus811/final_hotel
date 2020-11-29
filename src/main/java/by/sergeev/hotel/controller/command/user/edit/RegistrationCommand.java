@@ -7,8 +7,8 @@ import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
-import by.sergeev.hotel.util.ClientNotificationSender;
-import by.sergeev.hotel.util.ClientNotificationSenderImpl;
+import by.sergeev.hotel.util.mail.ClientNotificationSender;
+import by.sergeev.hotel.util.mail.impl.ClientNotificationSenderImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,27 +28,23 @@ public class RegistrationCommand implements Command {
         String page = PagePath.REGISTRATION;
         boolean isParamsValid;
         boolean isEmailFree;
-        try {
-            isParamsValid = userService.checkIsValid(email, password, firstName, lastName);
-        } catch (ServiceException e) {
-            throw new CommandException("Problem with validation registration params", e);
-        }
-        try {
-            isEmailFree = userService.checkIsEmailFree(email);
-        } catch (ServiceException e) {
-            throw new CommandException("Problem with checking email free", e);
-        }
+        isParamsValid = userService.checkIsValid(email, password, firstName, lastName);
         if (isParamsValid) {
+            try {
+                isEmailFree = userService.checkIsEmailFree(email);
+            } catch (ServiceException e) {
+                throw new CommandException("Problem with checking email free", e);
+            }
             if (isEmailFree) {
                 try {
-                    userService.register(email, password, firstName, lastName);
                     ClientNotificationSender clientNotificationSender = new ClientNotificationSenderImpl();
                     clientNotificationSender.registerMailNotification(email,
                             firstName, request.getRequestURL().toString());
+                    userService.register(email, password, firstName, lastName);
                 } catch (ServiceException e) {
                     throw new CommandException("Problem with registration", e);
                 }
-                page = PagePath.LOGIN;
+                page = PagePath.INFO_SUCCESS;
             } else {
                 request.setAttribute(PageParameter.ERROR_EMAIL, PageParameter.ERROR_INFO);
             }

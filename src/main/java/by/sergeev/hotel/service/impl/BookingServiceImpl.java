@@ -4,7 +4,6 @@ import by.sergeev.hotel.dao.*;
 import by.sergeev.hotel.entity.Booking;
 import by.sergeev.hotel.entity.Room;
 import by.sergeev.hotel.entity.User;
-import by.sergeev.hotel.entity.enums.BookingStatus;
 import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.BookingService;
@@ -17,6 +16,9 @@ import java.util.Optional;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
+/**
+ * The type Booking service.
+ */
 public class BookingServiceImpl implements BookingService {
 
     private BookingDao bookingDao = DaoFactory.daoFactory.getBookingDao();
@@ -109,11 +111,12 @@ public class BookingServiceImpl implements BookingService {
         boolean isCommandSuccess = false;
         try {
             Optional<User> user = userDao.findEntityById(userId);
+            if (user.isPresent()){
             BigDecimal balance = user.get().getBalance();
             BigDecimal totalBalance = balance.subtract(totalCost);
             if (totalBalance.compareTo(BigDecimal.ZERO) >= 0) {
                 isCommandSuccess = TransactionManager.getInstance().payForBooking(userId, bookingId, totalBalance);
-            }
+            }}
         } catch (DaoException e) {
             throw new ServiceException("Problem with pay for booking in booking service", e);
         }

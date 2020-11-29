@@ -5,7 +5,7 @@ import by.sergeev.hotel.entity.enums.RoomGrade;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Room implements Serializable {
+public class Room implements Serializable, Cloneable {
 
     private long id;
     private String name;

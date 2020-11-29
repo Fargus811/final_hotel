@@ -1,4 +1,4 @@
-package by.sergeev.hotel.util;
+package by.sergeev.hotel.util.mail;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -19,9 +19,12 @@ import java.util.Properties;
 public class MailSender {
 
     private static final Logger logger = LogManager.getLogger();
-    private static final String CONFIG_FILEPATH = "config_mail/mail.properties";
+    private static final String CONFIG_FILEPATH = "mail/mail.properties";
     private static final String USER_NAME = "mail.user.name";
     private static final String USER_PASSWORD = "mail.user.password";
+
+    private static String username;
+    private static String password;
 
     private MailSender() {
     }
@@ -36,7 +39,14 @@ public class MailSender {
     public static void sendMail(String recipientAddress, String subject, String text) {
         try {
             Properties properties = getProperties();
-            Session session = getSession(properties);
+            username = properties.getProperty(USER_NAME);
+            password = properties.getProperty(USER_PASSWORD);
+            Session session = Session.getDefaultInstance(properties, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
+                }
+            });
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress((String) properties.get(USER_NAME)));
             message.setSubject(subject);
@@ -59,20 +69,5 @@ public class MailSender {
         }
 
         return properties;
-    }
-
-    private static Session getSession(Properties properties) {
-        Session session = Session.getDefaultInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                String passwordGlobal = (String) properties.get(USER_PASSWORD);
-                String passwordValue = System.getenv(passwordGlobal);
-
-                return new PasswordAuthentication((String) properties.get(USER_NAME),
-                        passwordValue);
-            }
-        });
-
-        return session;
     }
 }

@@ -11,7 +11,7 @@ public interface UserService {
 
     List<User> findAllUsers() throws ServiceException;
 
-    boolean checkIsValid(String email, String password, String firstName, String lastName) throws ServiceException;
+    boolean checkIsValid(String email, String password, String firstName, String lastName);
 
     boolean checkIsEmailFree(String email) throws ServiceException;
 
@@ -27,8 +27,9 @@ public interface UserService {
 
     boolean updateUserPassword(long userId, String oldPassword, String newPassword) throws ServiceException;
 
-    boolean deleteAccount(long userId, String password) throws ServiceException;
+    boolean deleteAccount(long userId, int statusId, String password) throws ServiceException;
 
     void changeAccountStatus(long userId, int statusId) throws ServiceException;
 
+    boolean activateAccount(String email) throws ServiceException;
 }

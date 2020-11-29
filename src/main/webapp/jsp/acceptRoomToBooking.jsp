@@ -17,8 +17,8 @@
     <jsp:include page="/jsp/part/header.jsp"/>
     <div class="d-flex justify-content-center">
         <div class="container" style="text-align: center; margin: 20px">
-            <label> ✅ Заселение ${booking.startDate} ➖ ❌ Выселение ${booking.endDate}</label>
-            <label>Итоговая сумма бронирования составляет: ${cost}💵</label>
+            <label> ✅ <fmt:message key="text.bookings.startDate"/> ${booking.startDate} ➖ ❌ <fmt:message key="text.bookings.endDate"/> ${booking.endDate}</label>
+            <label><fmt:message key="text.bookings.totalCost"/> ${cost}💵</label>
             <c:if test="${sessionUser.role == 'ADMIN'}">
                 <c:if test="${booking.bookingStatus.ordinal() == 0}">
                     <form action="${pageContext.request.contextPath}/controller" method="post">
@@ -28,8 +28,7 @@
                         <input type="hidden" name="bookingId" value="${booking.id}">
                         <div class="form-group" style="margin-top: 20px">
                             <div class="row">
-                                <button type="submit" class="button auth secondary" style="background-color: blue;
-                    top: 40px;right: 250px;">
+                                <button type="submit" class="btn btn-outline-success" style="margin-left: 340px;">
                                     <fmt:message key="text.bookings.addRoom"/>
                                 </button>
                             </div>

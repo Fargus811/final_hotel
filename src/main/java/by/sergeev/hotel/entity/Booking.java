@@ -6,7 +6,7 @@ import by.sergeev.hotel.entity.enums.RoomGrade;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Booking implements Serializable {
+public class Booking implements Serializable, Cloneable {
 
     private long id;
     private String startDate;

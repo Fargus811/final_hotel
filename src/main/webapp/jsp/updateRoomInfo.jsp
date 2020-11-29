@@ -39,7 +39,8 @@
                             <input type="hidden" name="roomId" value="${room.id}"/>
                         </div>
                         <div class="row">
-                            <button  type="submit" class="button auth secondary" style="background-color: blue;background-color: blue;margin-right: 1011px">Download</button>
+                            <button  type="submit" class="button auth secondary" style="background-color: blue;background-color: blue;margin-right: 1011px">
+                                <fmt:message key="text.createRoom.download"/></button>
                         </div>
                     </div>
 

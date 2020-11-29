@@ -20,7 +20,9 @@ public enum RolePermission {
             PASS_TO_REGISTRATION,
             LOGIN,
             REGISTRATION,
-            SHOW_ALL_ROOMS)),
+            SHOW_ALL_ROOMS,
+            CHANGE_LANGUAGE,
+            ACTIVATE_ACCOUNT)),
 
     /**
      * Client command role permission.
@@ -38,7 +40,8 @@ public enum RolePermission {
             UPDATE_USER_PASSWORD,
             SHOW_MY_PROFILE,
             SHOW_PROFILE_SETTINGS,
-            LANGUAGE)),
+            CHANGE_LANGUAGE,
+            LOGOUT)),
 
     /**
      * Admin command role permission.
@@ -57,13 +60,14 @@ public enum RolePermission {
             SHOW_FREE_ROOM_BY_CONDITION,
             SHOW_ROOM_TO_UPDATE_INFO,
             CHANGE_ACCOUNT_STATUS,
-            LANGUAGE,
+            CHANGE_LANGUAGE,
             LOGIN,
             UPDATE_USER_INFO,
             UPDATE_USER_PASSWORD,
             SHOW_ALL_USERS,
             SHOW_MY_PROFILE,
-            SHOW_PROFILE_SETTINGS));
+            SHOW_PROFILE_SETTINGS,
+            LOGOUT));
 
     private Set<CommandType> roleCommands;
 

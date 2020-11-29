@@ -37,7 +37,9 @@
                     <input type="hidden" name="image_type" value="exterior_small">
                     </div>
                     <div class="row">
-                    <button  type="submit" class="button auth secondary" style="background-color: blue;background-color: blue;">Download</button>
+                    <button  type="submit" class="button auth secondary" style="background-color: blue;background-color: blue;">
+                        <fmt:message key="text.createRoom.download"/>
+                    </button>
                     </div>
                 </div>
 

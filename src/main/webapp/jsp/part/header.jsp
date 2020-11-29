@@ -66,11 +66,11 @@
         </c:choose>
     </div>
     <form id="ruForm" action="${pageContext.request.contextPath}/controller" method="post" style="display:none;">
-        <input type="hidden" name="command" value="language"/>
+        <input type="hidden" name="command" value="change_language"/>
         <input type="hidden" name="lang" value="ru"/>
     </form>
     <form id="enForm" action="${pageContext.request.contextPath}/controller" method="post" style="display:none;">
-        <input type="hidden" name="command" value="language"/>
+        <input type="hidden" name="command" value="change_language"/>
         <input type="hidden" name="lang" value="en"/>
     </form>
     </div>

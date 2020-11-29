@@ -6,7 +6,10 @@ import by.sergeev.hotel.entity.enums.Role;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class User implements Serializable {
+/**
+ * The type User.
+ */
+public class User implements Serializable, Cloneable {
 
     private long id;
     private String email;
@@ -16,8 +19,7 @@ public class User implements Serializable {
     private Role role;
     private AccountStatus accountStatus;
 
-    public User(){
-
+    public User() {
     }
 
     public User(long id, String email, String firstName, String lastName) {
@@ -42,11 +44,11 @@ public class User implements Serializable {
     }
 
     public User(long id, String email, String firstName, String lastName, BigDecimal balance, Role role) {
-        this.id = this.id;
+        this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.balance = this.balance;
+        this.balance = balance;
         this.role = role;
     }
 

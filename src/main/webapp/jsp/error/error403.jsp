@@ -34,7 +34,7 @@
                                 <path stroke="#E22" stroke-width="7" d="m7,6 26,26m0-26-26,26"/>
                             </svg>
                         </div>
-                        Доступ запрещён
+                        <fmt:message key="text.info.403"/>
                     </div>
                 </div>
             </div>

@@ -58,7 +58,7 @@
                         <input type="hidden" name="command" value="show_user_bookings"/>
                         <input type="hidden" name="userId" value="${elem.id}"/>
                         <button type="submit" class="btn btn-outline-primary">
-                            View bookings
+                           <fmt:message key="text.bookings.viewBookings"/>
                         </button>
                     </form>
                     <c:choose>

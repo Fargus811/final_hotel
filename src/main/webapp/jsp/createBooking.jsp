@@ -35,15 +35,18 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <span class="form-label"><fmt:message key="text.create.checkIn"/>*</span>
-                                            <input class="form-control" name="startDate" type="date" required not-validated>
+                                            <input class="form-control" name="startDate" type="date" required
+                                                   not-validated>
                                             <span class="error-message" style="margin: unset" for="startDate" hidden>Invalid</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <span class="form-label"><fmt:message key="text.create.checkOut"/>*</span>
-                                            <input class="form-control" name="endDate" type="date" required not-validated>
-                                            <span class="error-message" style="margin: unset" for="endDate" hidden>Invalid</span>
+                                            <input class="form-control" name="endDate" type="date" required
+                                                   not-validated>
+                                            <span class="error-message" style="margin: unset" for="endDate" hidden>
+                                                <fmt:message key="text.profileSettings.invalidData"/></span>
                                         </div>
                                     </div>
                                 </div>
@@ -69,10 +72,14 @@
                                         <div class="form-group">
                                             <span class="form-label"><fmt:message key="text.create.roomGrade"/></span>
                                             <select class="form-control" name="gradeId">
-                                                <option value="1"><fmt:message key="text.create.roomGrade.economy"/></option>
-                                                <option value="2"><fmt:message key="text.create.roomGrade.standard"/></option>
-                                                <option value="3"><fmt:message key="text.create.roomGrade.premium"/></option>
-                                                <option value="4"><fmt:message key="text.create.roomGrade.elite"/></option>
+                                                <option value="1"><fmt:message
+                                                        key="text.create.roomGrade.economy"/></option>
+                                                <option value="2"><fmt:message
+                                                        key="text.create.roomGrade.standard"/></option>
+                                                <option value="3"><fmt:message
+                                                        key="text.create.roomGrade.premium"/></option>
+                                                <option value="4"><fmt:message
+                                                        key="text.create.roomGrade.elite"/></option>
                                             </select>
                                             <span class="select-arrow"></span>
                                         </div>
@@ -115,11 +122,12 @@
                                     </div>
                                 </div>
                                 <div class="form-btn">
-                                    <button id="create-booking" class="submit-btn"><fmt:message key="text.createBooking.button"/></button>
+                                    <button id="create-booking" class="submit-btn"><fmt:message
+                                            key="text.createBooking.button"/></button>
                                 </div>
                                 <c:if test="${not empty error}">
                                     <div class="alert alert-danger" role="alert" style="margin: 20px">
-                                        Invalid data
+                                        <fmt:message key="text.profileSettings.invalidData"/>
                                     </div>
                                 </c:if>
                             </div>
