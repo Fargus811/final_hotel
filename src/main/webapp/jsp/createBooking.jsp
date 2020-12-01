@@ -72,14 +72,16 @@
                                         <div class="form-group">
                                             <span class="form-label"><fmt:message key="text.create.roomGrade"/></span>
                                             <select class="form-control" name="gradeId">
-                                                <option value="1"><fmt:message
+                                                <option value="0"><fmt:message
                                                         key="text.create.roomGrade.economy"/></option>
-                                                <option value="2"><fmt:message
+                                                <option value="1"><fmt:message
                                                         key="text.create.roomGrade.standard"/></option>
+                                                <option value="2"><fmt:message
+                                                        key="text.create.roomGrade.suite"/></option>
                                                 <option value="3"><fmt:message
-                                                        key="text.create.roomGrade.premium"/></option>
+                                                        key="text.create.roomGrade.premier"/></option>
                                                 <option value="4"><fmt:message
-                                                        key="text.create.roomGrade.elite"/></option>
+                                                        key="text.create.roomGrade.premium"/></option>
                                             </select>
                                             <span class="select-arrow"></span>
                                         </div>

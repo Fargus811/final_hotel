@@ -9,7 +9,12 @@ import by.sergeev.hotel.service.ServiceFactory;
 import by.sergeev.hotel.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-
+/**
+ * The type Activate account after registration.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
 public class ActivateAccountAfterRegistrationCommand implements Command {
 
     private UserService userService = ServiceFactory.serviceFactory.getUserService();

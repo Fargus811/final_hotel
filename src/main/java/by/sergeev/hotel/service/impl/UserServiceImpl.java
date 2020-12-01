@@ -15,6 +15,12 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type User service.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
 public class UserServiceImpl implements UserService {
 
     private static final int ACTIVE_STATUS_ACCOUNT = 0;

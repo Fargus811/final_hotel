@@ -15,6 +15,9 @@ import java.math.BigDecimal;
 
 /**
  * The type Refill user balance command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class AddUserBalanceCommand implements Command {
 

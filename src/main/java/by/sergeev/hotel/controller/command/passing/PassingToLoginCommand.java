@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * The type Passing to login page.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class PassingToLoginCommand implements Command {
 

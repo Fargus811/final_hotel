@@ -17,10 +17,11 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Set;
 
+
 /**
- * The {@code RoleSecurityFilter} class represents role security filter.
+ * The type Role security filter.
  *
- * @author Sergeev Daniil
+ * @author Daniil Sergeev
  * @version 1.0
  */
 @WebFilter(urlPatterns = {"/controller"})

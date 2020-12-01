@@ -1,6 +1,6 @@
 package by.sergeev.hotel.dao.impl;
 
-import by.sergeev.hotel.dao.AbstractDao;
+import by.sergeev.hotel.dao.AbstractJDBCDao;
 import by.sergeev.hotel.dao.BookingDao;
 import by.sergeev.hotel.dao.DaoFactory;
 import by.sergeev.hotel.dao.RoomDao;
@@ -22,10 +22,14 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+
 /**
+ * The type Booking dao.
  *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
-public class BookingDaoImpl extends AbstractDao<Booking> implements BookingDao {
+public class BookingDaoImpl extends AbstractJDBCDao<Booking> implements BookingDao {
 
     private static final Logger LOGGER = LogManager.getLogger(BookingDaoImpl.class);
 

@@ -16,6 +16,9 @@ import java.util.Objects;
 
 /**
  * The type Show all rooms command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class ShowAllRoomsCommand implements ShowCommand {
 

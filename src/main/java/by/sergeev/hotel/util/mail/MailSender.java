@@ -14,6 +14,7 @@ import java.util.Properties;
 /**
  * The type Mail sender.
  *
+ * @author Daniil Sergeev
  * @version 1.0
  */
 public class MailSender {

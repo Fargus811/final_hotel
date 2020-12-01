@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 
 /**
- * The {@code TransactionManager} class represents transaction manager.
+ * The class represents transaction manager.
  *
  * @author Daniil Sergeev
  * @version 1.0

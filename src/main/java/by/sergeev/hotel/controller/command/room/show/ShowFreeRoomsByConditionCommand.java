@@ -14,6 +14,9 @@ import java.util.List;
 
 /**
  * The type Show free rooms by condition command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class ShowFreeRoomsByConditionCommand implements Command {
 

@@ -18,6 +18,9 @@ import java.util.Objects;
 
 /**
  * The type Update room's information command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class UpdateRoomInfoCommand implements Command {
 

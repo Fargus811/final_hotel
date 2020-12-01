@@ -1,5 +1,11 @@
 package by.sergeev.hotel.controller.command;
 
+/**
+ * The type Page Path of request.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
 public class PagePath {
 
     public static final String MAIN = "/jsp/main.jsp";

@@ -1,6 +1,6 @@
 package by.sergeev.hotel.dao.impl;
 
-import by.sergeev.hotel.dao.AbstractDao;
+import by.sergeev.hotel.dao.AbstractJDBCDao;
 import by.sergeev.hotel.dao.RoomDao;
 import by.sergeev.hotel.entity.Booking;
 import by.sergeev.hotel.entity.Room;
@@ -19,7 +19,13 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class RoomDaoImpl extends AbstractDao<Room> implements RoomDao {
+/**
+ * The type Room dao.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
+public class RoomDaoImpl extends AbstractJDBCDao<Room> implements RoomDao {
 
     private static final Logger LOGGER = LogManager.getLogger(RoomDaoImpl.class);
 

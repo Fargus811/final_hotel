@@ -1,6 +1,23 @@
 package by.sergeev.hotel.entity.enums;
 
+/**
+ * The enum Account status.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
 public enum AccountStatus {
 
-    ACTIVE,BANNED,DELETED
+    /**
+     * Active account status.
+     */
+    ACTIVE,
+    /**
+     * Banned account status.
+     */
+    BANNED,
+    /**
+     * Deleted account status.
+     */
+    DELETED
 }

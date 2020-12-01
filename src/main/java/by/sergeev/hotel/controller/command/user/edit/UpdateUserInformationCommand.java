@@ -15,6 +15,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  * The type Update user information command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class UpdateUserInformationCommand implements Command {
 

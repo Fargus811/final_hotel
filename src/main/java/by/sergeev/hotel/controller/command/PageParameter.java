@@ -1,5 +1,11 @@
 package by.sergeev.hotel.controller.command;
 
+/**
+ * The type Page Parameter of request.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
 public class PageParameter {
 
     public static final String COMMAND = "command";

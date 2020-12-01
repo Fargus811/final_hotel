@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * The type Delete room command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class DeleteRoomCommand implements Command {
 

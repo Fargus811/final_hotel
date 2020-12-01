@@ -16,6 +16,9 @@ import java.util.Optional;
 
 /**
  * The type Show profile settings command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class ShowProfileSettingsCommand implements Command {
 

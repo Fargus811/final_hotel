@@ -15,6 +15,9 @@ import java.util.Objects;
 
 /**
  * The type Change language command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class ChangeLanguageCommand implements Command {
 

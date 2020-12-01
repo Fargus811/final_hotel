@@ -1,6 +1,6 @@
 package by.sergeev.hotel.dao.impl;
 
-import by.sergeev.hotel.dao.AbstractDao;
+import by.sergeev.hotel.dao.AbstractJDBCDao;
 import by.sergeev.hotel.dao.UserDao;
 import by.sergeev.hotel.entity.User;
 import by.sergeev.hotel.entity.enums.AccountStatus;
@@ -19,7 +19,13 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class UserDaoImpl extends AbstractDao<User> implements UserDao {
+/**
+ * The type User dao.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
+public class UserDaoImpl extends AbstractJDBCDao<User> implements UserDao {
 
     private static final Logger LOGGER = LogManager.getLogger(UserDaoImpl.class);
 
@@ -139,6 +145,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         }
     }
 
+    /**
+     * Update user.
+     *
+     * @param entity   the entity
+     * @param password the password
+     * @throws DaoException the dao exception
+     */
     public void updateUser(User entity, String password) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(CHECK_USER_BALANCE)) {

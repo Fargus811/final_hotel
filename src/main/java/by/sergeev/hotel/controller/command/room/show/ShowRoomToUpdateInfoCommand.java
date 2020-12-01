@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * The type Show the room information to update command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class ShowRoomToUpdateInfoCommand implements Command {
 

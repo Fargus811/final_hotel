@@ -15,6 +15,9 @@ import java.math.BigDecimal;
 
 /**
  * The type Add room to booking command as param.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class AddRoomToBookingCommand implements Command {
 

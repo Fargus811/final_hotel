@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * The type Registration command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class RegistrationCommand implements Command {
 
@@ -29,28 +32,28 @@ public class RegistrationCommand implements Command {
         boolean isParamsValid;
         boolean isEmailFree;
         isParamsValid = userService.checkIsValid(email, password, firstName, lastName);
-        if (isParamsValid) {
-            try {
-                isEmailFree = userService.checkIsEmailFree(email);
-            } catch (ServiceException e) {
-                throw new CommandException("Problem with checking email free", e);
-            }
-            if (isEmailFree) {
-                try {
-                    ClientNotificationSender clientNotificationSender = new ClientNotificationSenderImpl();
-                    clientNotificationSender.registerMailNotification(email,
-                            firstName, request.getRequestURL().toString());
-                    userService.register(email, password, firstName, lastName);
-                } catch (ServiceException e) {
-                    throw new CommandException("Problem with registration", e);
-                }
-                page = PagePath.INFO_SUCCESS;
-            } else {
-                request.setAttribute(PageParameter.ERROR_EMAIL, PageParameter.ERROR_INFO);
-            }
-        } else {
+        if (!isParamsValid) {
             request.setAttribute(PageParameter.ERROR_PARAMETERS, PageParameter.ERROR_INFO);
+            return page;
         }
+        try {
+            isEmailFree = userService.checkIsEmailFree(email);
+        } catch (ServiceException e) {
+            throw new CommandException("Problem with checking email free", e);
+        }
+        if (!isEmailFree) {
+            request.setAttribute(PageParameter.ERROR_EMAIL, PageParameter.ERROR_INFO);
+            return page;
+        }
+        try {
+            ClientNotificationSender clientNotificationSender = new ClientNotificationSenderImpl();
+            clientNotificationSender.registerMailNotification(email,
+                    firstName, request.getRequestURL().toString());
+            userService.register(email, password, firstName, lastName);
+        } catch (ServiceException e) {
+            throw new CommandException("Problem with registration", e);
+        }
+        page = PagePath.INFO_SUCCESS;
         return page;
     }
 }

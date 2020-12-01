@@ -16,6 +16,9 @@ import java.util.Optional;
 
 /**
  * The type Show my profile command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class ShowMyProfileCommand implements Command {
 

@@ -14,6 +14,9 @@ import java.util.List;
 
 /**
  * The type Show all users bookings command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class ShowAllBookingsCommand implements Command {
 

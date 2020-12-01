@@ -12,6 +12,12 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 
+/**
+ * The type Connection pool.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
 public class ConnectionPool {
 
     private static final Logger LOG = LogManager.getLogger(ConnectionPool.class);
@@ -27,8 +33,9 @@ public class ConnectionPool {
     private static ConnectionPool instance = null;
 
     /**
-     *  
-     * @return
+     * Gets instance.
+     *
+     * @return instance
      */
     public static ConnectionPool getInstance() {
         if (instance == null) {
@@ -81,6 +88,12 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Take connection proxy connection.
+     *
+     * @return the proxy connection
+     * @throws ConnectionPoolException the connection pool exception
+     */
     public ProxyConnection takeConnection() throws ConnectionPoolException {
         try {
             ProxyConnection connection = availableConnections.take();
@@ -91,6 +104,12 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Put connection.
+     *
+     * @param connection the connection
+     * @throws ConnectionPoolException the connection pool exception
+     */
     public void putConnection(ProxyConnection connection) throws ConnectionPoolException {
         try {
             if (!connection.isValid(TIMEOUT_VALID)) {
@@ -103,6 +122,9 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Close all.
+     */
     public void closeAll() {
         if (isInitialized.compareAndSet(true, false)) {
             for (int i = 0; i < POOL_SIZE; i++) {

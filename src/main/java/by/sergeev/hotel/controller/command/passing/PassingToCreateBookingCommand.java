@@ -7,7 +7,10 @@ import by.sergeev.hotel.exception.CommandException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * The type Pass to create booking page.
+ * The type Passing to create booking page.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class PassingToCreateBookingCommand implements Command {
 

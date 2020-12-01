@@ -11,7 +11,10 @@ import by.sergeev.hotel.controller.command.PageParameter;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * The type Change booking status command in booking.(IN_PROCESS, WAITING_FOR_PAYMENT, CANCELLATION, PAID)
+ * The type Change booking status command in booking.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class ChangeBookingStatusCommand implements Command {
 

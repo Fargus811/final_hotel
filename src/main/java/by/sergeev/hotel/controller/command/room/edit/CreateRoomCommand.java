@@ -17,6 +17,9 @@ import java.util.Objects;
 
 /**
  * The type Create room command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class CreateRoomCommand implements Command {
 

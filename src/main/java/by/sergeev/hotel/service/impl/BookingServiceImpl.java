@@ -16,8 +16,12 @@ import java.util.Optional;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
+
 /**
  * The type Booking service.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class BookingServiceImpl implements BookingService {
 

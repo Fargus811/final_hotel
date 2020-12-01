@@ -1,5 +1,11 @@
 package by.sergeev.hotel.util.mail;
 
+/**
+ * The interface Client notification sender.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
 public interface ClientNotificationSender {
     /**
      * Register mail notification.

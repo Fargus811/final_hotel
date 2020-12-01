@@ -14,6 +14,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  * The type Change account status command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class ChangeAccountStatusCommand implements Command {
 

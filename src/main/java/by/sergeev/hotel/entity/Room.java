@@ -5,6 +5,12 @@ import by.sergeev.hotel.entity.enums.RoomGrade;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * The type Room.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
 public class Room implements Serializable, Cloneable {
 
     private long id;
@@ -20,9 +26,28 @@ public class Room implements Serializable, Cloneable {
     private String photoPath;
     private RoomGrade roomGrade;
 
+    /**
+     * Instantiates a new Room.
+     */
     public Room() {
     }
 
+    /**
+     * Instantiates a new Room.
+     *
+     * @param id            the id
+     * @param name          the name
+     * @param numberOfRooms the number of rooms
+     * @param maxPersons    the max persons
+     * @param cost          the cost
+     * @param hasWifi       the has wifi
+     * @param hasTV         the has tv
+     * @param hasBathroom   the has bathroom
+     * @param numberOfBeds  the number of beds
+     * @param description   the description
+     * @param photoPath     the photo path
+     * @param roomGrade     the room grade
+     */
     public Room(long id, String name, int numberOfRooms, int maxPersons, BigDecimal cost, boolean hasWifi,
                 boolean hasTV, boolean hasBathroom, int numberOfBeds, String description, String photoPath, RoomGrade roomGrade) {
         this.id = id;
@@ -39,98 +64,218 @@ public class Room implements Serializable, Cloneable {
         this.roomGrade = roomGrade;
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets number of rooms.
+     *
+     * @return the number of rooms
+     */
     public int getNumberOfRooms() {
         return numberOfRooms;
     }
 
+    /**
+     * Sets number of rooms.
+     *
+     * @param numberOfRooms the number of rooms
+     */
     public void setNumberOfRooms(int numberOfRooms) {
         this.numberOfRooms = numberOfRooms;
     }
 
+    /**
+     * Gets max persons.
+     *
+     * @return the max persons
+     */
     public int getMaxPersons() {
         return maxPersons;
     }
 
+    /**
+     * Sets max persons.
+     *
+     * @param maxPersons the max persons
+     */
     public void setMaxPersons(int maxPersons) {
         this.maxPersons = maxPersons;
     }
 
+    /**
+     * Gets cost.
+     *
+     * @return the cost
+     */
     public BigDecimal getCost() {
         return cost;
     }
 
+    /**
+     * Sets cost.
+     *
+     * @param cost the cost
+     */
     public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 
+    /**
+     * Is has wifi boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHasWifi() {
         return hasWifi;
     }
 
+    /**
+     * Sets has wifi.
+     *
+     * @param hasWifi the has wifi
+     */
     public void setHasWifi(boolean hasWifi) {
         this.hasWifi = hasWifi;
     }
 
+    /**
+     * Is has tv boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHasTV() {
         return hasTV;
     }
 
+    /**
+     * Sets has tv.
+     *
+     * @param hasTV the has tv
+     */
     public void setHasTV(boolean hasTV) {
         this.hasTV = hasTV;
     }
 
+    /**
+     * Is has bathroom boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHasBathroom() {
         return hasBathroom;
     }
 
+    /**
+     * Sets has bathroom.
+     *
+     * @param hasBathroom the has bathroom
+     */
     public void setHasBathroom(boolean hasBathroom) {
         this.hasBathroom = hasBathroom;
     }
 
+    /**
+     * Gets number of beds.
+     *
+     * @return the number of beds
+     */
     public int getNumberOfBeds() {
         return numberOfBeds;
     }
 
+    /**
+     * Sets number of beds.
+     *
+     * @param numberOfBeds the number of beds
+     */
     public void setNumberOfBeds(int numberOfBeds) {
         this.numberOfBeds = numberOfBeds;
     }
 
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Sets description.
+     *
+     * @param description the description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Gets photo path.
+     *
+     * @return the photo path
+     */
     public String getPhotoPath() {
         return photoPath;
     }
 
+    /**
+     * Sets photo path.
+     *
+     * @param photoPath the photo path
+     */
     public void setPhotoPath(String photoPath) {
         this.photoPath = photoPath;
     }
 
+    /**
+     * Gets room grade.
+     *
+     * @return the room grade
+     */
     public RoomGrade getRoomGrade() {
         return roomGrade;
     }
 
+    /**
+     * Sets room grade.
+     *
+     * @param roomGrade the room grade
+     */
     public void setRoomGrade(RoomGrade roomGrade) {
         this.roomGrade = roomGrade;
     }

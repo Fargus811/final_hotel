@@ -15,6 +15,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  * The type Update user password command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class UpdateUserPasswordCommand implements EditCommand {
 

@@ -1,12 +1,17 @@
 package by.sergeev.hotel.util.mail.impl;
 
-import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.util.mail.ClientNotificationSender;
 import by.sergeev.hotel.util.mail.MailSender;
 
 import java.util.ResourceBundle;
 import java.util.StringJoiner;
 
+/**
+ * The type Client notification sender.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
 public class ClientNotificationSenderImpl implements ClientNotificationSender {
 
     private static final String MESSAGE_FILENAME = "../mail/notification_message";

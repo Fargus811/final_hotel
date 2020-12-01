@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * The type Logout command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class LogoutCommand implements Command {
 

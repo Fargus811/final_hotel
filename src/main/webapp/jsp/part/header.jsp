@@ -10,7 +10,6 @@
                 key="text.hotel"/></a></div>
         <div class='button'><a style="color: white" href="${pageContext.request.contextPath}/index.jsp"><fmt:message
                 key="text.catalog"/></a></div>
-        <a class='button' href="partnership"><fmt:message key="text.partnership"/></a>
         <div class="lang-select">
             <select id="lang-select" cur-lang="${locale}">
                 <c:choose>

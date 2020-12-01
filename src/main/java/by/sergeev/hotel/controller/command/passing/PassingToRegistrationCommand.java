@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * The type Passing to registration page.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class PassingToRegistrationCommand implements Command {
 

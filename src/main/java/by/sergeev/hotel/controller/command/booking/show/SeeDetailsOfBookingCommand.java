@@ -17,6 +17,9 @@ import java.util.Optional;
 
 /**
  * The type Show detail of user's booking.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class SeeDetailsOfBookingCommand implements Command {
 

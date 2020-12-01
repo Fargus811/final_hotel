@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 
 /**
  * The type User.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class User implements Serializable, Cloneable {
 

@@ -11,6 +11,13 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+
+/**
+ * The type Connection producer.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
 class ConnectionProducer {
 
     private static final Logger LOGGER = LogManager.getLogger(ConnectionProducer.class);
@@ -25,6 +32,9 @@ class ConnectionProducer {
     private static final String CHARACTER_ENCODING_PROP_NAME = "db.characterEncoding";
     private static final String USE_UNICODE_PROP_NAME = "db.useUnicode";
 
+    /**
+     * Instantiates a new Connection producer.
+     */
     ConnectionProducer() {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(DATABASE_NAME_PROPERTIES);
         configProp = new Properties();
@@ -41,6 +51,12 @@ class ConnectionProducer {
         }
     }
 
+    /**
+     * Produce proxy connection.
+     *
+     * @return the proxy connection
+     * @throws ConnectionPoolException the connection pool exception
+     */
     public ProxyConnection produce() throws ConnectionPoolException {
         try {
             Connection connection = DriverManager.getConnection(url, configProp);

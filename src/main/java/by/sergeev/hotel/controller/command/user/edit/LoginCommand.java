@@ -18,6 +18,9 @@ import java.util.Optional;
 
 /**
  * The type Login command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class LoginCommand implements Command {
 

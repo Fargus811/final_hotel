@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * The type Delete room from booking command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class DeleteRoomFromBookingCommand implements Command {
 

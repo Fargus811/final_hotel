@@ -18,8 +18,8 @@
     <title>Grand Hotel</title>
 </head>
 <body>
-<fmt:bundle basename="text">
 <fmt:setLocale value="${locale}"/>
+<fmt:bundle basename="text">
 <jsp:include page="/jsp/part/header.jsp"/>
 <div class="fade-block left"></div>
 <div class="fade-block right"></div>
@@ -73,7 +73,7 @@
                     <input type="hidden" name="command" value="show_all_rooms"/>
                     <input type="hidden" name="numberOfPage" value="${numberOfPage-1}"/>
                     <li class="page-item">
-                        <button type="submit" class="page-link"><fmt:message key="text.catalog.pagination.previous"/></button>
+                        <button type="submit" class="page-link">⬅️</button>
                     </li>
                 </form>
             </c:if>
@@ -82,7 +82,7 @@
                     <input type="hidden" name="command" value="show_all_rooms"/>
                     <input type="hidden" name="numberOfPage" value="${numberOfPage+1}"/>
                     <li class="page-item">
-                        <button type="submit" class="page-link"><fmt:message key="text.catalog.pagination.next"/></button>
+                        <button type="submit" class="page-link">➡️</button>
                     </li>
                 </form>
             </c:if>

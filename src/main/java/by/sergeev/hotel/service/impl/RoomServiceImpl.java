@@ -15,9 +15,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Room service.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
 public class RoomServiceImpl implements RoomService {
 
-    private static final String PHOTO_PATH = "/Users/mac/Downloads/projectImages/";
+    private static final String PHOTO_PATH = "/Users/mac/Downloads/hotel1/src/main/webapp/resources/images";
     private static final double COUNT_OF_VALUES = 5.0;
 
     private RoomDao roomDao = DaoFactory.daoFactory.getRoomDao();

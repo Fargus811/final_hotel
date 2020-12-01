@@ -6,6 +6,13 @@ import by.sergeev.hotel.entity.SessionUser;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
+
+/**
+ * The type Only for admin tag.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
 public class OnlyForAdminTag extends BodyTagSupport {
 
     @Override

@@ -21,6 +21,12 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 
+/**
+ * The type Upload image servlet.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
 @WebServlet(urlPatterns = "/upload_image_controller/*")
 @MultipartConfig(maxFileSize = 1024 * 1024 * 10,
         maxRequestSize = 1024 * 1024 * 50)

@@ -19,6 +19,9 @@ import java.util.Objects;
 
 /**
  * The type Create booking command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class CreateBookingCommand implements EditCommand {
 

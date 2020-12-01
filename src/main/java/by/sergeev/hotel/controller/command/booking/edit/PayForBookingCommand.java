@@ -16,6 +16,9 @@ import java.math.BigDecimal;
 
 /**
  * The type Pay for booking command by user.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class PayForBookingCommand implements Command {
 
@@ -29,7 +32,7 @@ public class PayForBookingCommand implements Command {
         long userId = sessionUser.getId();
         long bookingId = Long.parseLong(request.getParameter(PageParameter.BOOKING_ID));
         BigDecimal totalCost = new BigDecimal(request.getParameter(PageParameter.COST));
-        boolean isCommandSuccess = false;
+        boolean isCommandSuccess;
         try {
             isCommandSuccess = bookingService.payForBooking(userId, bookingId, totalCost);
         }catch (ServiceException e){

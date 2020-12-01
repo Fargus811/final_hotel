@@ -14,6 +14,9 @@ import java.util.List;
 
 /**
  * The type Show all users command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class ShowAllUsersCommand implements Command {
 

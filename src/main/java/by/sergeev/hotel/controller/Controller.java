@@ -19,6 +19,12 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Controller.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
+ */
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
 
@@ -38,6 +44,14 @@ public class Controller extends HttpServlet {
         processRequest(request, response);
     }
 
+    /**
+     * Process request.
+     *
+     * @param request  the request
+     * @param response the response
+     * @throws ServletException the servlet exception
+     * @throws IOException      the io exception
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {

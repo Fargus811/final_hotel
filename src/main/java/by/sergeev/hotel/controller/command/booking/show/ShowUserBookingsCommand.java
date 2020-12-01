@@ -17,6 +17,9 @@ import java.util.Objects;
 
 /**
  * The type Show user's bookings command.
+ *
+ * @author Daniil Sergeev
+ * @version 1.0
  */
 public class ShowUserBookingsCommand implements ShowCommand {
 
