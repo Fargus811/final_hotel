@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  * @author Daniil Sergeev
  * @version 1.0
  */
-public class Room implements Serializable, Cloneable {
+public class Room implements Entity {
 
     private long id;
     private String name;

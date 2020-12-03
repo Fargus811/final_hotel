@@ -207,7 +207,7 @@
                                 <input type="hidden" name="delete" value="true"/>
                                 <div class="form-group">
                                     <label class="d-block"><fmt:message key="text.logIn.password.confirm"/></label>
-                                    <input pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,25}$"
+                                    <input pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,25}$" type="password"
                                            title="<fmt:message key="text.registration.passwordError"/>"
                                            class="form-control" id="password" name="password"
                                            placeholder="<fmt:message key="text.profileSettings.enterPassword"/>"
@@ -335,6 +335,7 @@
         </div>
     </div>
     <script src="${pageContext.servletContext.contextPath}/resources/js/update_password_validator.js"></script>
+    <script src="${pageContext.servletContext.contextPath}/resources/js/protect_f5.js"></script>
 </fmt:bundle>
 </body>
 <jsp:include page="/jsp/part/footer.jsp"/>

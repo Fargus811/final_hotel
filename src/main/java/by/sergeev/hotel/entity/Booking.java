@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  * @author Daniil Sergeev
  * @version 1.0
  */
-public class Booking implements Serializable, Cloneable {
+public class Booking implements Entity {
 
     private long id;
     private String startDate;

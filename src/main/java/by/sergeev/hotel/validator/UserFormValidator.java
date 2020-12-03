@@ -9,6 +9,10 @@ package by.sergeev.hotel.validator;
  */
 public class UserFormValidator {
 
+    private static final String REGEX_FOR_EMAIL = "\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+";
+    private static final String REGEX_FOR_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{6,25}$";
+    private static final String REGEX_FOR_NAME = "[A-ZА-Я][a-zа-я\\-]{1,32}";
+
     /**
      * Is valid email boolean.
      *
@@ -16,7 +20,7 @@ public class UserFormValidator {
      * @return the boolean
      */
     public static boolean isValidEmail(String email) {
-        return email.matches("\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+");
+        return email.matches(REGEX_FOR_EMAIL);
     }
 
     /**
@@ -26,7 +30,7 @@ public class UserFormValidator {
      * @return the boolean
      */
     public static boolean isValidPassword(String pass) {
-        return pass.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{6,25}$");
+        return pass.matches(REGEX_FOR_PASSWORD);
     }
 
     /**
@@ -35,19 +39,10 @@ public class UserFormValidator {
      * @param firstName the first name
      * @return the boolean
      */
-    public static boolean isValidFirstName(String firstName) {
-        return firstName.matches("[A-ZА-Я][a-zа-я\\-]{1,32}");
+    public static boolean isValidFirstAndLastName(String firstName, String lastName) {
+        return firstName.matches(REGEX_FOR_NAME) && lastName.matches(REGEX_FOR_NAME);
     }
 
-    /**
-     * Is valid last name boolean.
-     *
-     * @param lastName the last name
-     * @return the boolean
-     */
-    public static boolean isValidLastName(String lastName) {
-        return lastName.matches("[A-ZА-Я][a-zа-я\\-]{1,32}");
-    }
 
     private UserFormValidator() {
     }

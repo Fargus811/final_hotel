@@ -80,6 +80,7 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
+    @Override
     public BigDecimal getTotalCostOfBooking(long bookingId, long roomId) throws ServiceException {
         Optional<Booking> booking;
         Optional<Room> room;

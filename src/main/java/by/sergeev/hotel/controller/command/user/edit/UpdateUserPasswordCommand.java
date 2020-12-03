@@ -28,12 +28,13 @@ public class UpdateUserPasswordCommand implements EditCommand {
         String result;
         String oldPassword = request.getParameter(PageParameter.OLD_PASSWORD);
         String newPassword = request.getParameter(PageParameter.NEW_PASSWORD);
+        String confirmPassword = request.getParameter(PageParameter.CONFIRM_PASSWORD);
         HttpSession session = request.getSession();
         SessionUser sessionUser = (SessionUser) (session.getAttribute(PageParameter.SESSION_USER));
         long userId = sessionUser.getId();
         boolean isCommandSuccess;
         try {
-            isCommandSuccess = userService.updateUserPassword(userId, oldPassword, newPassword);
+            isCommandSuccess = userService.updateUserPassword(userId, oldPassword, newPassword, confirmPassword);
         } catch (ServiceException e) {
             throw new CommandException("Problem with update user password", e);
         }

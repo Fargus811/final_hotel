@@ -67,6 +67,7 @@ public class PageParameter {
     //IMAGE CONTROLLER
     public static final String DOWNLOAD_STATUS = "imageStatus";
     public static final String UPDATE = "update";
+    public static final String CONFIRM_PASSWORD = "confirmPassword";
 
     private PageParameter(){
     }

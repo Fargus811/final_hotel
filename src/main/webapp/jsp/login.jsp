@@ -21,14 +21,15 @@
             <label for="inputEmail"><fmt:message key="text.logIn.email"/></label>
             <input name="email" type="email" class="form-control" id="InputEmail"
                    aria-describedby="emailHelp"
-                   placeholder="Enter email" pattern="\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+" not-validated>
+                   placeholder="Enter email" pattern="\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+">
             <span class="text-danger" hidden><fmt:message key="text.logIn.email.error"/></span>
         </div>
         <div class="form-group">
             <label for="inputPassword"><fmt:message key="text.logIn.password"/></label>
             <input name="password" type="password" class="form-control" id="InputPassword"
                    placeholder="<fmt:message key="text.logIn.password"/>"
-                   pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,25}$" not-validated>
+                   pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,25}$"
+                   title="<fmt:message key="text.registration.passwordError"/>">
             <span class="text-danger" hidden><fmt:message key="text.logIn.password.error"/></span>
         </div>
         <div class="form-group">
@@ -45,7 +46,6 @@
         <span class="text-danger"><fmt:message key="text.logIn.banned.error"/></span>
     </c:if>
 </div>
-<script src="${pageContext.servletContext.contextPath}/resources/js/login_validator.js"></script>
 </body>
 </fmt:bundle>
 <jsp:include page="/jsp/part/footer.jsp"/>

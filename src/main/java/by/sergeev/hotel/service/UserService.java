@@ -98,10 +98,11 @@ public interface UserService {
      * @param userId      the user id
      * @param oldPassword the old password
      * @param newPassword the new password
+     * @param confirmPassword
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean updateUserPassword(long userId, String oldPassword, String newPassword) throws ServiceException;
+    boolean updateUserPassword(long userId, String oldPassword, String newPassword, String confirmPassword) throws ServiceException;
 
     /**
      * Delete account boolean.

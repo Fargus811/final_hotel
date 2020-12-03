@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  * @author Daniil Sergeev
  * @version 1.0
  */
-public class User implements Serializable, Cloneable {
+public class User implements Entity {
 
     private long id;
     private String email;

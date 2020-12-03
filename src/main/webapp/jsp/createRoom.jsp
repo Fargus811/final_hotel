@@ -151,6 +151,7 @@
 </div>
 </body>
 <jsp:include page="/jsp/part/footer.jsp"/>
+<script src="${pageContext.servletContext.contextPath}/resources/js/protect_f5.js"></script>
 </body>
 </fmt:bundle>
 </html>

@@ -77,6 +77,7 @@
         </div>
     </div>
     <script src="${pageContext.servletContext.contextPath}/resources/js/registration_validator.js"></script>
+    <script src="${pageContext.servletContext.contextPath}/resources/js/protect_f5.js"></script>
 </fmt:bundle>
 </body>
 <jsp:include page="/jsp/part/footer.jsp"/>

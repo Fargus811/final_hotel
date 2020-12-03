@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkIsValid(String email, String password, String firstName, String lastName) {
         return UserFormValidator.isValidEmail(email) && UserFormValidator.isValidPassword(password) &&
-                UserFormValidator.isValidFirstName(firstName) && UserFormValidator.isValidLastName(lastName);
+                UserFormValidator.isValidFirstAndLastName(firstName, lastName);
     }
 
     public boolean checkIsEmailFree(String email) throws ServiceException {
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
                 return userOptional;
             }
         } catch (DaoException e) {
-            throw new ServiceException("Problem with log in in user service",e);
+            throw new ServiceException("Problem with log in in user service", e);
         }
     }
 
@@ -96,7 +96,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     @Override
     public Optional<User> findUserById(long userId) throws ServiceException {
         try {
@@ -109,8 +108,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean updateUser(User user) throws ServiceException {
         boolean isUpdated = false;
-        if (UserFormValidator.isValidEmail(user.getEmail()) && UserFormValidator.isValidFirstName(user.getFirstName())
-                && UserFormValidator.isValidLastName(user.getLastName())) {
+        if (UserFormValidator.isValidEmail(user.getEmail()) && UserFormValidator.isValidFirstAndLastName(user.getFirstName(),
+                user.getLastName())) {
             try {
                 userDao.updateUserInformation(user);
                 isUpdated = true;
@@ -122,8 +121,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUserPassword(long userId, String oldPassword, String newPassword) throws ServiceException {
+    public boolean updateUserPassword(long userId, String oldPassword, String newPassword, String confirmPassword) throws ServiceException {
         boolean isUpdated = false;
+        if (!confirmPassword.equals(newPassword)){
+            return isUpdated;
+        }
         String userPassword = getUserPassword(userId);
         if (!oldPassword.equals(newPassword) && UserFormValidator.isValidPassword(oldPassword) && UserFormValidator.isValidPassword(newPassword)
                 && BCryptHash.checkPassword(oldPassword, userPassword)) {
@@ -153,7 +155,7 @@ public class UserServiceImpl implements UserService {
         String userPassword = getUserPassword(userId);
         if (BCryptHash.checkPassword(password, userPassword)) {
             try {
-                userDao.changeAccountStatus(userId,statusId);
+                userDao.changeAccountStatus(userId, statusId);
             } catch (DaoException e) {
                 throw new ServiceException("Problem with method delete account in user service", e);
             }
@@ -165,9 +167,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changeAccountStatus(long userId, int statusId) throws ServiceException {
-        try{
-            userDao.changeAccountStatus(userId,statusId);
-        }catch (DaoException e){
+        try {
+            userDao.changeAccountStatus(userId, statusId);
+        } catch (DaoException e) {
             throw new ServiceException("Problem with changing account status", e);
         }
     }
@@ -177,12 +179,12 @@ public class UserServiceImpl implements UserService {
         boolean isCommandSuccess = false;
         try {
             Optional<User> user = userDao.findUserByEmail(email);
-            if (user.isPresent()){
+            if (user.isPresent()) {
                 long userId = user.get().getId();
                 userDao.changeAccountStatus(userId, ACTIVE_STATUS_ACCOUNT);
                 isCommandSuccess = true;
             }
-        }catch (DaoException e){
+        } catch (DaoException e) {
             throw new ServiceException("Problem with activate account in user service", e);
         }
         return isCommandSuccess;
