@@ -3,7 +3,6 @@ package by.sergeev.hotel.entity;
 import by.sergeev.hotel.entity.enums.AccountStatus;
 import by.sergeev.hotel.entity.enums.Role;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**

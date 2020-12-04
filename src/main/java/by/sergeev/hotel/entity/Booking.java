@@ -3,7 +3,6 @@ package by.sergeev.hotel.entity;
 import by.sergeev.hotel.entity.enums.BookingStatus;
 import by.sergeev.hotel.entity.enums.RoomGrade;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**

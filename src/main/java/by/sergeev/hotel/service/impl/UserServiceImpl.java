@@ -25,7 +25,13 @@ public class UserServiceImpl implements UserService {
 
     private static final int ACTIVE_STATUS_ACCOUNT = 0;
 
-    private UserDao userDao = DaoFactory.daoFactory.getUserDao();
+    private DaoFactory daoFactory;
+    private UserDao userDao;
+
+    public UserServiceImpl() {
+       daoFactory = DaoFactory.daoFactory;
+       userDao = daoFactory.getUserDao();
+    }
 
     @Override
     public List<User> findAllUsers() throws ServiceException {

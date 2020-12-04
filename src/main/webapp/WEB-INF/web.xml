@@ -18,6 +18,7 @@
     <error-code>404</error-code>
     <location>/jsp/error/error404.jsp</location>
   </error-page>
+  <request-character-encoding>UTF-8</request-character-encoding>
   <absolute-ordering>
     <name>PageSecurityFilter</name>
     <name>RoleSecurityFilter</name>

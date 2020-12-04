@@ -11,7 +11,6 @@ import by.sergeev.hotel.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.sql.rowset.serial.SerialException;
 import java.math.BigDecimal;
 
 /**

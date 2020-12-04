@@ -25,9 +25,17 @@ import static java.time.temporal.ChronoUnit.DAYS;
  */
 public class BookingServiceImpl implements BookingService {
 
-    private BookingDao bookingDao = DaoFactory.daoFactory.getBookingDao();
-    private RoomDao roomDao = DaoFactory.daoFactory.getRoomDao();
-    private UserDao userDao = DaoFactory.daoFactory.getUserDao();
+    private DaoFactory daoFactory;
+    private BookingDao bookingDao;
+    private RoomDao roomDao;
+    private UserDao userDao;
+
+    public BookingServiceImpl() {
+        daoFactory = DaoFactory.daoFactory;
+        bookingDao = daoFactory.getBookingDao();
+        roomDao = daoFactory.getRoomDao();
+        userDao = daoFactory.getUserDao();
+    }
 
     @Override
     public Optional<Booking> findBookingById(long bookingId) throws ServiceException {
@@ -116,12 +124,13 @@ public class BookingServiceImpl implements BookingService {
         boolean isCommandSuccess = false;
         try {
             Optional<User> user = userDao.findEntityById(userId);
-            if (user.isPresent()){
-            BigDecimal balance = user.get().getBalance();
-            BigDecimal totalBalance = balance.subtract(totalCost);
-            if (totalBalance.compareTo(BigDecimal.ZERO) >= 0) {
-                isCommandSuccess = TransactionManager.getInstance().payForBooking(userId, bookingId, totalBalance);
-            }}
+            if (user.isPresent()) {
+                BigDecimal balance = user.get().getBalance();
+                BigDecimal totalBalance = balance.subtract(totalCost);
+                if (totalBalance.compareTo(BigDecimal.ZERO) >= 0) {
+                    isCommandSuccess = TransactionManager.getInstance().payForBooking(userId, bookingId, totalBalance);
+                }
+            }
         } catch (DaoException e) {
             throw new ServiceException("Problem with pay for booking in booking service", e);
         }

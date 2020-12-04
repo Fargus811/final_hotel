@@ -23,11 +23,18 @@ import java.util.Optional;
  */
 public class RoomServiceImpl implements RoomService {
 
-    private static final String PHOTO_PATH = "/Users/mac/Downloads/hotel1/src/main/webapp/resources/images";
+    private static final String PHOTO_PATH = "../resources/images";
     private static final double COUNT_OF_VALUES = 5.0;
 
-    private RoomDao roomDao = DaoFactory.daoFactory.getRoomDao();
-    private BookingDao bookingDao = DaoFactory.daoFactory.getBookingDao();
+    private DaoFactory daoFactory;
+    private RoomDao roomDao;
+    private BookingDao bookingDao;
+
+    public RoomServiceImpl(){
+        daoFactory = DaoFactory.daoFactory;
+        roomDao = daoFactory.getRoomDao();
+        bookingDao =daoFactory.getBookingDao();
+    }
 
     public List<Room> findAll() throws ServiceException {
         try {
@@ -49,6 +56,7 @@ public class RoomServiceImpl implements RoomService {
         return Collections.emptyList();
     }
 
+    @Override
     public int getAmountOfPages() throws ServiceException {
         try {
             int rowsCount = roomDao.getCountOfRows();

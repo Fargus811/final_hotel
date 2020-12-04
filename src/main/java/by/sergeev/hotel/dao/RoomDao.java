@@ -3,9 +3,7 @@ package by.sergeev.hotel.dao;
 import by.sergeev.hotel.entity.Booking;
 import by.sergeev.hotel.entity.Room;
 import by.sergeev.hotel.exception.DaoException;
-import by.sergeev.hotel.pool.ProxyConnection;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,4 +90,5 @@ public interface RoomDao {
      * @throws DaoException the dao exception
      */
     List<Room> getRoomsByPage(int offset) throws DaoException;
+
 }

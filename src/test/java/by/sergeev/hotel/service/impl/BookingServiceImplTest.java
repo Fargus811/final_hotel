@@ -1,53 +1,43 @@
 package by.sergeev.hotel.service.impl;
 
-import by.sergeev.hotel.dao.BookingDao;
-import by.sergeev.hotel.dao.DaoFactory;
 import by.sergeev.hotel.dao.impl.BookingDaoImpl;
 import by.sergeev.hotel.entity.Booking;
 import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.exception.ServiceException;
 import org.mockito.Mockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockObjectFactory;
-import org.powermock.reflect.Whitebox;
-import org.testng.IObjectFactory;
+import org.powermock.reflect.internal.WhiteboxImpl;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.ObjectFactory;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 
-@PowerMockIgnore({"com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "org.w3c.*",
-        "com.sun.org.apache.xalan.*", "javax.management.*"})
-@PrepareForTest({BookingDaoImpl.class})
 public class BookingServiceImplTest {
 
-    BookingDao bookingDao;
     BookingServiceImpl bookingService;
-
-    @ObjectFactory
-    public IObjectFactory setObjectFactory() {
-        return new PowerMockObjectFactory();
-    }
+    BookingDaoImpl mock;
+    List<Booking> expected;
 
     @BeforeMethod
     public void setUp() {
-        bookingDao = Mockito.mock(BookingDao.class);
+        mock = Mockito.mock(BookingDaoImpl.class);
         bookingService = new BookingServiceImpl();
-
+        WhiteboxImpl.setInternalState(bookingService, "bookingDao", mock);
+        expected = new ArrayList<>();
     }
 
     @Test
     public void testFindBookingById() {
         try {
             Optional<Booking> expected = Optional.of(new Booking());
-            when(bookingDao.findBookingById(any(Long.class))).thenReturn(expected);
-            Optional<Booking> actual = bookingService.findBookingById(1);
+            when(mock.findBookingById(any(Long.class))).thenReturn(expected);
+            Optional<Booking> actual = bookingService.findBookingById(0);
             assertEquals(actual, expected);
         } catch (ServiceException | DaoException e) {
             fail("Incorrect data", e);
@@ -56,10 +46,20 @@ public class BookingServiceImplTest {
 
     @Test
     public void testFindBookingsByUserId() {
+        List<Booking> listBookingsTest = new ArrayList<>();
+        try {
+            when(mock.findBookingsByUserId(any(Long.class))).thenReturn(listBookingsTest);
+            List<Booking> actualListBookings = bookingService.findBookingsByUserId(1);
+            assertEquals(actualListBookings, listBookingsTest);
+        } catch (DaoException | ServiceException exp) {
+            fail(exp.getMessage());
+        }
+
     }
 
     @Test
     public void testChangeBookingStatusById() {
+
     }
 
     @Test
@@ -76,6 +76,13 @@ public class BookingServiceImplTest {
 
     @Test
     public void testFindAll() {
+        try {
+            when(mock.findAll()).thenReturn(expected);
+            List<Booking> actual = bookingService.findAll();
+            assertEquals(actual, expected);
+        } catch (ServiceException | DaoException e) {
+            fail("Incorrect data", e);
+        }
     }
 
     @Test
