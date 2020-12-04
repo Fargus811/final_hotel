@@ -55,6 +55,5 @@ fabric.properties
 .idea
 *.iml
 
-/database/*
 *.log
 target/
