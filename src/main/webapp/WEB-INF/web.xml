@@ -18,6 +18,11 @@
     <error-code>404</error-code>
     <location>/jsp/error/error404.jsp</location>
   </error-page>
+  <absolute-ordering>
+    <name>PageSecurityFilter</name>
+    <name>RoleSecurityFilter</name>
+    <name>EncodingFilter</name>
+  </absolute-ordering>
   <error-page>
     <error-code>403</error-code>
     <location>/jsp/error/error403.jsp</location>
