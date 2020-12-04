@@ -8,25 +8,30 @@ package by.sergeev.hotel.entity.enums;
  */
 public enum RoomGrade {
 
+
     /**
-     * Эконом room grade.
+     * Economy room grade.
      */
-    ЭКОНОМ,
+    ECONOMY,
+
     /**
-     * Стандарт room grade.
+     * Standard room grade.
      */
-    СТАНДАРТ ,
+    STANDARD,
+
     /**
-     * Люкс room grade.
+     * Lux room grade.
      */
-    ЛЮКС,
+    LUX,
+
     /**
-     * Премьер room grade.
+     * Premier room grade.
      */
-    ПРЕМЬЕР,
+    PREMIER,
+
     /**
-     * Премиум room grade.
+     * Premium room grade.
      */
-    ПРЕМИУМ
+    PREMIUM
 
 }

@@ -10,6 +10,7 @@ import by.sergeev.hotel.service.RoomService;
 import by.sergeev.hotel.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 /**
  * The type Show the room information to update command.
@@ -24,9 +25,12 @@ public class ShowRoomToUpdateInfoCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         long roomId = Long.parseLong(request.getParameter(PageParameter.ROOM_ID));
-        Room room;
+        Room room = null;
         try {
-            room = roomService.findRoomById(roomId).get();
+            Optional<Room> roomOptional = roomService.findRoomById(roomId);
+            if (roomOptional.isPresent()) {
+                room = roomOptional.get();
+            }
         } catch (ServiceException e) {
             throw new CommandException("Problem with find room by id in room service", e);
         }

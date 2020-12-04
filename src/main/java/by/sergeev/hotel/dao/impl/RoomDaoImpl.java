@@ -32,9 +32,7 @@ public class RoomDaoImpl extends AbstractJDBCDao<Room> implements RoomDao {
     private static final String INSERTED_COLUMNS = "rooms.name, rooms.number_of_rooms, rooms.max_persons, " +
             "rooms.cost, rooms.has_Wifi, rooms.has_TV, rooms.has_bathroom, rooms.number_of_beds,rooms.room_description, rooms.photo_path, rooms.grade_id";
     private static final String SELECTED_COLUMNS = "rooms.id, " + INSERTED_COLUMNS;
-    private static final String CREATE_ROOM = "INSERT INTO rooms ( rooms.name, rooms.number_of_rooms, rooms.max_persons, " +
-            "rooms.cost, rooms.has_Wifi, rooms.has_TV, rooms.has_bathroom, rooms.number_of_beds, rooms.room_description," +
-            " rooms.photo_path, rooms.grade_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String CREATE_ROOM = "INSERT INTO rooms (" + INSERTED_COLUMNS + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_ROOM_INFO = "UPDATE rooms SET rooms.name = ?, rooms.number_of_rooms= ?, rooms.max_persons = ?, " +
             "rooms.cost = ?, rooms.has_Wifi = ?, rooms.has_TV=?, rooms.has_bathroom=?, rooms.number_of_beds=?, rooms.room_description=?," +
             " rooms.photo_path=?, rooms.grade_id=?  WHERE id = ?";
@@ -57,6 +55,7 @@ public class RoomDaoImpl extends AbstractJDBCDao<Room> implements RoomDao {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             return tryFindEntityListByQuery(connection, FIND_ALL_ROOMS);
         } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.fatal("Problem in RoomDao, while trying to find all rooms");
             throw new DaoException("Problem in RoomDao, while trying to find all rooms", e);
         }
     }
@@ -67,6 +66,7 @@ public class RoomDaoImpl extends AbstractJDBCDao<Room> implements RoomDao {
             return tryFindEntityListByPrStatement(connection, GET_ROOMS_BY_PAGE,
                     ((preparedStatement, params) -> preparedStatement.setInt(1, offset)), offset);
         } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.fatal("Problem with get rooms by page");
             throw new DaoException("Problem in RoomDao, while trying to get rooms by page in room dao", e);
         }
     }
@@ -81,6 +81,7 @@ public class RoomDaoImpl extends AbstractJDBCDao<Room> implements RoomDao {
                 }
             }
         } catch (ConnectionPoolException | SQLException e) {
+            LOGGER.fatal("Problem with get count of room");
             throw new DaoException("Problem with get count of room", e);
         }
         return 0;
@@ -92,6 +93,7 @@ public class RoomDaoImpl extends AbstractJDBCDao<Room> implements RoomDao {
             return Optional.ofNullable(tryFindEntityByPrStatement(connection, FIND_ROOM_BY_ID,
                     ((preparedStatement, params) -> preparedStatement.setLong(1, roomId)), roomId));
         } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.fatal("Problem with find room by id");
             throw new DaoException("Problem with bookingDao to find room by id in room dao", e);
         }
     }
@@ -112,6 +114,7 @@ public class RoomDaoImpl extends AbstractJDBCDao<Room> implements RoomDao {
                         preparedStatement.setString(9, booking.getEndDate());
                     }, booking);
         } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.fatal("Problem with find free rooms");
             throw new DaoException("Problem in UserDao, while trying to find free rooms", e);
         }
     }
@@ -139,10 +142,12 @@ public class RoomDaoImpl extends AbstractJDBCDao<Room> implements RoomDao {
             try (PreparedStatement preparedSt = connection.prepareStatement(CREATE_ROOM)) {
                 prepareStatement(room, preparedSt);
                 if (preparedSt.executeUpdate() != 1) {
+                    LOGGER.fatal("Room was not created");
                     throw new DaoException("Room was not created");
                 }
             }
         } catch (ConnectionPoolException | SQLException e) {
+            LOGGER.fatal("Room was not created");
             throw new DaoException("Problem with create room in room dao", e);
         }
     }
@@ -167,10 +172,12 @@ public class RoomDaoImpl extends AbstractJDBCDao<Room> implements RoomDao {
             try (PreparedStatement preparedSt = connection.prepareStatement(DELETE_ROOM)) {
                 preparedSt.setLong(1, roomId);
                 if (preparedSt.executeUpdate() != 1) {
+                    LOGGER.fatal("Room was not deleted");
                     throw new DaoException("Room was not deleted");
                 }
             }
         } catch (ConnectionPoolException | SQLException e) {
+            LOGGER.fatal("Room was not deleted");
             throw new DaoException("Problem in delete room method in room dao", e);
         }
     }
@@ -182,10 +189,12 @@ public class RoomDaoImpl extends AbstractJDBCDao<Room> implements RoomDao {
                 prepareStatement(room, preparedSt);
                 preparedSt.setLong(12, room.getId());
                 if (preparedSt.executeUpdate() != 1) {
+                    LOGGER.fatal("Room was not updated");
                     throw new DaoException("Room was not updated");
                 }
             }
         } catch (ConnectionPoolException | SQLException e) {
+            LOGGER.fatal("Room was not updated");
             throw new DaoException("Problem with update room", e);
         }
     }
@@ -197,10 +206,12 @@ public class RoomDaoImpl extends AbstractJDBCDao<Room> implements RoomDao {
                 preparedSt.setString(1, newPath);
                 preparedSt.setLong(2, roomId);
                 if (preparedSt.executeUpdate() != 1) {
+                    LOGGER.fatal("Room was not updated");
                     throw new DaoException("Room was not update");
                 }
             }
         } catch (ConnectionPoolException | SQLException e) {
+            LOGGER.fatal("Room was not updated");
             throw new DaoException("Problem with create room", e);
         }
     }

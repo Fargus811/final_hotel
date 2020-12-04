@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -49,7 +50,7 @@ public class RoleSecurityFilter implements Filter {
             SessionUser sessionUser = (SessionUser) (session.getAttribute(PageParameter.SESSION_USER));
             userRole = sessionUser.getRole();
         }
-        Set<CommandType> commands = null;
+        Set<CommandType> commands = new HashSet<>();
         switch (userRole) {
             case USER:
                 commands = RolePermission.USER.getRoleCommands();
@@ -61,14 +62,13 @@ public class RoleSecurityFilter implements Filter {
                 commands = RolePermission.GUEST.getRoleCommands();
                 break;
         }
-                CommandType commandType = CommandType.valueOf(commandLine.toUpperCase());
-               if (!commands.contains(CommandType.valueOf(commandLine.toUpperCase()))) {
-                    LOGGER.log(Level.ERROR, "Role {} has no access to {} command", userRole, command);
-                    response.sendError(FORBIDDEN_ACCESS_ERROR_NUMBER);
-                    return;
-                }
-          chain.doFilter(servletRequest, servletResponse);
-       }
+        if (!commands.contains(CommandType.valueOf(commandLine.toUpperCase()))) {
+            LOGGER.log(Level.ERROR, "Role {} has no access to {} command", userRole, command);
+            response.sendError(FORBIDDEN_ACCESS_ERROR_NUMBER);
+            return;
+        }
+        chain.doFilter(servletRequest, servletResponse);
+    }
 
     @Override
     public void destroy() {

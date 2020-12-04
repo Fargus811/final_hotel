@@ -70,8 +70,7 @@ public class CreateRoomCommand implements Command {
         if (isCommandSuccess) {
             result = PagePath.INFO_SUCCESS;
             session.removeAttribute(PageParameter.DOWNLOAD_STATUS);
-        }
-        else {
+        } else {
             request.setAttribute(PageParameter.ERROR, PageParameter.ERROR);
             result = PagePath.CREATE_ROOM;
         }

@@ -48,44 +48,28 @@ public class BookingDaoImpl extends AbstractJDBCDao<Booking> implements BookingD
     private static final String ADD_ROOM_TO_BOOKING_BY_ID = "UPDATE bookings SET room_id = ?, cost = ?, booking_status_id = ? WHERE id = ?";
     private static final String DELETE_ROOM_FROM_BOOKING_BY_ID = "UPDATE bookings SET room_id = NULL , cost = 0.00 , booking_status_id = 0 WHERE id = ?";
 
-    /**
-     *
-     * @param userId
-     * @return
-     * @throws DaoException
-     */
-
     @Override
     public List<Booking> findBookingsByUserId(long userId) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             return tryFindEntityListByPrStatement(connection, FIND_BOOKINGS_BY_USER,
                     ((preparedStatement, params) -> preparedStatement.setLong(1, userId)), userId);
         } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.fatal("Problem in BookingDao, while trying to find all bookings by user id");
             throw new DaoException("Problem with bookingDao to find Bookings by userID", e);
         }
     }
 
-    /**
-     *
-     * @param bookingId
-     * @return
-     * @throws DaoException
-     */
     @Override
     public Optional<Booking> findBookingById(long bookingId) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             return Optional.ofNullable(tryFindEntityByPrStatement(connection, FIND_BOOKING_BY_ID,
                     ((preparedStatement, params) -> preparedStatement.setLong(1, bookingId)), bookingId));
         } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.fatal("Problem in BookingDao, while trying to find all booking by id");
             throw new DaoException("Problem with bookingDao to find Bookings by userID", e);
         }
     }
 
-    /**
-     * @param bookingId
-     * @param statusId
-     * @throws DaoException
-     */
     @Override
     public void changeBookingStatusById(long bookingId, int statusId) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
@@ -93,19 +77,16 @@ public class BookingDaoImpl extends AbstractJDBCDao<Booking> implements BookingD
                 preparedSt.setInt(1, statusId);
                 preparedSt.setLong(2, bookingId);
                 if (preparedSt.executeUpdate() != 1) {
+                    LOGGER.fatal("Problem in BookingDao, while trying to change booking status");
                     throw new DaoException("Status was not updated");
                 }
             }
         } catch (ConnectionPoolException | SQLException e) {
+            LOGGER.fatal("Problem in BookingDao, while trying to change booking status");
             throw new DaoException("Problem with change book status", e);
         }
     }
 
-    /**
-     *
-     * @param freshBooking
-     * @throws DaoException
-     */
     @Override
     public void createBooking(Booking freshBooking) throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
@@ -122,20 +103,16 @@ public class BookingDaoImpl extends AbstractJDBCDao<Booking> implements BookingD
                 preparedSt.setLong(10, freshBooking.getUserId());
                 preparedSt.setInt(11, freshBooking.getNumberOfRooms());
                 if (preparedSt.executeUpdate() != 1) {
-                    throw new DaoException("Status was not updated");
+                    LOGGER.fatal("Problem in BookingDao, while trying to create booking ");
+                    throw new DaoException("Booking was not created");
                 }
             }
         } catch (ConnectionPoolException | SQLException e) {
+            LOGGER.fatal("Problem in BookingDao, while trying to create booking ");
             throw new DaoException("Problem with create booking", e);
         }
     }
 
-    /**
-     *
-     * @param resultSet
-     * @return
-     * @throws SQLException
-     */
     @Override
     protected Booking makeEntity(ResultSet resultSet) throws SQLException {
         long id = resultSet.getInt(1);
@@ -158,6 +135,7 @@ public class BookingDaoImpl extends AbstractJDBCDao<Booking> implements BookingD
             try {
                 room = roomDao.findRoomById(roomId).get();
             } catch (DaoException e) {
+                LOGGER.fatal("Problem in BookingDao, while trying to find room by id");
                 LOGGER.info("Can't find room by this id in bookingDao");
             }
         }
@@ -166,6 +144,7 @@ public class BookingDaoImpl extends AbstractJDBCDao<Booking> implements BookingD
         return new Booking(id, startDate, endDate, cost, maxPersons, numberOfBeds, roomGrade, hasWifi, hasTV, hasBathroom,
                 userId, room, status, numberOfRooms);
     }
+
 
     @Override
     public void addRoomToBooking(long bookingsId, long roomId, BigDecimal cost) throws DaoException {
@@ -176,10 +155,12 @@ public class BookingDaoImpl extends AbstractJDBCDao<Booking> implements BookingD
                 preparedSt.setInt(3, BookingStatus.WAITING_FOR_PAYMENT.ordinal());
                 preparedSt.setLong(4, bookingsId);
                 if (preparedSt.executeUpdate() != 1) {
+                    LOGGER.fatal("Booking was not updated");
                     throw new DaoException("Booking was not updated");
                 }
             }
         } catch (ConnectionPoolException | SQLException e) {
+            LOGGER.fatal("Booking was not updated");
             throw new DaoException("Problem with add room to booking", e);
         }
     }
@@ -193,6 +174,7 @@ public class BookingDaoImpl extends AbstractJDBCDao<Booking> implements BookingD
                 isCommandSuccess = preparedSt.executeUpdate() == 1;
             }
         } catch (ConnectionPoolException | SQLException e) {
+            LOGGER.fatal("Room was not deleted from booking");
             throw new DaoException("Problem with add room to booking", e);
         }
         return isCommandSuccess;
@@ -203,7 +185,8 @@ public class BookingDaoImpl extends AbstractJDBCDao<Booking> implements BookingD
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
             return tryFindEntityListByQuery(connection, FIND_ALL_BOOKINGS);
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Problem in RoomDao, while trying to find all rooms", e);
+            LOGGER.fatal("Problem with findAll in BookingDao");
+            throw new DaoException("Problem in BookingDao, while trying to find all rooms", e);
         }
     }
 

@@ -8,7 +8,6 @@ import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.BookingService;
 import by.sergeev.hotel.service.ServiceFactory;
 
-
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 
@@ -27,9 +26,9 @@ public class AddRoomToBookingCommand implements Command {
         long bookingId = Long.parseLong(request.getParameter(PageParameter.BOOKING_ID));
         long roomId = Long.parseLong(request.getParameter(PageParameter.ROOM_ID));
         BigDecimal totalCost = new BigDecimal(request.getParameter(PageParameter.COST));
-        try{
-            bookingService.addRoomToBooking(bookingId,roomId,totalCost);
-        }catch (ServiceException e){
+        try {
+            bookingService.addRoomToBooking(bookingId, roomId, totalCost);
+        } catch (ServiceException e) {
             throw new CommandException("Problem with adding room to booking", e);
         }
         return PagePath.INFO_SUCCESS;

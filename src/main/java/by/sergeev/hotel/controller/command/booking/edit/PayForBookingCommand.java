@@ -34,12 +34,12 @@ public class PayForBookingCommand implements Command {
         boolean isCommandSuccess;
         try {
             isCommandSuccess = bookingService.payForBooking(userId, bookingId, totalCost);
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             throw new CommandException("Problem with payment for booking", e);
         }
-        if (isCommandSuccess){
+        if (isCommandSuccess) {
             resultPage = PagePath.INFO_SUCCESS;
-        }else {
+        } else {
             resultPage = PagePath.INFO_FAIL;
         }
         return resultPage;

@@ -58,6 +58,7 @@ public class TransactionManager {
             return isStatusChanged;
         } catch (ConnectionPoolException | SQLException ex) {
             rollbackConnection(proxyConnection);
+            LOGGER.fatal("Problem with transaction");
             throw new DaoException("Error while pay for booking ", ex);
         } finally {
             closeConnection(proxyConnection);

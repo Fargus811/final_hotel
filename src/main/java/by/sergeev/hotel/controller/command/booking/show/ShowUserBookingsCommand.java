@@ -1,8 +1,8 @@
 package by.sergeev.hotel.controller.command.booking.show;
 
 import by.sergeev.hotel.controller.command.Command;
-import by.sergeev.hotel.controller.command.PagePath;
 import by.sergeev.hotel.controller.command.PageParameter;
+import by.sergeev.hotel.controller.command.PagePath;
 import by.sergeev.hotel.entity.Booking;
 import by.sergeev.hotel.entity.SessionUser;
 import by.sergeev.hotel.exception.CommandException;

@@ -28,4 +28,8 @@ public class CommandDefiner {
         Command currentCommand = currentEnum.getCommand();
         return currentCommand;
     }
+
+
+    private CommandDefiner() {
+    }
 }

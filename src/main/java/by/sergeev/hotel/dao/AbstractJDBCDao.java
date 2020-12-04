@@ -49,8 +49,7 @@ public abstract class AbstractJDBCDao<T> {
         try (PreparedStatement preparedSt = proxyConnection.prepareStatement(query)) {
             master.prepare(preparedSt, params);
             try (ResultSet rs = preparedSt.executeQuery()) {
-                List<T> list = makeEntityList(rs);
-                return list;
+                return makeEntityList(rs);
             }
         }
     }
@@ -66,14 +65,13 @@ public abstract class AbstractJDBCDao<T> {
     protected List<T> tryFindEntityListByQuery(ProxyConnection proxyConnection, String query) throws SQLException {
         try (Statement st = proxyConnection.createStatement()) {
             try (ResultSet rs = st.executeQuery(query)) {
-                List<T> entityList = makeEntityList(rs);
-                return entityList;
+                return  makeEntityList(rs);
             }
         }
     }
 
     private List<T> makeEntityList(ResultSet rs) throws SQLException {
-        List<T> list = new ArrayList<T>();
+        List<T> list = new ArrayList<>();
         while (rs.next()) {
             T entity = makeEntity(rs);
             list.add(entity);

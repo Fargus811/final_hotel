@@ -47,7 +47,7 @@ class ConnectionProducer {
         try {
             DriverManager.registerDriver(new Driver());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Problem with register driver",e);
         }
     }
 

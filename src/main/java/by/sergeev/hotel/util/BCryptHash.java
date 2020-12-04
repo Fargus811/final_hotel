@@ -41,4 +41,6 @@ public class BCryptHash {
         return (passwordVerified);
     }
 
+    private BCryptHash(){
+    }
 }

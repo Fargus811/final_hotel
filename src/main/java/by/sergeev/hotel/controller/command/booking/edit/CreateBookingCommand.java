@@ -1,6 +1,9 @@
 package by.sergeev.hotel.controller.command.booking.edit;
 
-import by.sergeev.hotel.controller.command.*;
+import by.sergeev.hotel.controller.command.Command;
+import by.sergeev.hotel.controller.command.CommandType;
+import by.sergeev.hotel.controller.command.PageParameter;
+import by.sergeev.hotel.controller.command.PagePath;
 import by.sergeev.hotel.entity.Booking;
 import by.sergeev.hotel.entity.SessionUser;
 import by.sergeev.hotel.entity.enums.RoomGrade;
@@ -68,8 +71,7 @@ public class CreateBookingCommand implements Command {
         }
         if (isCommandSuccess) {
             result = CommandType.SHOW_USER_BOOKINGS.name();
-        }
-        else {
+        } else {
             request.setAttribute(PageParameter.ERROR, PageParameter.ERROR);
             result = PagePath.CREATE_BOOKING;
         }

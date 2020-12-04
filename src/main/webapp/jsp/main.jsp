@@ -29,7 +29,23 @@
             <div class="room-item" style="float: left; margin-top: 50px">
                 <img class="room-photo" src="${elem.photoPath}" alt="Room Image" width="210" height="120">
                 <div class="room-name">${elem.name}</div>
-                <div class="roomGrade">${elem.roomGrade}</div>
+                <div class="roomGrade">
+                    <c:if test="${elem.roomGrade.ordinal() == 0}">
+                        <fmt:message key="text.create.roomGrade.economy"/>
+                    </c:if>
+                    <c:if test="${elem.roomGrade.ordinal() == 1}">
+                        <fmt:message key="text.create.roomGrade.standard"/>
+                    </c:if>
+                    <c:if test="${elem.roomGrade.ordinal() == 2}">
+                        <fmt:message key="text.create.roomGrade.suite"/>
+                    </c:if>
+                    <c:if test="${elem.roomGrade.ordinal() == 3}">
+                        <fmt:message key="text.create.roomGrade.premium"/>
+                    </c:if>
+                    <c:if test="${elem.roomGrade.ordinal() == 4}">
+                        <fmt:message key="text.create.roomGrade.premier"/>
+                    </c:if>
+                </div>
                 <div class="room-desc">${elem.description}</div>
                 <div class="room-item-bottom">
                     <div class="room-cost">${elem.cost}💵</div>

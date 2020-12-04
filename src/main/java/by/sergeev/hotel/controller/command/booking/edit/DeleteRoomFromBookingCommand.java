@@ -29,6 +29,6 @@ public class DeleteRoomFromBookingCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException("Problem with delete room from booking in command", e);
         }
-        return isCommandSuccess? PagePath.INFO_SUCCESS : PagePath.INFO_FAIL;
+        return isCommandSuccess ? PagePath.INFO_SUCCESS : PagePath.INFO_FAIL;
     }
 }
