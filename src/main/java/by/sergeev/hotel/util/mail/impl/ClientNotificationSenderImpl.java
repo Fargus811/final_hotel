@@ -35,11 +35,4 @@ public class ClientNotificationSenderImpl implements ClientNotificationSender {
         mailText.add(link + REGISTRATION_LINK_SUFFIX + clientEmail);
         MailSender.sendMail(clientEmail, mailSubject, mailText.toString());
     }
-
-    public void createOrderNotification(String clientEmail) {
-        ResourceBundle bundle = ResourceBundle.getBundle(MESSAGE_FILENAME);
-        String mailSubject = bundle.getString(CREATE_ORDER_MAIL_SUBJECT);
-        String mailText = bundle.getString(CREATE_ORDER_MAIL_TEXT);
-        MailSender.sendMail(clientEmail, mailSubject, mailText);
-    }
 }

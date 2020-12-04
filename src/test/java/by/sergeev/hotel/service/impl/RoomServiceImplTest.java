@@ -34,7 +34,7 @@ public class RoomServiceImplTest {
         roomDao = Mockito.mock(RoomDaoImpl.class);
         bookingDao = Mockito.mock(BookingDaoImpl.class);
         roomService = new RoomServiceImpl();
-        WhiteboxImpl.setInternalState(roomService, "userDao", roomDao);
+        WhiteboxImpl.setInternalState(roomService, "roomDao", roomDao);
         WhiteboxImpl.setInternalState(roomService, "bookingDao", bookingDao);
         expected = new ArrayList<>();
     }
@@ -115,14 +115,9 @@ public class RoomServiceImplTest {
             room.setHasBathroom(false);
             doNothing().when(roomDao).createRoom(room);
             roomService.createRoom(room);
-            verify(roomDao);
+            verify(roomDao).createRoom(room);
         } catch (ServiceException |DaoException e) {
             fail(e.getMessage());
         }
-    }
-
-    @Test
-    public void testUpdateRoomInfo() {
-
     }
 }

@@ -1,8 +1,8 @@
 package by.sergeev.hotel.controller.command.room.show;
 
+import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.controller.command.PageParameter;
 import by.sergeev.hotel.controller.command.PagePath;
-import by.sergeev.hotel.controller.command.ShowCommand;
 import by.sergeev.hotel.entity.Room;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.ServiceException;
@@ -20,7 +20,7 @@ import java.util.Objects;
  * @author Daniil Sergeev
  * @version 1.0
  */
-public class ShowAllRoomsCommand implements ShowCommand {
+public class ShowAllRoomsCommand implements Command {
 
     private RoomService roomService = ServiceFactory.serviceFactory.getRoomService();
 

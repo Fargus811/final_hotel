@@ -23,7 +23,7 @@ import java.util.Optional;
  */
 public class RoomServiceImpl implements RoomService {
 
-    private static final String PHOTO_PATH = "../resources/images";
+    private static final String PHOTO_PATH = "../resources/images/";
     private static final double COUNT_OF_VALUES = 5.0;
 
     private DaoFactory daoFactory;

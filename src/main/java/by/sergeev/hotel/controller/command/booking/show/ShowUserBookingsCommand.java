@@ -1,8 +1,8 @@
 package by.sergeev.hotel.controller.command.booking.show;
 
+import by.sergeev.hotel.controller.command.Command;
 import by.sergeev.hotel.controller.command.PagePath;
 import by.sergeev.hotel.controller.command.PageParameter;
-import by.sergeev.hotel.controller.command.ShowCommand;
 import by.sergeev.hotel.entity.Booking;
 import by.sergeev.hotel.entity.SessionUser;
 import by.sergeev.hotel.exception.CommandException;
@@ -21,7 +21,7 @@ import java.util.Objects;
  * @author Daniil Sergeev
  * @version 1.0
  */
-public class ShowUserBookingsCommand implements ShowCommand {
+public class ShowUserBookingsCommand implements Command {
 
     private BookingService bookingService = ServiceFactory.serviceFactory.getBookingService();
 

@@ -21,5 +21,4 @@ public interface ClientNotificationSender {
      *
      * @param clientEmail the client email
      */
-    void createOrderNotification(String clientEmail);
 }

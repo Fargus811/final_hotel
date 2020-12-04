@@ -1,9 +1,6 @@
 package by.sergeev.hotel.controller.command.booking.edit;
 
-import by.sergeev.hotel.controller.command.CommandType;
-import by.sergeev.hotel.controller.command.EditCommand;
-import by.sergeev.hotel.controller.command.PagePath;
-import by.sergeev.hotel.controller.command.PageParameter;
+import by.sergeev.hotel.controller.command.*;
 import by.sergeev.hotel.entity.Booking;
 import by.sergeev.hotel.entity.SessionUser;
 import by.sergeev.hotel.entity.enums.RoomGrade;
@@ -23,7 +20,7 @@ import java.util.Objects;
  * @author Daniil Sergeev
  * @version 1.0
  */
-public class CreateBookingCommand implements EditCommand {
+public class CreateBookingCommand implements Command {
 
     private BookingService bookingService = ServiceFactory.serviceFactory.getBookingService();
 

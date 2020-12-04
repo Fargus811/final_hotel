@@ -56,9 +56,9 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void changeBookingStatusById(long bookingId, int bookingStatus) throws ServiceException {
+    public void changeBookingStatusById(long bookingId, int bookingStatusId) throws ServiceException {
         try {
-            bookingDao.changeBookingStatusById(bookingId, bookingStatus);
+            bookingDao.changeBookingStatusById(bookingId, bookingStatusId);
         } catch (DaoException e) {
             throw new ServiceException("Problem in method changeBookingsByUserId in booking service", e);
         }

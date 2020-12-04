@@ -1,9 +1,6 @@
 package by.sergeev.hotel.controller.command.user.edit;
 
-import by.sergeev.hotel.controller.command.CommandType;
-import by.sergeev.hotel.controller.command.EditCommand;
-import by.sergeev.hotel.controller.command.PageParameter;
-import by.sergeev.hotel.controller.command.PagePath;
+import by.sergeev.hotel.controller.command.*;
 import by.sergeev.hotel.entity.SessionUser;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.ServiceException;
@@ -19,7 +16,7 @@ import javax.servlet.http.HttpSession;
  * @author Daniil Sergeev
  * @version 1.0
  */
-public class UpdateUserPasswordCommand implements EditCommand {
+public class UpdateUserPasswordCommand implements Command {
 
     private UserService userService = ServiceFactory.serviceFactory.getUserService();
 
