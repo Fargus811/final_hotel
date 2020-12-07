@@ -37,7 +37,9 @@
                                             <span class="form-label"><fmt:message key="text.create.checkIn"/>*</span>
                                             <input class="form-control" name="startDate" type="date" required
                                                    not-validated>
-                                            <span class="error-message" style="margin: unset" for="startDate" hidden>Invalid</span>
+                                            <span class="error-message" style="margin: unset" for="startDate" hidden>
+                                                <fmt:message key="text.createBooking.error"/>
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">

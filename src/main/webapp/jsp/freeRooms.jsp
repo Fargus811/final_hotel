@@ -17,8 +17,14 @@
 <div class="fade-block left"></div>
 <div class="fade-block right"></div>
 <div class="scroll">
-<div class="room-container" style="margin-left: 95px">
-    <c:forEach var="elem" items="${rooms}">
+    <div class="room-container" style="margin-left: 95px">
+        <c:if test="${empty rooms}">
+            <div class="d-flex justify-content-center" style="margin-top: 100px;margin-left: 250px;">
+                <div class="container" style="text-align: center; margin: 20px"><h1><fmt:message
+                        key="text.admin.freeRooms.error"/></h1></div>
+            </div>
+        </c:if>
+        <c:forEach var="elem" items="${rooms}">
             <div class="room-item" style="float: left; margin-top: 50px">
                 <img class="room-photo" src="${elem.photoPath}" alt="Room Image" width="210" height="120">
                 <div class="room-name">${elem.name}</div>
@@ -42,13 +48,14 @@
                             <input type="hidden" name="command" value="see_details_of_booking"/>
                             <input type="hidden" name="roomId" value="${elem.id}"/>
                             <input type="hidden" name="bookingId" value="${requestScope.bookingId}"/>
-                            <button type="submit" class="btn btn-success"style="margin-top: 10px"><fmt:message key="text.admin.calculate"/></button>
+                            <button type="submit" class="btn btn-success" style="margin-top: 10px"><fmt:message
+                                    key="text.admin.calculate"/></button>
                         </form>
                     </div>
                 </div>
             </div>
-    </c:forEach>
-</div>
+        </c:forEach>
+    </div>
 </div>
 </body>
 <jsp:include page="/jsp/part/footer.jsp"/>

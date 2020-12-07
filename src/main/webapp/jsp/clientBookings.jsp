@@ -45,12 +45,12 @@
                 <td>${elem.endDate}</td>
                 <td>${elem.cost}</td>
                 <td><c:choose>
-                      <c:when test="${empty elem.room}">
-                          <fmt:message key="text.bookings.no.room"/>
-                      </c:when>
-                      <c:otherwise>${elem.room.name}
-                      </c:otherwise>
-                     </c:choose></td>
+                    <c:when test="${empty elem.room}">
+                        <fmt:message key="text.bookings.no.room"/>
+                    </c:when>
+                    <c:otherwise>${elem.room.name}
+                    </c:otherwise>
+                </c:choose></td>
                 <td><c:if test="${elem.bookingStatus == 'IN_PROCESS'}">
                     <fmt:message key="text.bookings.status.inProcess"/>
                 </c:if>
@@ -65,15 +65,27 @@
                     </c:if></td>
                 <td><c:choose>
                     <c:when test="${empty elem.room}">
-                        <fmt:message key="text.bookings.please"/>
+                        <c:if test="${sessionUser.role == 'ADMIN'}">
+                            <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                <input type="hidden" name="command" value="show_free_room_by_condition"/>
+                                <input type="hidden" name="bookingId" value="${elem.id}"/>
+                                <button type="submit" class='btn btn-outline-primary'
+                                        href="${pageContext.request.contextPath}/controller?command=show_free_room_by_condition">
+                                    <fmt:message key="text.client.chooseRoom"/></button>
+                            </form>
+                        </c:if>
+                        <c:if test="${sessionUser.role == 'USER'}">
+                            <fmt:message key="text.bookings.please"/>
+                        </c:if>
                     </c:when>
                     <c:otherwise>
                         <form action="${pageContext.request.contextPath}/controller" method="post">
-                        <input type="hidden" name="command" value="see_details_of_booking">
-                        <input type="hidden" name="cost" value="${elem.cost}">
-                        <input type="hidden" name="roomId" value="${elem.room.id}">
-                        <input type="hidden" name="bookingId" value="${elem.id}">
-                        <button type="submit" class="btn btn-outline-primary"><fmt:message key="text.bookings.viewDetails"/></button>
+                            <input type="hidden" name="command" value="see_details_of_booking">
+                            <input type="hidden" name="cost" value="${elem.cost}">
+                            <input type="hidden" name="roomId" value="${elem.room.id}">
+                            <input type="hidden" name="bookingId" value="${elem.id}">
+                            <button type="submit" class="btn btn-outline-primary"><fmt:message
+                                    key="text.bookings.viewDetails"/></button>
                         </form>
                     </c:otherwise>
                 </c:choose></td>

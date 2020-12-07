@@ -60,7 +60,8 @@
                         <input type="hidden" name="bookingId" value="${booking.id}">
                         <div class="form-group">
                             <div class="row">
-                                <button type="submit" class="btn btn-outline-success" style="margin-left: 340px">Pay
+                                <button type="submit" class="btn btn-outline-success" style="margin-left: 340px">
+                                    <fmt:message key="text.bookings.pay"/>
                                 </button>
                             </div>
                         </div>

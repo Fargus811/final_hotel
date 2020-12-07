@@ -46,10 +46,17 @@ public class RoomDaoImpl extends AbstractJDBCDao<Room> implements RoomDao {
     private static final String FIND_FREE_ROOMS_BY_BOOKING = "SELECT " + SELECTED_COLUMNS + " FROM rooms " +
             "WHERE rooms.number_of_rooms >= ? AND rooms.number_of_beds >= ? AND rooms.max_persons >= ?" +
             " AND rooms.grade_id = ? AND rooms.has_Wifi >= ? AND rooms.has_TV >= ? AND rooms.has_bathroom >= ?" +
-            " AND id NOT IN (" +
-            "SELECT bookings.room_id FROM bookings WHERE" +
-            "( ? <= bookings.end_date AND bookings.start_date >= ? ))";
+            " AND rooms.id NOT IN (" +
+            "SELECT room_id FROM bookings WHERE room_id IS NOT NULL AND" +
+            " (( hotel.bookings.end_date >= ? AND hotel.bookings.end_date <= ?) " +
+            "OR (hotel.bookings.start_date >= ?  AND hotel.bookings.start_date <= ?) " +
+            "OR ( hotel.bookings.start_date < ? AND hotel.bookings.end_date > ?)))";
 
+    //NOT IN
+    //(SELECT hotel.bookings.room_id  FROM hotel.bookings
+    //WHERE hotel.bookings.room_id IS NOT NULL AND (( '2020-12-07' >= hotel.bookings.end_date AND hotel.bookings.end_date <= '2020-12-10')
+    //OR ( '2020-12-07' >= hotel.bookings.start_date AND hotel.bookings.start_date <= '2020-12-10')
+    // OR ( hotel.bookings.start_date < '2020-12-07' AND hotel.bookings.end_date > '2020-12-10')));
     @Override
     public List<Room> findAll() throws DaoException {
         try (ProxyConnection connection = ConnectionPool.getInstance().takeConnection()) {
@@ -112,6 +119,10 @@ public class RoomDaoImpl extends AbstractJDBCDao<Room> implements RoomDao {
                         preparedStatement.setBoolean(7, booking.isHasBathroom());
                         preparedStatement.setString(8, booking.getStartDate());
                         preparedStatement.setString(9, booking.getEndDate());
+                        preparedStatement.setString(10, booking.getStartDate());
+                        preparedStatement.setString(11, booking.getEndDate());
+                        preparedStatement.setString(12, booking.getStartDate());
+                        preparedStatement.setString(13, booking.getEndDate());
                     }, booking);
         } catch (SQLException | ConnectionPoolException e) {
             LOGGER.fatal("Problem with find free rooms");

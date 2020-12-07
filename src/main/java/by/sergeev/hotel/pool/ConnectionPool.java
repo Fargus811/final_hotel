@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -27,7 +26,6 @@ public class ConnectionPool {
 
     private BlockingQueue<ProxyConnection> availableConnections;
 
-    private static AtomicBoolean isInitialized = new AtomicBoolean(false);
     private static Lock initializationLock = new ReentrantLock();
 
     private static ConnectionPool instance = null;
@@ -39,15 +37,13 @@ public class ConnectionPool {
      */
     public static ConnectionPool getInstance() {
         if (instance == null) {
-            if (isInitialized.compareAndSet(false, true)) {
-                initializationLock.lock();
-                try {
-                    if (instance == null) {
-                        instance = new ConnectionPool();
-                    }
-                } finally {
-                    initializationLock.unlock();
+            initializationLock.lock();
+            try {
+                if (instance == null) {
+                    instance = new ConnectionPool();
                 }
+            } finally {
+                initializationLock.unlock();
             }
         }
         return instance;
@@ -126,20 +122,27 @@ public class ConnectionPool {
      * Close all.
      */
     public void closeAll() {
-        if (isInitialized.compareAndSet(true, false)) {
+        try {
+            initializationLock.lock();
             for (int i = 0; i < POOL_SIZE; i++) {
                 closeConnection(i);
             }
+        } catch (ConnectionPoolException e) {
+            LOG.warn(String.format("problem with connection closing"));
+        } finally {
+            initializationLock.unlock();
         }
+
     }
 
-    private void closeConnection(int i) {
+    private void closeConnection(int i) throws ConnectionPoolException {
         try {
             ProxyConnection connection = availableConnections.take();
             connection.realClose();
             LOG.info(String.format("closed successfully (#%d)", i));
         } catch (SQLException | InterruptedException e) {
             LOG.warn(String.format("problem with connection closing (#%d)", i));
+            throw new ConnectionPoolException("Problem with close connection", e);
         }
     }
 }

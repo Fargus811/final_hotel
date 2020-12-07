@@ -1,6 +1,7 @@
 package by.sergeev.hotel.controller;
 
-import by.sergeev.hotel.controller.command.*;
+import by.sergeev.hotel.controller.command.PageParameter;
+import by.sergeev.hotel.controller.command.PagePath;
 import by.sergeev.hotel.controller.command.room.show.ShowRoomToUpdateInfoCommand;
 import by.sergeev.hotel.exception.CommandException;
 import org.apache.logging.log4j.Level;
@@ -13,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,18 +37,38 @@ public class UploadImageServlet extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(UploadImageServlet.class);
     private static final String UPLOAD_LOCATION = "/Users/mac/Downloads/hotel1/src/main/webapp/resources/images";
     private static final String FILE_PARAMETER = "file";
+    private static final String ENCODING = "UTF-8";
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String CONTENT_LENGTH = "Content-Length";
+    private static final String CONTENT_DISPOSITION = "Content-Disposition";
+    private static final String INLINE = "inline; filename=\"";
+    private static final String SEPARATOR = "\"";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        uploadImage(request, response);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        getImage(request, response);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private void getImage(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String filename = URLDecoder.decode(request.getPathInfo().substring(1), ENCODING);
+            File file = new File(UPLOAD_LOCATION, filename);
+            response.setHeader(CONTENT_TYPE, getServletContext().getMimeType(filename));
+            response.setHeader(CONTENT_LENGTH, String.valueOf(file.length()));
+            response.setHeader(CONTENT_DISPOSITION, INLINE + file.getName() + SEPARATOR);
+            Files.copy(file.toPath(), response.getOutputStream());
+        } catch (Exception e) {
+            LOGGER.error("Can't get image", e);
+        }
+
+    }
+
+    private void uploadImage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
         String fileName = request.getPart(FILE_PARAMETER).getSubmittedFileName();
         Path path = Paths.get(UPLOAD_LOCATION);
