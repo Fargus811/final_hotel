@@ -1,4 +1,4 @@
-package by.sergeev.hotel.entity.enums;
+package by.sergeev.hotel.entity.enumeration;
 
 /**
  * The enum Role.

@@ -5,7 +5,7 @@ import by.sergeev.hotel.controller.command.CommandType;
 import by.sergeev.hotel.controller.command.PageParameter;
 import by.sergeev.hotel.controller.command.PagePath;
 import by.sergeev.hotel.entity.Room;
-import by.sergeev.hotel.entity.enums.RoomGrade;
+import by.sergeev.hotel.entity.enumeration.RoomGrade;
 import by.sergeev.hotel.exception.CommandException;
 import by.sergeev.hotel.exception.ServiceException;
 import by.sergeev.hotel.service.RoomService;

@@ -1,7 +1,7 @@
 package by.sergeev.hotel.entity;
 
-import by.sergeev.hotel.entity.enums.BookingStatus;
-import by.sergeev.hotel.entity.enums.RoomGrade;
+import by.sergeev.hotel.entity.enumeration.BookingStatus;
+import by.sergeev.hotel.entity.enumeration.RoomGrade;
 
 import java.math.BigDecimal;
 

@@ -3,7 +3,7 @@ package by.sergeev.hotel.controller.filter;
 
 import by.sergeev.hotel.controller.command.*;
 import by.sergeev.hotel.entity.SessionUser;
-import by.sergeev.hotel.entity.enums.Role;
+import by.sergeev.hotel.entity.enumeration.Role;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -4,7 +4,7 @@ import by.sergeev.hotel.dao.impl.BookingDaoImpl;
 import by.sergeev.hotel.dao.impl.RoomDaoImpl;
 import by.sergeev.hotel.entity.Booking;
 import by.sergeev.hotel.entity.Room;
-import by.sergeev.hotel.entity.enums.RoomGrade;
+import by.sergeev.hotel.entity.enumeration.RoomGrade;
 import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.exception.ServiceException;
 import org.mockito.Mockito;

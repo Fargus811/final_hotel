@@ -4,7 +4,7 @@ import by.sergeev.hotel.dao.AbstractJDBCDao;
 import by.sergeev.hotel.dao.RoomDao;
 import by.sergeev.hotel.entity.Booking;
 import by.sergeev.hotel.entity.Room;
-import by.sergeev.hotel.entity.enums.RoomGrade;
+import by.sergeev.hotel.entity.enumeration.RoomGrade;
 import by.sergeev.hotel.exception.ConnectionPoolException;
 import by.sergeev.hotel.exception.DaoException;
 import by.sergeev.hotel.pool.ConnectionPool;
